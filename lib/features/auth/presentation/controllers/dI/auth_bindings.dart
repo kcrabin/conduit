@@ -1,3 +1,4 @@
+import 'package:conduit/core/utils/storage/storage_service.dart';
 import 'package:conduit/features/auth/data/repository/auth_repository_impl.dart';
 import 'package:conduit/features/auth/data/source/local/auth_local_data_source.dart';
 import 'package:conduit/features/auth/domain/repository/auth_repository.dart';
@@ -10,7 +11,7 @@ class AuthBindings implements Bindings {
   void dependencies() {
     Get.put<AuthLocalDataSource>(
       AuthLocalDataSourceImpl(
-        Get.find<FlutterSecureStorage>(),
+        Get.find<StorageService>(),
       ),
     );
 

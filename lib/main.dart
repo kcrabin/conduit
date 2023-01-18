@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: AppThemes.lightThemeData,
       getPages: AppRoutes.routes,
-      initialRoute: Routes.login,
+      initialRoute: Routes.splashScreen,
     );
   }
 }

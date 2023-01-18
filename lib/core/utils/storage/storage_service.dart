@@ -3,22 +3,26 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 class StorageService {
   final _secureStorage = const FlutterSecureStorage();
 
-  final String _token = 'token';
-
-  Future setToken(String token) async {
+  Future set(String key, String value) async {
     await _secureStorage.write(
-      key: _token,
-      value: token,
+      key: key,
+      value: value,
       aOptions: _getAndroidOptions(),
     );
   }
 
-  Future<String?> getToken() async {
-    return await _secureStorage.read(key: _token);
+  Future<String?> get(String key) async {
+    return await _secureStorage.read(
+      key: key,
+      aOptions: _getAndroidOptions(),
+    );
   }
 
-  Future deleteToken()async{
-    
+  Future delete(String key) async {
+    await _secureStorage.delete(
+      key: key,
+      aOptions: _getAndroidOptions(),
+    );
   }
 
   AndroidOptions _getAndroidOptions() =>

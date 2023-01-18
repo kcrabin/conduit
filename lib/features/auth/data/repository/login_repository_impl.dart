@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:conduit/core/data/source/local/storage_constants.dart';
 import 'package:conduit/core/data/source/remote/custom_exception.dart';
 import 'package:conduit/core/utils/storage/storage_service.dart';
 import 'package:conduit/features/auth/data/source/remote/login_remote_data_source.dart';
@@ -30,7 +31,7 @@ class LoginRepositoryImpl implements LoginRepository {
 
         userInfo = User1.fromJson(data["user"]);
 
-        storageService.setToken(userInfo.token ?? "");
+        storageService.set(StorageConstants.accessToken, userInfo.token ?? "");
 
         // Get.off(HomePageScreen());
         Get.toNamed("/home");
