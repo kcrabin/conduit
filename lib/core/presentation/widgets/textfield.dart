@@ -6,6 +6,7 @@ class CustomTextField extends StatefulWidget {
   TextEditingController controller;
   String labelText;
   String? Function(String?)? validator;
+  int? lines;
 
   CustomTextField(
       {Key? key,
@@ -13,7 +14,8 @@ class CustomTextField extends StatefulWidget {
       this.inputType,
       required this.controller,
       required this.labelText,
-      required this.validator})
+      this.validator,
+      this.lines})
       : super(key: key);
 
   @override
@@ -31,6 +33,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      maxLines: widget.lines,
       obscureText: _obscureText,
       keyboardType: widget.inputType,
       controller: widget.controller,

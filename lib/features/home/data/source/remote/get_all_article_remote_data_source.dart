@@ -2,14 +2,14 @@ import 'package:dio/dio.dart';
 
 import '../../../../../core/data/source/remote/api_constants.dart';
 
-abstract class ArticleRemoteDataSource {
+abstract class GetAllArticleRemoteDataSource {
   Future<dynamic> getAllArticles();
 }
 
-class ArticleRemoteDataSourceImpl implements ArticleRemoteDataSource {
+class GetAllArticleRemoteDataSourceImpl implements GetAllArticleRemoteDataSource {
   final Dio dio;
 
-  ArticleRemoteDataSourceImpl({required this.dio});
+  GetAllArticleRemoteDataSourceImpl({required this.dio});
 
   @override
   Future getAllArticles() {

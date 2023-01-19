@@ -6,7 +6,9 @@ import 'package:conduit/features/auth/presentation/controllers/dI/splash_binding
 import 'package:conduit/features/auth/presentation/screens/login_screen.dart';
 import 'package:conduit/features/auth/presentation/screens/register_screen.dart';
 import 'package:conduit/features/auth/presentation/screens/splash_screen.dart';
-import 'package:conduit/features/home/presentation/controllers/dI/article_bindings.dart';
+import 'package:conduit/features/home/presentation/controllers/dI/add_new_article_bindings.dart';
+import 'package:conduit/features/home/presentation/controllers/dI/get_all_article_bindings.dart';
+import 'package:conduit/features/home/presentation/screens/add_article_screen.dart';
 import 'package:conduit/features/home/presentation/screens/home_page_screen.dart';
 import 'package:conduit/features/home/presentation/screens/widgets/article_detail_screen.dart';
 import 'package:conduit/features/navigation/presentation/controller/dI/navigation_bindings.dart';
@@ -34,7 +36,7 @@ class AppRoutes {
     GetPage(
       name: Routes.home,
       page: () => HomePageScreen(),
-      binding: ArticleBinding(),
+      binding: GetAllArticleBinding(),
     ),
     GetPage(
       name: Routes.articleDetail,
@@ -56,8 +58,14 @@ class AppRoutes {
         page: () => NavigationScreen(),
         bindings: [
           NavigationBinding(),
-          ArticleBinding(),
-        ])
+          GetAllArticleBinding(),
+          AddNewArticleBindings(),
+        ]),
+    GetPage(
+      name: Routes.addArticleScreen,
+      page: () => AddArticleScreen(),
+      binding: AddNewArticleBindings(),
+    )
   ];
 }
 
@@ -68,4 +76,5 @@ class Routes {
   static const articleDetail = "/ArticleDetail";
   static const splashScreen = "/splashScreen";
   static const navigationScreen = "/navigation";
+  static const addArticleScreen = "/addNewArticle";
 }

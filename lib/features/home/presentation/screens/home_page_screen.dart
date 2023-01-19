@@ -1,7 +1,7 @@
 import 'package:conduit/core/presentation/themes/app_themes.dart';
 import 'package:conduit/core/presentation/themes/colors.dart';
 import 'package:conduit/core/presentation/utils/spacing.dart';
-import 'package:conduit/features/home/presentation/controllers/article_controller.dart';
+import 'package:conduit/features/home/presentation/controllers/get_all_article_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -10,7 +10,7 @@ class HomePageScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final articleController = Get.find<ArticleController>();
+    final articleController = Get.find<GetAllArticleController>();
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -32,8 +32,8 @@ class HomePageScreen extends StatelessWidget {
           // ],
         ),
         body: SingleChildScrollView(
-            child: GetBuilder<ArticleController>(
-                init: ArticleController(),
+            child: GetBuilder<GetAllArticleController>(
+                init: GetAllArticleController(),
                 builder: (context) {
                   return ListView.builder(
                       physics: NeverScrollableScrollPhysics(),

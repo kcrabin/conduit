@@ -21,6 +21,25 @@ class Article {
   }
 }
 
+class PostArticle {
+  Articles? articles;
+
+  PostArticle({this.articles});
+
+  PostArticle.fromJson(Map<String, dynamic> json) {
+    articles =
+        json["article"] == null ? null : Articles.fromJson(json["article"]);
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> _data = <String, dynamic>{};
+    if (articles != null) {
+      _data["article"] = articles?.toJson();
+    }
+    return _data;
+  }
+}
+
 class Articles {
   String? slug;
   String? title;
