@@ -20,16 +20,16 @@ class HomePageScreen extends StatelessWidget {
             'Conduit',
             style: AppThemes.textTheme.headline4,
           ),
-          actions: [
-            IconButton(
-                onPressed: () {
-                  articleController.fetchAllArticles();
-                },
-                icon: Icon(
-                  Icons.print,
-                  color: Colors.black,
-                )),
-          ],
+          // actions: [
+          //   IconButton(
+          //       onPressed: () {
+          //         articleController.fetchAllArticles();
+          //       },
+          //       icon: Icon(
+          //         Icons.print,
+          //         color: Colors.black,
+          //       )),
+          // ],
         ),
         body: SingleChildScrollView(
             child: GetBuilder<ArticleController>(

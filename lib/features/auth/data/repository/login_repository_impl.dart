@@ -5,12 +5,10 @@ import 'package:conduit/core/data/source/remote/custom_exception.dart';
 import 'package:conduit/core/utils/storage/storage_service.dart';
 import 'package:conduit/features/auth/data/source/remote/login_remote_data_source.dart';
 import 'package:conduit/features/auth/domain/repository/login_repository.dart';
-import 'package:conduit/features/home/presentation/screens/home_page_screen.dart';
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 
-import '../../../../core/presentation/routes/app_routes.dart';
 import '../model/register_model.dart';
 
 class LoginRepositoryImpl implements LoginRepository {
@@ -34,7 +32,7 @@ class LoginRepositoryImpl implements LoginRepository {
         storageService.set(StorageConstants.accessToken, userInfo.token ?? "");
 
         // Get.off(HomePageScreen());
-        Get.toNamed("/home");
+        Get.offAllNamed('/navigation');
 
         // print('this is the map printed ----${data["user"]}');
         print('this is the user info token----${userInfo.token}');

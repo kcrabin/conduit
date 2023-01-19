@@ -9,6 +9,8 @@ import 'package:conduit/features/auth/presentation/screens/splash_screen.dart';
 import 'package:conduit/features/home/presentation/controllers/dI/article_bindings.dart';
 import 'package:conduit/features/home/presentation/screens/home_page_screen.dart';
 import 'package:conduit/features/home/presentation/screens/widgets/article_detail_screen.dart';
+import 'package:conduit/features/navigation/presentation/controller/dI/navigation_bindings.dart';
+import 'package:conduit/features/navigation/presentation/screens/navigation_screen.dart';
 import 'package:get/route_manager.dart';
 
 class AppRoutes {
@@ -49,6 +51,13 @@ class AppRoutes {
         AuthBindings(),
       ],
     ),
+    GetPage(
+        name: Routes.navigationScreen,
+        page: () => NavigationScreen(),
+        bindings: [
+          NavigationBinding(),
+          ArticleBinding(),
+        ])
   ];
 }
 
@@ -58,4 +67,5 @@ class Routes {
   static const home = "/home";
   static const articleDetail = "/ArticleDetail";
   static const splashScreen = "/splashScreen";
+  static const navigationScreen = "/navigation";
 }

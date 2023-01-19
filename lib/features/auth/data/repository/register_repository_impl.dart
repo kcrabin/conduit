@@ -31,7 +31,7 @@ class RegisterRepositoryImpl implements RegisterRepository {
         userInfo = User1.fromJson(data["user"]);
         storageService.set(StorageConstants.accessToken, userInfo.token ?? "");
 
-        Get.off(HomePageScreen());
+        Get.offAllNamed('/navigation');
 
         print('this is response form server on try method ----$response');
       } on DioError catch (e) {

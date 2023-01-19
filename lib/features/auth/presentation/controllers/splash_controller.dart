@@ -13,13 +13,13 @@ class SplashController extends GetxController {
   }
 
   authorize() async {
-    var isLoggedIn =
-        await Get.find<AuthController>().isAuthenticated();
+    var isLoggedIn = await Get.find<AuthController>().isAuthenticated();
 
     if (isLoggedIn == true) {
-      Get.toNamed("/home");
+      // Get.toNamed("/navigation");
+      Get.offAllNamed('/navigation');
     } else {
-      Get.toNamed("/login");
+      Get.offAllNamed("/login");
     }
   }
 }
