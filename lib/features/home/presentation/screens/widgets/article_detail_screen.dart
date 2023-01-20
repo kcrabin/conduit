@@ -2,9 +2,12 @@ import 'package:conduit/core/presentation/themes/app_themes.dart';
 import 'package:conduit/core/presentation/themes/colors.dart';
 import 'package:conduit/core/presentation/widgets/custom_elevated_button.dart';
 import 'package:conduit/features/home/data/model/article_model.dart';
+import 'package:conduit/features/home/presentation/controllers/like_unlike_article_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../../../../core/presentation/utils/spacing.dart';
+import '../../controllers/get_all_article_controller.dart';
 
 class ArticleDetailScreen extends StatelessWidget {
   final Articles articles;
@@ -12,34 +15,43 @@ class ArticleDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final articleController = Get.find<GetAllArticleController>();
+
     TextEditingController commentController = TextEditingController();
     return SafeArea(
       child: Scaffold(
+          // appBar: AppBar(title: Text(articles.favorited.toString())),
           body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Container(
-              padding: EdgeInsets.symmetric(vertical: 15, horizontal: 6),
-              color: backgroundDark,
-              child: Column(
-                children: [
-                  Text(
-                    articles.title.toString(),
-                    style: AppThemes.textTheme.headline5,
-                  ),
-                  Spacing.sizeBoxH_10(),
-                  InkWell(
-                    onTap: () {},
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        InkWell(
-                          onTap: () {},
-                          child: Row(
+        child: GetBuilder<FavoriteArticleController>(
+            // init: GetAllArticleController(),
+            builder: (controller) {
+          return Column(
+            children: [
+              Container(
+                padding: EdgeInsets.symmetric(vertical: 15, horizontal: 6),
+                color: backgroundDark,
+                child: Column(
+                  children: [
+                    Text(
+                      articles.title.toString(),
+                      style: AppThemes.textTheme.headline5,
+                    ),
+                    Spacing.sizeBoxH_10(),
+                    InkWell(
+                      onTap: () {
+                        // print('ontap clicked');
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
                             children: [
-                              ClipOval(
-                                child: Image.network(
-                                    articles.author!.image.toString()),
+                              SizedBox(
+                                height: 30,
+                                child: ClipOval(
+                                  child: Image.network(
+                                      articles.author!.image.toString()),
+                                ),
                               ),
                               Spacing.sizeBoxW_10(),
                               Column(
@@ -55,128 +67,156 @@ class ArticleDetailScreen extends StatelessWidget {
                               )
                             ],
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                  Spacing.sizeBoxH_10(),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: InkWell(
-                          onTap: () {},
-                          child: Container(
-                            padding: EdgeInsets.all(3),
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                border: Border.all(color: whiteColor)),
-                            child: Row(
-                              children: [
-                                Icon(
-                                  Icons.add,
-                                  color: primaryColor,
-                                ),
-                                Text(
-                                  'Follow ${articles.author!.username.toString()}',
-                                  style: AppThemes.textTheme.headline2,
-                                )
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                      Spacing.sizeBoxW_5(),
-                      Expanded(
-                        child: InkWell(
-                          splashColor: primaryColor,
-                          onTap: () {},
-                          child: Container(
-                            padding: EdgeInsets.all(3),
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                border: Border.all(color: whiteColor)),
-                            child: Row(
-                              children: [
-                                Icon(
-                                  Icons.favorite_outline,
-                                  color: favColor,
-                                ),
-                                Text(
-                                  'Favourite Article (${articles.favoritesCount.toString()})',
-                                  style: AppThemes.textTheme.headline2,
-                                )
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            // Spacing.sizeBoxH_15(),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                children: [
-                  Text(
-                    articles.body.toString(),
-                    style: AppThemes.textTheme.bodyText1,
-                  ),
-                  Divider(
-                    color: dividerColor,
-                    thickness: 1.5,
-                  ),
-                  Container(
-                    width: MediaQuery.of(context).size.width,
-                    decoration: BoxDecoration(
-                        color: captionColor,
-                        borderRadius: BorderRadius.circular(3),
-                        border: Border.all(color: primaryColor)),
-                    child: Column(
-                      children: [
-                        Container(
-                          color: whiteColor,
-                          child: TextField(
-                            maxLines: 5,
-                            controller: commentController,
-                            decoration: InputDecoration(
-                                // fillColor: whiteColor,
-                                focusColor: whiteColor,
-                                labelText: 'Write a comment'),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              CircleAvatar(
-                                backgroundColor: backgroundDark,
-                                radius: 20,
-                                child: Icon(
-                                  Icons.person,
-                                  color: primaryColor,
-                                ),
+                    Spacing.sizeBoxH_10(),
+                    InkWell(
+                      onTap: () {
+                        print('ontap clicked');
+                      },
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Container(
+                              padding: EdgeInsets.all(3),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  border: Border.all(color: whiteColor)),
+                              child: Row(
+                                children: [
+                                  Icon(
+                                    Icons.add,
+                                    color: primaryColor,
+                                  ),
+                                  Text(
+                                    'Follow ${articles.author!.username.toString()}',
+                                    style: AppThemes.textTheme.headline2,
+                                  )
+                                ],
                               ),
-                              CustomElevtedButton(
-                                  onClicked: () {},
-                                  minSize: Size(
-                                      MediaQuery.of(context).size.width * 0.3,
-                                      40),
-                                  name: 'Post Comment')
-                            ],
+                            ),
                           ),
-                        ),
-                      ],
+                          Spacing.sizeBoxW_5(),
+                          Expanded(
+                            child: InkWell(
+                              splashColor: primaryColor,
+                              onTap: () {
+                                articles.favorited == true
+                                    ? controller
+                                        .unlikeArticle(articles.slug.toString())
+                                    : controller
+                                        .likeArticle(articles.slug.toString());
+
+                                articleController.fetchAllArticles();
+                              },
+                              child: Container(
+                                padding: EdgeInsets.all(3),
+                                decoration: BoxDecoration(
+                                    color: articles.favorited == true
+                                        ? primaryColor
+                                        : Colors.transparent,
+                                    borderRadius: BorderRadius.circular(10),
+                                    border: Border.all(color: whiteColor)),
+                                child: articles.favorited == true
+                                    ? Row(
+                                        children: [
+                                          Icon(
+                                            Icons.favorite,
+                                            color: favColor,
+                                          ),
+                                          Text(
+                                            'Unfavorite Article (${articles.favoritesCount.toString()})',
+                                            style:
+                                                AppThemes.textTheme.headline2,
+                                          )
+                                        ],
+                                      )
+                                    : Row(
+                                        children: [
+                                          Icon(
+                                            Icons.favorite_outline,
+                                            color: favColor,
+                                          ),
+                                          Text(
+                                            'Favourite Article (${articles.favoritesCount.toString()})',
+                                            style:
+                                                AppThemes.textTheme.headline2,
+                                          )
+                                        ],
+                                      ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                  )
-                ],
+                  ],
+                ),
               ),
-            ),
-          ],
-        ),
+              // Spacing.sizeBoxH_15(),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  children: [
+                    Text(
+                      articles.body.toString(),
+                      style: AppThemes.textTheme.bodyText1,
+                    ),
+                    Divider(
+                      color: dividerColor,
+                      thickness: 1.5,
+                    ),
+                    Container(
+                      width: MediaQuery.of(context).size.width,
+                      decoration: BoxDecoration(
+                          color: captionColor,
+                          borderRadius: BorderRadius.circular(3),
+                          border: Border.all(color: primaryColor)),
+                      child: Column(
+                        children: [
+                          Container(
+                            color: whiteColor,
+                            child: TextField(
+                              maxLines: 5,
+                              controller: commentController,
+                              decoration: InputDecoration(
+                                  // fillColor: whiteColor,
+                                  focusColor: whiteColor,
+                                  labelText: 'Write a comment'),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                CircleAvatar(
+                                  backgroundColor: backgroundDark,
+                                  radius: 20,
+                                  child: Icon(
+                                    Icons.person,
+                                    color: primaryColor,
+                                  ),
+                                ),
+                                CustomElevtedButton(
+                                    onClicked: () {},
+                                    minSize: Size(
+                                        MediaQuery.of(context).size.width * 0.3,
+                                        40),
+                                    name: 'Post Comment')
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ],
+          );
+        }),
       )),
     );
   }

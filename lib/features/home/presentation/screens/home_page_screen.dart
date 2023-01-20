@@ -5,12 +5,16 @@ import 'package:conduit/features/home/presentation/controllers/get_all_article_c
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../controllers/like_unlike_article_controller.dart';
+
 class HomePageScreen extends StatelessWidget {
   const HomePageScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     final articleController = Get.find<GetAllArticleController>();
+    final favarticleController = Get.find<FavoriteArticleController>();
+
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -59,13 +63,16 @@ class HomePageScreen extends StatelessWidget {
                                       onTap: () {},
                                       child: Row(
                                         children: [
-                                          ClipOval(
-                                            child: Image.network(
-                                                articleController
-                                                    .articleList[index]
-                                                    .author!
-                                                    .image
-                                                    .toString()),
+                                          SizedBox(
+                                            height: 30,
+                                            child: ClipOval(
+                                              child: Image.network(
+                                                  articleController
+                                                      .articleList[index]
+                                                      .author!
+                                                      .image
+                                                      .toString()),
+                                            ),
                                           ),
                                           Spacing.sizeBoxW_10(),
                                           Column(
@@ -97,7 +104,27 @@ class HomePageScreen extends StatelessWidget {
                                       children: [
                                         InkWell(
                                           splashColor: primaryColor,
-                                          onTap: () {},
+                                          onTap: () {
+                                            (articleController
+                                                        .articleList[index]
+                                                        .favorited) ==
+                                                    true
+                                                ? favarticleController
+                                                    .unlikeArticle(
+                                                        articleController
+                                                            .articleList[index]
+                                                            .slug
+                                                            .toString())
+                                                : favarticleController
+                                                    .likeArticle(
+                                                        articleController
+                                                            .articleList[index]
+                                                            .slug
+                                                            .toString());
+
+                                            articleController
+                                                .fetchAllArticles();
+                                          },
                                           child: Container(
                                             alignment: Alignment.center,
                                             height: 35,
@@ -107,10 +134,19 @@ class HomePageScreen extends StatelessWidget {
                                                     BorderRadius.circular(10),
                                                 border: Border.all(
                                                     color: primaryColor)),
-                                            child: Icon(
-                                              Icons.favorite_border_outlined,
-                                              color: primaryColor2,
-                                            ),
+                                            child: (articleController
+                                                        .articleList[index]
+                                                        .favorited) ==
+                                                    true
+                                                ? Icon(
+                                                    Icons.favorite,
+                                                    color: primaryColor,
+                                                  )
+                                                : Icon(
+                                                    Icons
+                                                        .favorite_border_outlined,
+                                                    color: primaryColor,
+                                                  ),
                                           ),
                                         ),
                                         Text(

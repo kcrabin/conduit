@@ -7,6 +7,7 @@ import 'package:conduit/features/auth/presentation/screens/login_screen.dart';
 import 'package:conduit/features/auth/presentation/screens/register_screen.dart';
 import 'package:conduit/features/auth/presentation/screens/splash_screen.dart';
 import 'package:conduit/features/home/presentation/controllers/dI/add_new_article_bindings.dart';
+import 'package:conduit/features/home/presentation/controllers/dI/like_unlike_article_bindings.dart';
 import 'package:conduit/features/home/presentation/controllers/dI/get_all_article_bindings.dart';
 import 'package:conduit/features/home/presentation/screens/add_article_screen.dart';
 import 'package:conduit/features/home/presentation/screens/home_page_screen.dart';
@@ -36,7 +37,10 @@ class AppRoutes {
     GetPage(
       name: Routes.home,
       page: () => HomePageScreen(),
-      binding: GetAllArticleBinding(),
+      bindings: [
+        GetAllArticleBinding(),
+        FavoriteArticleBinding(),
+      ],
     ),
     GetPage(
       name: Routes.articleDetail,
@@ -60,6 +64,7 @@ class AppRoutes {
           NavigationBinding(),
           GetAllArticleBinding(),
           AddNewArticleBindings(),
+          FavoriteArticleBinding(),
         ]),
     GetPage(
       name: Routes.addArticleScreen,

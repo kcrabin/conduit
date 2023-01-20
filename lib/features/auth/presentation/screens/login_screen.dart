@@ -32,6 +32,7 @@ class LoginScreen extends StatelessWidget {
               ),
               Spacing.sizeBoxH_5(),
               CustomTextField(
+                lines: 1,
                 controller: loginController.passwordController,
                 labelText: 'Password',
                 isObscure: true,

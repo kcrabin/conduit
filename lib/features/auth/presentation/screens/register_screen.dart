@@ -31,6 +31,7 @@ class RegisterScreen extends StatelessWidget {
               ),
               Spacing.sizeBoxH_5(),
               CustomTextField(
+                lines: 1,
                 controller: registerController.passwordController,
                 labelText: 'Password',
                 isObscure: true,
