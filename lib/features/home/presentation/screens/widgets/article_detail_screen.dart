@@ -2,6 +2,7 @@ import 'package:conduit/core/presentation/themes/app_themes.dart';
 import 'package:conduit/core/presentation/themes/colors.dart';
 import 'package:conduit/core/presentation/widgets/custom_elevated_button.dart';
 import 'package:conduit/features/home/data/model/article_model.dart';
+import 'package:conduit/features/home/presentation/controllers/comment_controller.dart';
 import 'package:conduit/features/home/presentation/controllers/like_unlike_article_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -15,9 +16,9 @@ class ArticleDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final articleController = Get.find<GetAllArticleController>();
+    final getAllArticleController = Get.find<GetAllArticleController>();
+    final addCommentController = Get.find<CommentController>();
 
-    TextEditingController commentController = TextEditingController();
     return SafeArea(
       child: Scaffold(
           // appBar: AppBar(title: Text(articles.favorited.toString())),
@@ -108,7 +109,7 @@ class ArticleDetailScreen extends StatelessWidget {
                                     : controller
                                         .likeArticle(articles.slug.toString());
 
-                                articleController.fetchAllArticles();
+                                getAllArticleController.fetchAllArticles();
                               },
                               child: Container(
                                 padding: EdgeInsets.all(3),
@@ -179,7 +180,8 @@ class ArticleDetailScreen extends StatelessWidget {
                             color: whiteColor,
                             child: TextField(
                               maxLines: 5,
-                              controller: commentController,
+                              controller:
+                                  addCommentController.commentController,
                               decoration: InputDecoration(
                                   // fillColor: whiteColor,
                                   focusColor: whiteColor,
@@ -200,7 +202,10 @@ class ArticleDetailScreen extends StatelessWidget {
                                   ),
                                 ),
                                 CustomElevtedButton(
-                                    onClicked: () {},
+                                    onClicked: () {
+                                      addCommentController
+                                          .addComment(articles.slug.toString());
+                                    },
                                     minSize: Size(
                                         MediaQuery.of(context).size.width * 0.3,
                                         40),
