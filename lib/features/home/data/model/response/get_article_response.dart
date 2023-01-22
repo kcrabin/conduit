@@ -10,34 +10,6 @@ class Article {
         : (json["articles"] as List).map((e) => Articles.fromJson(e)).toList();
     articlesCount = json["articlesCount"];
   }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> _data = <String, dynamic>{};
-    if (articles != null) {
-      _data["articles"] = articles?.map((e) => e.toJson()).toList();
-    }
-    _data["articlesCount"] = articlesCount;
-    return _data;
-  }
-}
-
-class PostArticle {
-  Articles? articles;
-
-  PostArticle({this.articles});
-
-  PostArticle.fromJson(Map<String, dynamic> json) {
-    articles =
-        json["article"] == null ? null : Articles.fromJson(json["article"]);
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> _data = <String, dynamic>{};
-    if (articles != null) {
-      _data["article"] = articles?.toJson();
-    }
-    return _data;
-  }
 }
 
 class Articles {

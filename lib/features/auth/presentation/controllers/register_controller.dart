@@ -4,11 +4,11 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
-import '../../data/model/register_model.dart';
+import '../../data/model/request/register_request_model.dart';
 
 class RegisterController extends GetxController {
-  late User user;
-  late User1 user1;
+  late RegisterUser user;
+  late RegisterUserInfo userInfo;
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController usernameController = TextEditingController();
@@ -16,11 +16,11 @@ class RegisterController extends GetxController {
   void requestRegister() {
     RegisterRepositoryImpl registerRepositoryImpl = RegisterRepositoryImpl(
         registerRemoteDataSource: Get.find<RegisterRemoteDataSource>());
-    user1 = User1(
+    userInfo = RegisterUserInfo(
         email: emailController.text,
         password: passwordController.text,
         username: usernameController.text);
-    user = User(user: user1);
+    user = RegisterUser(user: userInfo);
 
     registerRepositoryImpl.requestRegister(user);
   }

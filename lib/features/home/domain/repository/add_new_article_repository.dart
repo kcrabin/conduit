@@ -1,5 +1,5 @@
-import 'package:conduit/features/home/data/model/article_model.dart';
+import '../../data/model/request/post_article_model.dart';
 
 abstract class AddNewArticleRepository {
-  addArticle(PostArticle postArticles);
+  addArticle(PostArticleRequest postArticles);
 }

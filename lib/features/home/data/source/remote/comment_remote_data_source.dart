@@ -1,13 +1,13 @@
-import 'package:conduit/features/home/data/model/comment_model.dart';
 import 'package:dio/dio.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 import '../../../../../core/data/source/local/storage_constants.dart';
 import '../../../../../core/data/source/remote/api_constants.dart';
 import '../../../../../core/utils/storage/storage_service.dart';
+import '../../model/request/comment_request_model.dart';
 
 abstract class CommentRemoteDataSource {
-  postComment(String slug, Comment comment);
+  postComment(String slug, CommentRequest comment);
 }
 
 class CommentRemoteDataSourceImpl implements CommentRemoteDataSource {
@@ -16,7 +16,7 @@ class CommentRemoteDataSourceImpl implements CommentRemoteDataSource {
   CommentRemoteDataSourceImpl({required this.dio});
 
   @override
-  postComment(String slug, Comment comment) async {
+  postComment(String slug, CommentRequest comment) async {
     StorageService _storage = StorageService();
     String? token = await _storage.get(StorageConstants.accessToken);
 

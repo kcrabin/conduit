@@ -1,18 +1,19 @@
 import 'dart:convert';
 
 import 'package:conduit/core/data/source/remote/custom_exception.dart';
-import 'package:conduit/features/home/data/model/comment_model.dart';
 import 'package:conduit/features/home/data/source/remote/comment_remote_data_source.dart';
 import 'package:conduit/features/home/domain/repository/comment_repository.dart';
 import 'package:dio/dio.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
+
+import '../model/request/comment_request_model.dart';
 
 class CommentRepositoryImpl implements CommentRepository {
   CommentRemoteDataSource commentRemoteDataSource;
 
   CommentRepositoryImpl({required this.commentRemoteDataSource});
   @override
-  addComment(String slug, Comment comment) async {
+  addComment(String slug, CommentRequest comment) async {
     bool hasInternet = await InternetConnectionChecker().hasConnection;
 
     if (hasInternet == true) {

@@ -1,9 +1,10 @@
 import 'package:conduit/core/data/source/remote/api_constants.dart';
-import 'package:conduit/features/auth/data/model/register_model.dart';
 import 'package:dio/dio.dart';
 
+import '../../model/request/login_request_model.dart';
+
 abstract class LoginRemoteDataSource {
-  Future<dynamic> login(User user);
+  Future<dynamic> login(LoginRequest user);
 }
 
 class LoginRemoteDataSourceImpl implements LoginRemoteDataSource {
@@ -12,7 +13,7 @@ class LoginRemoteDataSourceImpl implements LoginRemoteDataSource {
   LoginRemoteDataSourceImpl({required this.dio});
 
   @override
-  Future login(User user) {
+  Future login(LoginRequest user) {
     return dio.post("${ApiConstants.baseUrl}${ApiConstants.login}",
         data: user.toJson(),
         options: Options(headers: <String, String>{

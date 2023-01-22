@@ -1,7 +1,7 @@
 import 'package:conduit/core/presentation/themes/app_themes.dart';
 import 'package:conduit/core/presentation/themes/colors.dart';
 import 'package:conduit/core/presentation/widgets/custom_elevated_button.dart';
-import 'package:conduit/features/home/data/model/article_model.dart';
+import 'package:conduit/features/home/data/model/response/get_article_response.dart';
 import 'package:conduit/features/home/presentation/controllers/comment_controller.dart';
 import 'package:conduit/features/home/presentation/controllers/like_unlike_article_controller.dart';
 import 'package:flutter/material.dart';

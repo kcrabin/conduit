@@ -1,5 +1,5 @@
-import 'package:conduit/features/auth/data/model/register_model.dart';
+import 'package:conduit/features/auth/data/model/request/register_request_model.dart';
 
 abstract class RegisterRepository {
-  requestRegister(User user);
+  requestRegister(RegisterUser user);
 }

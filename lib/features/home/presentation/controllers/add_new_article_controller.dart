@@ -1,12 +1,13 @@
-import 'package:conduit/features/home/data/model/article_model.dart';
 import 'package:conduit/features/home/data/repository/add_new_article_repository_impl.dart';
 import 'package:conduit/features/home/data/source/remote/add_new_article_remote_data_source.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../data/model/request/post_article_model.dart';
+
 class AddNewArticleController extends GetxController {
-  late Articles articles;
-  late PostArticle postArticle;
+  late ArticleRequestInfo articles;
+  late PostArticleRequest postArticle;
 
   AddNewArticleRepositoryImpl addNewArticleRepositoryImpl =
       AddNewArticleRepositoryImpl(
@@ -23,14 +24,14 @@ class AddNewArticleController extends GetxController {
   publishArticle() {
     tagList = tagListController.text.split(" ");
 
-    articles = Articles(
+    articles = ArticleRequestInfo(
       title: titleController.text,
       description: descriptionController.text,
       body: bodyController.text,
       tagList: tagList,
     );
 
-    postArticle = PostArticle(articles: articles);
+    postArticle = PostArticleRequest(article: articles);
 
     var hasData = addNewArticleRepositoryImpl.addArticle(postArticle);
 

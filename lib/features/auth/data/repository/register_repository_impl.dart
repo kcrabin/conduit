@@ -2,15 +2,15 @@ import 'dart:convert';
 
 import 'package:conduit/core/data/source/local/storage_constants.dart';
 import 'package:conduit/core/data/source/remote/custom_exception.dart';
+import 'package:conduit/features/auth/data/model/request/register_request_model.dart';
+import 'package:conduit/features/auth/data/model/response/register_response.dart';
 import 'package:conduit/features/auth/data/source/remote/register_remote_data_source.dart';
 import 'package:conduit/features/auth/domain/repository/register_repository.dart';
-import 'package:conduit/features/home/presentation/screens/home_page_screen.dart';
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 
 import '../../../../core/utils/storage/storage_service.dart';
-import '../model/register_model.dart';
 
 class RegisterRepositoryImpl implements RegisterRepository {
   RegisterRemoteDataSource registerRemoteDataSource;
@@ -18,9 +18,9 @@ class RegisterRepositoryImpl implements RegisterRepository {
   RegisterRepositoryImpl({required this.registerRemoteDataSource});
 
   @override
-  requestRegister(User user) async {
+  requestRegister(RegisterUser user) async {
     bool hasInternet = await InternetConnectionChecker().hasConnection;
-    User1 userInfo;
+    RegisterResponseInfo userInfo;
     StorageService storageService = StorageService();
 
     if (hasInternet == true) {
@@ -28,7 +28,7 @@ class RegisterRepositoryImpl implements RegisterRepository {
         final response = await registerRemoteDataSource.register(user);
         var data = jsonDecode(response.toString());
 
-        userInfo = User1.fromJson(data["user"]);
+        userInfo = RegisterResponseInfo.fromJson(data["user"]);
         storageService.set(StorageConstants.accessToken, userInfo.token ?? "");
 
         Get.offAllNamed('/navigation');

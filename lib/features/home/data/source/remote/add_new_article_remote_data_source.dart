@@ -1,14 +1,15 @@
 import 'package:conduit/core/data/source/local/storage_constants.dart';
-import 'package:conduit/features/home/data/model/article_model.dart';
+import 'package:conduit/features/home/data/model/response/get_article_response.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 import '../../../../../core/data/source/remote/api_constants.dart';
 import '../../../../../core/utils/storage/storage_service.dart';
+import '../../model/request/post_article_model.dart';
 
 abstract class AddNewArticleRemoteDataSource {
-  Future<dynamic> addNewArticle(PostArticle postArticle);
+  Future<dynamic> addNewArticle(PostArticleRequest postArticle);
 }
 
 class AddNewArticleRemoteDataSourceImpl
@@ -18,7 +19,7 @@ class AddNewArticleRemoteDataSourceImpl
   AddNewArticleRemoteDataSourceImpl({required this.dio});
 
   @override
-  Future addNewArticle(PostArticle postArticle) async {
+  Future addNewArticle(PostArticleRequest postArticle) async {
     StorageService _storage = StorageService();
     String? token = await _storage.get(StorageConstants.accessToken);
 

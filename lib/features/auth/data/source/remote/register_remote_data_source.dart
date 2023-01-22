@@ -1,10 +1,10 @@
 import 'package:dio/dio.dart';
 
 import '../../../../../core/data/source/remote/api_constants.dart';
-import '../../model/register_model.dart';
+import '../../model/request/register_request_model.dart';
 
 abstract class RegisterRemoteDataSource {
-  Future<dynamic> register(User user);
+  Future<dynamic> register(RegisterUser user);
 }
 
 class RegisterRemoteDataSourceImpl implements RegisterRemoteDataSource {
@@ -13,7 +13,7 @@ class RegisterRemoteDataSourceImpl implements RegisterRemoteDataSource {
   RegisterRemoteDataSourceImpl({required this.dio});
 
   @override
-  Future register(User user) {
+  Future register(RegisterUser user) {
     return dio.post("${ApiConstants.baseUrl}${ApiConstants.register}",
         data: user.toJson(),
         options: Options(headers: <String, String>{

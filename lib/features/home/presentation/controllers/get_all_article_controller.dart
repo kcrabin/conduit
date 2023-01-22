@@ -4,7 +4,7 @@ import 'package:conduit/features/home/domain/repository/get_all_article_reposito
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get/instance_manager.dart';
 
-import '../../data/model/article_model.dart';
+import '../../data/model/response/get_article_response.dart';
 import '../../domain/repository/like_unlike_article_repository.dart';
 
 class GetAllArticleController extends GetxController {

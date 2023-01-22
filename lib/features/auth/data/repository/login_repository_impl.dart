@@ -9,7 +9,8 @@ import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 
-import '../model/register_model.dart';
+import '../model/request/login_request_model.dart';
+import '../model/response/login_response_model.dart';
 
 class LoginRepositoryImpl implements LoginRepository {
   LoginRemoteDataSource loginRemoteDataSource;
@@ -17,9 +18,9 @@ class LoginRepositoryImpl implements LoginRepository {
   LoginRepositoryImpl({required this.loginRemoteDataSource});
 
   @override
-  requestLogin(User user) async {
+  requestLogin(LoginRequest user) async {
     bool hasInternet = await InternetConnectionChecker().hasConnection;
-    User1 userInfo;
+    LoginResponseInfo userInfo;
     StorageService storageService = StorageService();
 
     if (hasInternet == true) {
@@ -27,7 +28,7 @@ class LoginRepositoryImpl implements LoginRepository {
         final response = await loginRemoteDataSource.login(user);
         var data = jsonDecode(response.toString());
 
-        userInfo = User1.fromJson(data["user"]);
+        userInfo = LoginResponseInfo.fromJson(data["user"]);
 
         storageService.set(StorageConstants.accessToken, userInfo.token ?? "");
 
