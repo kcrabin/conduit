@@ -52,6 +52,24 @@ dependencies:
   # Pretty Dio logger is a Dio interceptor that logs network calls in a pretty, easy to read format.
   pretty_dio_logger: ^1.1.1
 
+  # Flutter plugin for Firebase Core, enabling connecting to multiple Firebase apps.
+  firebase_core: ^2.4.1
+
+  # Flutter plugin for Firebase Cloud Messaging, a cross-platform messaging solution that lets you reliably deliver messages on Android and iOS.
+  firebase_messaging: ^14.2.1
+
+  # Flutter plugin for Firebase Cloud Storage, a powerful, simple, and cost-effective object storage service for Android and iOS.
+  firebase_storage: ^11.0.10
+
+  # Flutter plugin for Cloud Firestore, a cloud-hosted, noSQL database with live synchronization and offline support on Android and iOS.
+  cloud_firestore: ^4.3.1
+
+  # A cross platform plugin for displaying and scheduling local notifications for Flutter applications with the ability to customise for each platform.
+  flutter_local_notifications: ^13.0.0
+
+  # provider support for overlay, easy to build toast and internal notification
+  overlay_support: ^2.1.0
+
 
 dev_dependencies:
   flutter_test:

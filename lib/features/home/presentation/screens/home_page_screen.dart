@@ -24,16 +24,17 @@ class HomePageScreen extends StatelessWidget {
             'Conduit',
             style: AppThemes.textTheme.headline4,
           ),
-          // actions: [
-          //   IconButton(
-          //       onPressed: () {
-          //         articleController.fetchAllArticles();
-          //       },
-          //       icon: Icon(
-          //         Icons.print,
-          //         color: Colors.black,
-          //       )),
-          // ],
+          actions: [
+            IconButton(
+                onPressed: () {
+                  Get.toNamed("/notifications");
+                },
+                icon: Icon(
+                  Icons.notifications,
+                  color: primaryColor2,
+                  size: 30,
+                )),
+          ],
         ),
         body: SingleChildScrollView(
             child: GetBuilder<GetAllArticleController>(

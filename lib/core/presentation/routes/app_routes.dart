@@ -15,7 +15,11 @@ import 'package:conduit/features/home/presentation/screens/home_page_screen.dart
 import 'package:conduit/features/home/presentation/screens/widgets/article_detail_screen.dart';
 import 'package:conduit/features/navigation/presentation/controller/dI/navigation_bindings.dart';
 import 'package:conduit/features/navigation/presentation/screens/navigation_screen.dart';
+import 'package:conduit/features/notification/presentation/controller/dI/notification_bindings.dart';
+import 'package:conduit/features/notification/presentation/screens/notification_screens.dart';
 import 'package:get/route_manager.dart';
+
+import '../../../features/notification/presentation/screens/create_notification_screen.dart';
 
 class AppRoutes {
   static final routes = [
@@ -73,7 +77,13 @@ class AppRoutes {
       name: Routes.addArticleScreen,
       page: () => AddArticleScreen(),
       binding: AddNewArticleBindings(),
-    )
+    ),
+    GetPage(
+      name: Routes.notifications,
+      page: () => CreateNotification(),
+      binding: NotificationBindings(),
+    ),
+    GetPage(name: Routes.showNotification, page: () => NotificationScreen())
   ];
 }
 
@@ -85,4 +95,6 @@ class Routes {
   static const splashScreen = "/splashScreen";
   static const navigationScreen = "/navigation";
   static const addArticleScreen = "/addNewArticle";
+  static const notifications = "/notifications";
+  static const showNotification = "/showNotification";
 }
