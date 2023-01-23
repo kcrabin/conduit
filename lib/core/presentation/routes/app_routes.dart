@@ -17,9 +17,14 @@ import 'package:conduit/features/navigation/presentation/controller/dI/navigatio
 import 'package:conduit/features/navigation/presentation/screens/navigation_screen.dart';
 import 'package:conduit/features/notification/presentation/controller/dI/notification_bindings.dart';
 import 'package:conduit/features/notification/presentation/screens/notification_screens.dart';
+import 'package:conduit/features/profile/presentation/controllers/dI/my_articles_bindings.dart';
+import 'package:conduit/features/profile/presentation/controllers/dI/profile_bindings.dart';
+import 'package:conduit/features/profile/presentation/screens/my_articles_screen.dart';
+import 'package:conduit/features/profile/presentation/screens/profile_screen.dart';
 import 'package:get/route_manager.dart';
 
 import '../../../features/notification/presentation/screens/create_notification_screen.dart';
+import '../../../features/profile/presentation/screens/widgets/my_article_detail_screen.dart';
 
 class AppRoutes {
   static final routes = [
@@ -72,6 +77,8 @@ class AppRoutes {
           AddNewArticleBindings(),
           FavoriteArticleBinding(),
           CommentBindings(),
+          ProfileBindings(),
+          MyArticleBindings(),
         ]),
     GetPage(
       name: Routes.addArticleScreen,
@@ -79,11 +86,33 @@ class AppRoutes {
       binding: AddNewArticleBindings(),
     ),
     GetPage(
+      name: Routes.profileScreen,
+      page: () => ProfileScreen(),
+      bindings: [
+        ProfileBindings(),
+        FavoriteArticleBinding(),
+      ],
+    ),
+    GetPage(
       name: Routes.notifications,
       page: () => CreateNotification(),
       binding: NotificationBindings(),
     ),
-    GetPage(name: Routes.showNotification, page: () => NotificationScreen())
+    GetPage(
+      name: Routes.showNotification,
+      page: () => NotificationScreen(),
+    ),
+    GetPage(
+      name: Routes.myArticleDetail,
+      page: () => MyArticleDetailScreen(
+        articles: Get.arguments,
+      ),
+    ),
+    GetPage(
+      name: Routes.myArticleScreen,
+      page: () => MyArticles(),
+      binding: MyArticleBindings(),
+    )
   ];
 }
 
@@ -95,6 +124,9 @@ class Routes {
   static const splashScreen = "/splashScreen";
   static const navigationScreen = "/navigation";
   static const addArticleScreen = "/addNewArticle";
+  static const profileScreen = "/profile";
   static const notifications = "/notifications";
   static const showNotification = "/showNotification";
+  static const myArticleDetail = "/myArticleDetail";
+  static const myArticleScreen = "/myArticles";
 }

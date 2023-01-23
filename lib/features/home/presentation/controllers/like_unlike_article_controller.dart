@@ -11,10 +11,11 @@ class FavoriteArticleController extends GetxController {
 
   likeArticle(String slug) async {
     favoriteArticleRepositoryImpl.favoriteArticle(slug);
-    // update();
+    update();
   }
 
   unlikeArticle(String slug) {
     favoriteArticleRepositoryImpl.unfavoriteArticle(slug);
+    update();
   }
 }
