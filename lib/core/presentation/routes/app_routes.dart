@@ -7,20 +7,28 @@ import 'package:conduit/features/auth/presentation/screens/login_screen.dart';
 import 'package:conduit/features/auth/presentation/screens/register_screen.dart';
 import 'package:conduit/features/auth/presentation/screens/splash_screen.dart';
 import 'package:conduit/features/home/presentation/controllers/dI/add_new_article_bindings.dart';
+import 'package:conduit/features/home/presentation/controllers/dI/article_by_tag_bindings.dart';
 import 'package:conduit/features/home/presentation/controllers/dI/comment_bindings.dart';
 import 'package:conduit/features/home/presentation/controllers/dI/like_unlike_article_bindings.dart';
 import 'package:conduit/features/home/presentation/controllers/dI/get_all_article_bindings.dart';
+import 'package:conduit/features/home/presentation/controllers/dI/taglist_bindings.dart';
 import 'package:conduit/features/home/presentation/screens/add_article_screen.dart';
+import 'package:conduit/features/home/presentation/screens/articles_by_tag_screen.dart';
 import 'package:conduit/features/home/presentation/screens/home_page_screen.dart';
+import 'package:conduit/features/home/presentation/screens/taglist_screen.dart';
+import 'package:conduit/features/home/presentation/screens/widgets/article_by_tag_detail_screen.dart';
 import 'package:conduit/features/home/presentation/screens/widgets/article_detail_screen.dart';
 import 'package:conduit/features/navigation/presentation/controller/dI/navigation_bindings.dart';
 import 'package:conduit/features/navigation/presentation/screens/navigation_screen.dart';
 import 'package:conduit/features/notification/presentation/controller/dI/notification_bindings.dart';
 import 'package:conduit/features/notification/presentation/screens/notification_screens.dart';
+import 'package:conduit/features/profile/presentation/controllers/dI/fav_articles_bindings.dart';
 import 'package:conduit/features/profile/presentation/controllers/dI/my_articles_bindings.dart';
 import 'package:conduit/features/profile/presentation/controllers/dI/profile_bindings.dart';
+import 'package:conduit/features/profile/presentation/screens/fav_articles_screen.dart';
 import 'package:conduit/features/profile/presentation/screens/my_articles_screen.dart';
 import 'package:conduit/features/profile/presentation/screens/profile_screen.dart';
+import 'package:conduit/features/profile/presentation/screens/widgets/fav_articles_detail_screen.dart';
 import 'package:get/route_manager.dart';
 
 import '../../../features/notification/presentation/screens/create_notification_screen.dart';
@@ -79,6 +87,8 @@ class AppRoutes {
           CommentBindings(),
           ProfileBindings(),
           MyArticleBindings(),
+          GetFavArticlesBindings(),
+          // TaglistBindings(),
         ]),
     GetPage(
       name: Routes.addArticleScreen,
@@ -112,6 +122,36 @@ class AppRoutes {
       name: Routes.myArticleScreen,
       page: () => MyArticles(),
       binding: MyArticleBindings(),
+    ),
+    GetPage(
+      name: Routes.favArticlesScreen,
+      page: () => MyFavArticles(),
+      binding: GetFavArticlesBindings(),
+    ),
+    GetPage(
+      name: Routes.favArticleDetailScren,
+      page: () => FavArticleDetailScreen(articles: Get.arguments),
+    ),
+    GetPage(
+      name: Routes.tagListScreen,
+      page: () => TaglistScreen(),
+      bindings: [
+        TaglistBindings(),
+        ArticlesByTagBindings(),
+      ],
+    ),
+    GetPage(
+      name: Routes.articlesByTagScreen,
+      page: () => ArticlesByTagScreen(
+        tagName: Get.arguments,
+      ),
+      binding: ArticlesByTagBindings(),
+    ),
+    GetPage(
+      name: Routes.articleByTagDetail,
+      page: () => ArticleByTagDetailScreen(
+        articles: Get.arguments,
+      ),
     )
   ];
 }
@@ -129,4 +169,9 @@ class Routes {
   static const showNotification = "/showNotification";
   static const myArticleDetail = "/myArticleDetail";
   static const myArticleScreen = "/myArticles";
+  static const favArticlesScreen = "/favArticleScreen";
+  static const favArticleDetailScren = "/favArticleDetail";
+  static const tagListScreen = "/tagListScreen";
+  static const articlesByTagScreen = "/articleByTagScreen";
+  static const articleByTagDetail = "/articleByTagDetail";
 }

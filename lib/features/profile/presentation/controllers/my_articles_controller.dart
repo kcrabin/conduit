@@ -11,7 +11,7 @@ class MyArticleController extends GetxController {
         data['articles'].map<Articles>((e) => Articles.fromJson(e)).toList();
     update();
 
-    print('this is articles by user ---$articleList');
+    // print('this is articles by user ---$articleList');
   }
 
   @override

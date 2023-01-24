@@ -1,5 +1,6 @@
 import 'package:conduit/core/presentation/utils/spacing.dart';
 import 'package:conduit/core/presentation/widgets/custom_elevated_button.dart';
+import 'package:conduit/features/profile/presentation/controllers/fav_articles_controller.dart';
 import 'package:conduit/features/profile/presentation/controllers/my_articles_controller.dart';
 import 'package:conduit/features/profile/presentation/controllers/profile_controller.dart';
 import 'package:conduit/features/profile/presentation/screens/widgets/container_button.dart';
@@ -13,6 +14,7 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final myArticleController = Get.find<MyArticleController>();
     final profileController = Get.find<ProfileController>();
+    final getFavArticles = Get.find<GetFavArticlesController>();
     return Scaffold(
       appBar: AppBar(title: Text('Profile')),
       body: Padding(
@@ -29,7 +31,10 @@ class ProfileScreen extends StatelessWidget {
             Spacing.sizeBoxH_10(),
             ContainerButton(
               name: 'Favorited Articles',
-              onPressed: () {},
+              onPressed: () {
+                getFavArticles.getFavArticlesByUser();
+                Get.toNamed("/favArticleScreen");
+              },
             ),
             Spacing.sizeBoxH_10(),
             ContainerButton(

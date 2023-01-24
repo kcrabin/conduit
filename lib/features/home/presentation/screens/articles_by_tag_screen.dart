@@ -1,20 +1,20 @@
-import 'package:conduit/core/presentation/themes/app_themes.dart';
-import 'package:conduit/core/presentation/themes/colors.dart';
-import 'package:conduit/core/presentation/utils/spacing.dart';
-import 'package:conduit/features/home/presentation/controllers/get_all_article_controller.dart';
+import 'package:conduit/features/home/presentation/controllers/article_by_taglist_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../../core/presentation/themes/app_themes.dart';
+import '../../../../core/presentation/themes/colors.dart';
+import '../../../../core/presentation/utils/spacing.dart';
 import '../controllers/like_unlike_article_controller.dart';
 
-class HomePageScreen extends StatelessWidget {
-  const HomePageScreen({super.key});
+class ArticlesByTagScreen extends StatelessWidget {
+  String tagName;
+  ArticlesByTagScreen({super.key, required this.tagName});
 
   @override
   Widget build(BuildContext context) {
-    final articleController = Get.find<GetAllArticleController>();
     final favarticleController = Get.find<FavoriteArticleController>();
-    // final taglistController = Get.find<TagListController>();
+    // print('this is ptinted tag name ----$tagName');
 
     return SafeArea(
       child: Scaffold(
@@ -22,38 +22,29 @@ class HomePageScreen extends StatelessWidget {
           backgroundColor: Colors.transparent,
           automaticallyImplyLeading: false,
           title: Text(
-            'Conduit',
+            '# $tagName',
             style: AppThemes.textTheme.headline4,
           ),
-          actions: [
-            IconButton(
-                onPressed: () {
-                  Get.toNamed("/notifications");
-                },
-                icon: Icon(
-                  Icons.notifications,
-                  color: primaryColor2,
-                  size: 30,
-                )),
-            TextButton(
-                onPressed: () {
-                  // taglistController.getAllTags();
-                  Get.toNamed('/tagListScreen');
-                },
-                child: Text(
-                  '#',
-                  style: AppThemes.textTheme.headline4,
-                ))
-          ],
+          // actions: [
+          //   IconButton(
+          //       onPressed: () {
+          //         Get.toNamed("/notifications");
+          //       },
+          //       icon: Icon(
+          //         Icons.notifications,
+          //         color: primaryColor2,
+          //         size: 30,
+          //       )),
+          // ],
         ),
         body: SingleChildScrollView(
-            child: GetBuilder<GetAllArticleController>(
-                init: GetAllArticleController(),
-                builder: (context) {
+            child: GetBuilder<ArticleByTaglistController>(
+                init: ArticleByTaglistController(),
+                builder: (controller) {
                   return ListView.builder(
                       physics: NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
-                      itemCount: articleController.articleList.length,
+                      itemCount: controller.articleList.length,
                       itemBuilder: (context, index) {
                         return Padding(
                           padding: const EdgeInsets.symmetric(
@@ -77,12 +68,11 @@ class HomePageScreen extends StatelessWidget {
                                           SizedBox(
                                             height: 30,
                                             child: ClipOval(
-                                              child: Image.network(
-                                                  articleController
-                                                      .articleList[index]
-                                                      .author!
-                                                      .image
-                                                      .toString()),
+                                              child: Image.network(controller
+                                                  .articleList[index]
+                                                  .author!
+                                                  .image
+                                                  .toString()),
                                             ),
                                           ),
                                           Spacing.sizeBoxW_10(),
@@ -91,17 +81,14 @@ class HomePageScreen extends StatelessWidget {
                                                 CrossAxisAlignment.start,
                                             children: [
                                               Text(
-                                                articleController
-                                                    .articleList[index]
-                                                    .author!
-                                                    .username
+                                                controller.articleList[index]
+                                                    .author!.username
                                                     .toString(),
                                                 style: AppThemes
                                                     .textTheme.headline6,
                                               ),
                                               Text(
-                                                  articleController
-                                                      .articleList[index]
+                                                  controller.articleList[index]
                                                       .createdAt
                                                       .toString(),
                                                   style: AppThemes
@@ -116,25 +103,20 @@ class HomePageScreen extends StatelessWidget {
                                         InkWell(
                                           splashColor: primaryColor,
                                           onTap: () {
-                                            (articleController
-                                                        .articleList[index]
+                                            (controller.articleList[index]
                                                         .favorited) ==
                                                     true
                                                 ? favarticleController
-                                                    .unlikeArticle(
-                                                        articleController
-                                                            .articleList[index]
-                                                            .slug
-                                                            .toString())
+                                                    .unlikeArticle(controller
+                                                        .articleList[index].slug
+                                                        .toString())
                                                 : favarticleController
-                                                    .likeArticle(
-                                                        articleController
-                                                            .articleList[index]
-                                                            .slug
-                                                            .toString());
+                                                    .likeArticle(controller
+                                                        .articleList[index].slug
+                                                        .toString());
 
-                                            articleController
-                                                .fetchAllArticles();
+                                            controller
+                                                .getAllArticlesByTag(tagName);
                                           },
                                           child: Container(
                                             alignment: Alignment.center,
@@ -145,15 +127,15 @@ class HomePageScreen extends StatelessWidget {
                                                     BorderRadius.circular(10),
                                                 border: Border.all(
                                                     color: primaryColor)),
-                                            child: (articleController
+                                            child: (controller
                                                         .articleList[index]
                                                         .favorited) ==
                                                     true
-                                                ? Icon(
+                                                ? const Icon(
                                                     Icons.favorite,
                                                     color: primaryColor,
                                                   )
-                                                : Icon(
+                                                : const Icon(
                                                     Icons
                                                         .favorite_border_outlined,
                                                     color: primaryColor,
@@ -161,7 +143,7 @@ class HomePageScreen extends StatelessWidget {
                                           ),
                                         ),
                                         Text(
-                                          articleController
+                                          controller
                                               .articleList[index].favoritesCount
                                               .toString(),
                                           style: AppThemes.textTheme.headline6,
@@ -173,23 +155,21 @@ class HomePageScreen extends StatelessWidget {
                                 InkWell(
                                   onTap: () {
                                     Get.toNamed(
-                                      '/ArticleDetail',
-                                      arguments:
-                                          articleController.articleList[index],
+                                      '/articleByTagDetail',
+                                      arguments: controller.articleList[index],
                                     );
                                   },
                                   child: SizedBox(
                                     child: Column(
                                       children: [
                                         Text(
-                                          articleController
-                                              .articleList[index].title
+                                          controller.articleList[index].title
                                               .toString(),
                                           style:
                                               AppThemes.textTheme.labelMedium,
                                         ),
                                         Text(
-                                          articleController
+                                          controller
                                               .articleList[index].description
                                               .toString(),
                                           style: AppThemes.textTheme.bodyText1,
@@ -218,7 +198,7 @@ class HomePageScreen extends StatelessWidget {
                                                   childAspectRatio: 3 / 1,
                                                   crossAxisSpacing: 3,
                                                   mainAxisSpacing: 3),
-                                          itemCount: articleController
+                                          itemCount: controller
                                               .articleList[index]
                                               .tagList!
                                               .length,
@@ -230,7 +210,7 @@ class HomePageScreen extends StatelessWidget {
                                                 borderRadius:
                                                     BorderRadius.circular(6),
                                               ),
-                                              child: Text(articleController
+                                              child: Text(controller
                                                   .articleList[index]
                                                   .tagList![i]),
                                             );

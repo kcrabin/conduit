@@ -24,7 +24,7 @@ class ContainerButton extends StatelessWidget {
         decoration: BoxDecoration(boxShadow: [
           BoxShadow(
             color: primaryColor.withOpacity(0.3),
-            blurRadius: 10,
+            blurRadius: 7,
           )
         ], borderRadius: BorderRadius.circular(10), color: whiteColor),
         child: Text(

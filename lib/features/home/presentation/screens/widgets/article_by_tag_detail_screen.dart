@@ -1,26 +1,28 @@
-import 'package:conduit/core/presentation/themes/app_themes.dart';
-import 'package:conduit/core/presentation/themes/colors.dart';
-import 'package:conduit/core/presentation/widgets/custom_elevated_button.dart';
-import 'package:conduit/features/home/data/model/response/get_article_response.dart';
-import 'package:conduit/features/home/presentation/controllers/comment_controller.dart';
-import 'package:conduit/features/home/presentation/controllers/like_unlike_article_controller.dart';
+import 'package:conduit/features/home/presentation/controllers/article_by_taglist_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../../../core/presentation/themes/app_themes.dart';
+import '../../../../../core/presentation/themes/colors.dart';
 import '../../../../../core/presentation/utils/spacing.dart';
-import '../../controllers/get_all_article_controller.dart';
+import '../../../../../core/presentation/widgets/custom_elevated_button.dart';
+import '../../../data/model/response/article_by_tag_response.dart';
+import '../../controllers/comment_controller.dart';
+import '../../controllers/like_unlike_article_controller.dart';
 
-class ArticleDetailScreen extends StatelessWidget {
+class ArticleByTagDetailScreen extends StatelessWidget {
   final Articles articles;
-  const ArticleDetailScreen({super.key, required this.articles});
+  // final String tag;
 
-  // for this do by using get articles by slug 
+  const ArticleByTagDetailScreen({
+    super.key,
+    required this.articles,
+  });
 
   @override
   Widget build(BuildContext context) {
-    final getAllArticleController = Get.find<GetAllArticleController>();
     final addCommentController = Get.find<CommentController>();
-    final favController = Get.find<FavoriteArticleController>();
+    // final articleByTagController = Get.find<ArticleByTaglistController>();
 
     return SafeArea(
       child: Scaffold(
@@ -107,12 +109,12 @@ class ArticleDetailScreen extends StatelessWidget {
                               splashColor: primaryColor,
                               onTap: () {
                                 articles.favorited == true
-                                    ? favController
+                                    ? controller
                                         .unlikeArticle(articles.slug.toString())
-                                    : favController
+                                    : controller
                                         .likeArticle(articles.slug.toString());
 
-                                getAllArticleController.fetchAllArticles();
+                                // articleByTagController.getAllArticlesByTag(tag);
                               },
                               child: Container(
                                 padding: EdgeInsets.all(3),
