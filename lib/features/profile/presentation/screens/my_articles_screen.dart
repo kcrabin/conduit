@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import '../../../../core/presentation/themes/app_themes.dart';
 import '../../../../core/presentation/themes/colors.dart';
 import '../../../../core/presentation/utils/spacing.dart';
+import '../../../home/presentation/controllers/get_single_article_by_slug_controller.dart';
 import '../../../home/presentation/controllers/like_unlike_article_controller.dart';
 
 class MyArticles extends StatelessWidget {
@@ -13,6 +14,8 @@ class MyArticles extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final favarticleController = Get.find<FavoriteArticleController>();
+    final getSingleArticleBySlugController =
+        Get.find<GetSingleArticleBySlugController>();
 
     return SafeArea(
       child: Scaffold(
@@ -151,9 +154,14 @@ class MyArticles extends StatelessWidget {
                                 ),
                                 InkWell(
                                   onTap: () {
+                                    getSingleArticleBySlugController
+                                        .getSelectedArticle(controller
+                                            .articleList[index].slug
+                                            .toString());
                                     Get.toNamed(
                                       '/myArticleDetail',
-                                      arguments: controller.articleList[index],
+                                      arguments:
+                                          controller.articleList[index].slug,
                                     );
                                   },
                                   child: SizedBox(

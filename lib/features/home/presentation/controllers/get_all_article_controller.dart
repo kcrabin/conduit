@@ -32,10 +32,10 @@ class GetAllArticleController extends GetxController {
         data['articles'].map<Articles>((e) => Articles.fromJson(e)).toList();
     final articleCount = data['articlesCount'];
 
-
     print(articleCount);
 
     print(articleList[1].author!.username.toString());
+    update();
     isLoading = false;
   }
 }

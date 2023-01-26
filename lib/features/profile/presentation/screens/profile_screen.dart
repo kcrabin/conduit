@@ -24,7 +24,7 @@ class ProfileScreen extends StatelessWidget {
             ContainerButton(
               name: 'My Articles',
               onPressed: () {
-                myArticleController.getArticleByUser();
+                // myArticleController.getArticleByUser();
                 Get.toNamed("/myArticles");
               },
             ),

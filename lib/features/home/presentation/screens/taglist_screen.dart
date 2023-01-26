@@ -35,21 +35,26 @@ class TaglistScreen extends StatelessWidget {
           builder: (controller) {
             return Padding(
               padding: const EdgeInsets.all(8.0),
-              child: ListView.builder(
-                  itemCount: controller.tags.length,
-                  itemBuilder: (context, index) {
-                    return Padding(
-                      padding: const EdgeInsets.only(top: 10),
-                      child: ContainerButton(
-                          onPressed: () {
-                            Get.toNamed("/articleByTagScreen",
-                                arguments: controller.tags[index]);
-                            Get.put(ArticleByTaglistController())
-                                .getAllArticlesByTag(controller.tags[index]);
-                          },
-                          name: controller.tags[index]),
-                    );
-                  }),
+              child: controller.isLoading == true
+                  ? Center(
+                      child: CircularProgressIndicator(),
+                    )
+                  : ListView.builder(
+                      itemCount: controller.tags.length,
+                      itemBuilder: (context, index) {
+                        return Padding(
+                          padding: const EdgeInsets.only(top: 10),
+                          child: ContainerButton(
+                              onPressed: () {
+                                Get.toNamed("/articleByTagScreen",
+                                    arguments: controller.tags[index]);
+                                Get.put(ArticleByTaglistController())
+                                    .getAllArticlesByTag(
+                                        controller.tags[index]);
+                              },
+                              name: controller.tags[index]),
+                        );
+                      }),
             );
           }),
     );

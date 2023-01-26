@@ -7,7 +7,19 @@ class ArticleByTaglistController extends GetxController {
 
   // String tag = '';
 
+  bool _isLoading = true;
+
+  // setter of _isLoading variable
+  set isLoading(bool value) {
+    _isLoading = value;
+    update();
+    // update() is the method similar to setState(){} method
+  }
+
+  bool get isLoading => _isLoading;
+
   getAllArticlesByTag(String tag) async {
+    isLoading = true;
     var data = await Get.find<ArticleByTagRepository>().getArticlesByTag(tag);
 
     articleList =
@@ -15,6 +27,7 @@ class ArticleByTaglistController extends GetxController {
     update();
 
     print('this is printed tag from controller ----$tag');
+    isLoading = false;
   }
 
   @override

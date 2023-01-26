@@ -20,3 +20,5 @@ final grey500 = Colors.grey.withOpacity(0.5);
 final favColor = Color.fromARGB(255, 102, 14, 8);
 final darkGrey = Colors.black.withOpacity(0.6);
 const whiteColor = Color.fromARGB(255, 255, 255, 255);
+const editColor = Color.fromARGB(255, 21, 121, 24);
+const deleteColor = Color.fromARGB(255, 154, 30, 21);

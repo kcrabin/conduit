@@ -9,6 +9,7 @@ import 'package:conduit/features/auth/presentation/screens/splash_screen.dart';
 import 'package:conduit/features/home/presentation/controllers/dI/add_new_article_bindings.dart';
 import 'package:conduit/features/home/presentation/controllers/dI/article_by_tag_bindings.dart';
 import 'package:conduit/features/home/presentation/controllers/dI/comment_bindings.dart';
+import 'package:conduit/features/home/presentation/controllers/dI/get_single_article_by_slug_bindings.dart';
 import 'package:conduit/features/home/presentation/controllers/dI/like_unlike_article_bindings.dart';
 import 'package:conduit/features/home/presentation/controllers/dI/get_all_article_bindings.dart';
 import 'package:conduit/features/home/presentation/controllers/dI/taglist_bindings.dart';
@@ -16,7 +17,7 @@ import 'package:conduit/features/home/presentation/screens/add_article_screen.da
 import 'package:conduit/features/home/presentation/screens/articles_by_tag_screen.dart';
 import 'package:conduit/features/home/presentation/screens/home_page_screen.dart';
 import 'package:conduit/features/home/presentation/screens/taglist_screen.dart';
-import 'package:conduit/features/home/presentation/screens/widgets/article_by_tag_detail_screen.dart';
+// import 'package:conduit/features/home/presentation/screens/widgets/article_by_tag_detail_screen.dart';
 import 'package:conduit/features/home/presentation/screens/widgets/article_detail_screen.dart';
 import 'package:conduit/features/navigation/presentation/controller/dI/navigation_bindings.dart';
 import 'package:conduit/features/navigation/presentation/screens/navigation_screen.dart';
@@ -28,7 +29,6 @@ import 'package:conduit/features/profile/presentation/controllers/dI/profile_bin
 import 'package:conduit/features/profile/presentation/screens/fav_articles_screen.dart';
 import 'package:conduit/features/profile/presentation/screens/my_articles_screen.dart';
 import 'package:conduit/features/profile/presentation/screens/profile_screen.dart';
-import 'package:conduit/features/profile/presentation/screens/widgets/fav_articles_detail_screen.dart';
 import 'package:get/route_manager.dart';
 
 import '../../../features/notification/presentation/screens/create_notification_screen.dart';
@@ -59,13 +59,15 @@ class AppRoutes {
         GetAllArticleBinding(),
         FavoriteArticleBinding(),
         CommentBindings(),
+        GetSingleArticleBySlugBindings(),
       ],
     ),
     GetPage(
       name: Routes.articleDetail,
       page: () => ArticleDetailScreen(
-        articles: Get.arguments,
+        slug: Get.arguments,
       ),
+      binding: GetSingleArticleBySlugBindings(),
     ),
     GetPage(
       name: Routes.splashScreen,
@@ -88,6 +90,7 @@ class AppRoutes {
           ProfileBindings(),
           MyArticleBindings(),
           GetFavArticlesBindings(),
+          GetSingleArticleBySlugBindings(),
           // TaglistBindings(),
         ]),
     GetPage(
@@ -115,8 +118,9 @@ class AppRoutes {
     GetPage(
       name: Routes.myArticleDetail,
       page: () => MyArticleDetailScreen(
-        articles: Get.arguments,
+        slug: Get.arguments,
       ),
+      binding: GetSingleArticleBySlugBindings(),
     ),
     GetPage(
       name: Routes.myArticleScreen,
@@ -127,10 +131,6 @@ class AppRoutes {
       name: Routes.favArticlesScreen,
       page: () => MyFavArticles(),
       binding: GetFavArticlesBindings(),
-    ),
-    GetPage(
-      name: Routes.favArticleDetailScren,
-      page: () => FavArticleDetailScreen(articles: Get.arguments),
     ),
     GetPage(
       name: Routes.tagListScreen,
@@ -147,12 +147,6 @@ class AppRoutes {
       ),
       binding: ArticlesByTagBindings(),
     ),
-    GetPage(
-      name: Routes.articleByTagDetail,
-      page: () => ArticleByTagDetailScreen(
-        articles: Get.arguments,
-      ),
-    )
   ];
 }
 
@@ -170,8 +164,6 @@ class Routes {
   static const myArticleDetail = "/myArticleDetail";
   static const myArticleScreen = "/myArticles";
   static const favArticlesScreen = "/favArticleScreen";
-  static const favArticleDetailScren = "/favArticleDetail";
   static const tagListScreen = "/tagListScreen";
   static const articlesByTagScreen = "/articleByTagScreen";
-  static const articleByTagDetail = "/articleByTagDetail";
 }

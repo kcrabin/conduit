@@ -1,231 +1,276 @@
 import 'package:conduit/core/presentation/themes/app_themes.dart';
 import 'package:conduit/core/presentation/themes/colors.dart';
 import 'package:conduit/core/presentation/widgets/custom_elevated_button.dart';
-import 'package:conduit/features/home/data/model/response/get_article_response.dart';
 import 'package:conduit/features/home/presentation/controllers/comment_controller.dart';
+import 'package:conduit/features/home/presentation/controllers/get_single_article_by_slug_controller.dart';
 import 'package:conduit/features/home/presentation/controllers/like_unlike_article_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../../../core/presentation/utils/spacing.dart';
-import '../../controllers/get_all_article_controller.dart';
 
 class ArticleDetailScreen extends StatelessWidget {
-  final Articles articles;
-  const ArticleDetailScreen({super.key, required this.articles});
+  final String slug;
+  ArticleDetailScreen({super.key, required this.slug});
 
-  // for this do by using get articles by slug 
+  // for this do by using get articles by slug
 
   @override
   Widget build(BuildContext context) {
-    final getAllArticleController = Get.find<GetAllArticleController>();
+    final getSingleArticleBySlugController =
+        Get.find<GetSingleArticleBySlugController>();
     final addCommentController = Get.find<CommentController>();
     final favController = Get.find<FavoriteArticleController>();
+    print(
+        'printed from detail screen --${getSingleArticleBySlugController.article.body}');
 
-    return SafeArea(
-      child: Scaffold(
-          // appBar: AppBar(title: Text(articles.favorited.toString())),
+    return GetBuilder<GetSingleArticleBySlugController>(
+        builder: (getSingleArticleBySlugController) {
+      return SafeArea(
+        child: Scaffold(
           body: SingleChildScrollView(
-        child: GetBuilder<FavoriteArticleController>(
-            // init: GetAllArticleController(),
-            builder: (controller) {
-          return Column(
-            children: [
-              Container(
-                padding: EdgeInsets.symmetric(vertical: 15, horizontal: 6),
-                color: backgroundDark,
-                child: Column(
-                  children: [
-                    Text(
-                      articles.title.toString(),
-                      style: AppThemes.textTheme.headline5,
-                    ),
-                    Spacing.sizeBoxH_10(),
-                    InkWell(
-                      onTap: () {
-                        // print('ontap clicked');
-                      },
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            children: [
-                              SizedBox(
-                                height: 30,
-                                child: ClipOval(
-                                  child: Image.network(
-                                      articles.author!.image.toString()),
-                                ),
-                              ),
-                              Spacing.sizeBoxW_10(),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    articles.author!.username.toString(),
-                                    style: AppThemes.textTheme.headline6,
-                                  ),
-                                  Text(articles.createdAt.toString(),
-                                      style: AppThemes.textTheme.headline2)
-                                ],
-                              )
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                    Spacing.sizeBoxH_10(),
-                    InkWell(
-                      onTap: () {
-                        print('ontap clicked');
-                      },
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: Container(
-                              padding: EdgeInsets.all(3),
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  border: Border.all(color: whiteColor)),
+            child: getSingleArticleBySlugController.isLoading == true
+                ? Center(
+                    child: CircularProgressIndicator(),
+                  )
+                : Column(
+                    children: [
+                      Container(
+                        padding:
+                            EdgeInsets.symmetric(vertical: 15, horizontal: 6),
+                        color: backgroundDark,
+                        child: Column(
+                          children: [
+                            Text(
+                              getSingleArticleBySlugController.article.title
+                                  .toString(),
+                              style: AppThemes.textTheme.headline5,
+                            ),
+                            Spacing.sizeBoxH_10(),
+                            InkWell(
+                              onTap: () {
+                                // print('ontap clicked');
+                              },
                               child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Icon(
-                                    Icons.add,
-                                    color: primaryColor,
+                                  Row(
+                                    children: [
+                                      SizedBox(
+                                        height: 30,
+                                        child: ClipOval(
+                                          child: Image.network(
+                                              getSingleArticleBySlugController
+                                                  .article.author!.image
+                                                  .toString()),
+                                        ),
+                                      ),
+                                      Spacing.sizeBoxW_10(),
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            getSingleArticleBySlugController
+                                                .article.author!.username
+                                                .toString(),
+                                            style:
+                                                AppThemes.textTheme.headline6,
+                                          ),
+                                          Text(
+                                              getSingleArticleBySlugController
+                                                  .article.createdAt
+                                                  .toString(),
+                                              style:
+                                                  AppThemes.textTheme.headline2)
+                                        ],
+                                      )
+                                    ],
                                   ),
-                                  Text(
-                                    'Follow ${articles.author!.username.toString()}',
-                                    style: AppThemes.textTheme.headline2,
-                                  )
                                 ],
                               ),
                             ),
-                          ),
-                          Spacing.sizeBoxW_5(),
-                          Expanded(
-                            child: InkWell(
-                              splashColor: primaryColor,
+                            Spacing.sizeBoxH_10(),
+                            InkWell(
                               onTap: () {
-                                articles.favorited == true
-                                    ? favController
-                                        .unlikeArticle(articles.slug.toString())
-                                    : favController
-                                        .likeArticle(articles.slug.toString());
-
-                                getAllArticleController.fetchAllArticles();
+                                print('ontap clicked');
                               },
-                              child: Container(
-                                padding: EdgeInsets.all(3),
-                                decoration: BoxDecoration(
-                                    color: articles.favorited == true
-                                        ? primaryColor
-                                        : Colors.transparent,
-                                    borderRadius: BorderRadius.circular(10),
-                                    border: Border.all(color: whiteColor)),
-                                child: articles.favorited == true
-                                    ? Row(
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: Container(
+                                      padding: EdgeInsets.all(3),
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          border:
+                                              Border.all(color: whiteColor)),
+                                      child: Row(
                                         children: [
                                           Icon(
-                                            Icons.favorite,
-                                            color: favColor,
+                                            Icons.add,
+                                            color: primaryColor,
                                           ),
                                           Text(
-                                            'Unfavorite Article (${articles.favoritesCount.toString()})',
-                                            style:
-                                                AppThemes.textTheme.headline2,
-                                          )
-                                        ],
-                                      )
-                                    : Row(
-                                        children: [
-                                          Icon(
-                                            Icons.favorite_outline,
-                                            color: favColor,
-                                          ),
-                                          Text(
-                                            'Favourite Article (${articles.favoritesCount.toString()})',
+                                            'Follow ${getSingleArticleBySlugController.article.author!.username.toString()}',
                                             style:
                                                 AppThemes.textTheme.headline2,
                                           )
                                         ],
                                       ),
+                                    ),
+                                  ),
+                                  Spacing.sizeBoxW_5(),
+                                  Expanded(
+                                    child: InkWell(
+                                      splashColor: primaryColor,
+                                      onTap: () {
+                                        getSingleArticleBySlugController
+                                                    .article.favorited ==
+                                                true
+                                            ? favController.unlikeArticle(
+                                                getSingleArticleBySlugController
+                                                    .article.slug
+                                                    .toString())
+                                            : favController.likeArticle(
+                                                getSingleArticleBySlugController
+                                                    .article.slug
+                                                    .toString());
+
+                                        getSingleArticleBySlugController
+                                            .getSelectedArticle(
+                                                getSingleArticleBySlugController
+                                                    .article.slug
+                                                    .toString());
+                                      },
+                                      child: Container(
+                                        padding: EdgeInsets.all(3),
+                                        decoration: BoxDecoration(
+                                            color:
+                                                getSingleArticleBySlugController
+                                                            .article
+                                                            .favorited ==
+                                                        true
+                                                    ? primaryColor
+                                                    : Colors.transparent,
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                            border:
+                                                Border.all(color: whiteColor)),
+                                        child: getSingleArticleBySlugController
+                                                    .article.favorited ==
+                                                true
+                                            ? Row(
+                                                children: [
+                                                  Icon(
+                                                    Icons.favorite,
+                                                    color: favColor,
+                                                  ),
+                                                  Text(
+                                                    'Unfavorite Article (${getSingleArticleBySlugController.article.favoritesCount.toString()})',
+                                                    style: AppThemes
+                                                        .textTheme.headline2,
+                                                  )
+                                                ],
+                                              )
+                                            : Row(
+                                                children: [
+                                                  Icon(
+                                                    Icons.favorite_outline,
+                                                    color: favColor,
+                                                  ),
+                                                  Text(
+                                                    'Favourite Article (${getSingleArticleBySlugController.article.favoritesCount.toString()})',
+                                                    style: AppThemes
+                                                        .textTheme.headline2,
+                                                  )
+                                                ],
+                                              ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-              ),
-              // Spacing.sizeBoxH_15(),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  children: [
-                    Text(
-                      articles.body.toString(),
-                      style: AppThemes.textTheme.bodyText1,
-                    ),
-                    Divider(
-                      color: dividerColor,
-                      thickness: 1.5,
-                    ),
-                    Container(
-                      width: MediaQuery.of(context).size.width,
-                      decoration: BoxDecoration(
-                          color: captionColor,
-                          borderRadius: BorderRadius.circular(3),
-                          border: Border.all(color: primaryColor)),
-                      child: Column(
-                        children: [
-                          Container(
-                            color: whiteColor,
-                            child: TextField(
-                              maxLines: 5,
-                              controller:
-                                  addCommentController.commentController,
-                              decoration: InputDecoration(
-                                  // fillColor: whiteColor,
-                                  focusColor: whiteColor,
-                                  labelText: 'Write a comment'),
+                      // Spacing.sizeBoxH_15(),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          children: [
+                            Text(
+                              '${getSingleArticleBySlugController.article.body}',
+                              style: AppThemes.textTheme.bodyText1,
                             ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                CircleAvatar(
-                                  backgroundColor: backgroundDark,
-                                  radius: 20,
-                                  child: Icon(
-                                    Icons.person,
-                                    color: primaryColor,
+                            Divider(
+                              color: dividerColor,
+                              thickness: 1.5,
+                            ),
+                            Container(
+                              width: MediaQuery.of(context).size.width,
+                              decoration: BoxDecoration(
+                                  color: captionColor,
+                                  borderRadius: BorderRadius.circular(3),
+                                  border: Border.all(color: primaryColor)),
+                              child: Column(
+                                children: [
+                                  Container(
+                                    color: whiteColor,
+                                    child: TextField(
+                                      maxLines: 5,
+                                      controller: addCommentController
+                                          .commentController,
+                                      decoration: InputDecoration(
+                                          // fillColor: whiteColor,
+                                          focusColor: whiteColor,
+                                          labelText: 'Write a comment'),
+                                    ),
                                   ),
-                                ),
-                                CustomElevtedButton(
-                                    onClicked: () {
-                                      addCommentController
-                                          .addComment(articles.slug.toString());
-                                    },
-                                    minSize: Size(
-                                        MediaQuery.of(context).size.width * 0.3,
-                                        40),
-                                    name: 'Post Comment')
-                              ],
-                            ),
-                          ),
-                        ],
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        CircleAvatar(
+                                          backgroundColor: backgroundDark,
+                                          radius: 20,
+                                          child: Icon(
+                                            Icons.person,
+                                            color: primaryColor,
+                                          ),
+                                        ),
+                                        CustomElevtedButton(
+                                            onClicked: () {
+                                              addCommentController.addComment(
+                                                  getSingleArticleBySlugController
+                                                      .article.slug
+                                                      .toString());
+                                            },
+                                            minSize: Size(
+                                                MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    0.3,
+                                                40),
+                                            name: 'Post Comment')
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
                       ),
-                    )
-                  ],
-                ),
-              ),
-            ],
-          );
-        }),
-      )),
-    );
+                    ],
+                  ),
+          ),
+        ),
+      );
+    });
   }
 }
