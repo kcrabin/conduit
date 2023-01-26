@@ -9,7 +9,7 @@ import 'package:overlay_support/overlay_support.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
-  print('Handeling a background message ${message.messageId} ');
+  // print('Handeling a background message ${message.messageId} ');
 }
 
 Future<void> main() async {

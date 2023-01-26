@@ -1,6 +1,7 @@
 import 'package:conduit/features/home/presentation/controllers/article_by_taglist_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
 
 import '../../../../core/presentation/themes/app_themes.dart';
 import '../../../../core/presentation/themes/colors.dart';
@@ -46,10 +47,10 @@ class ArticlesByTagScreen extends StatelessWidget {
             return SingleChildScrollView(
                 child: controller.isLoading == true
                     ? Center(
-                        child: CircularProgressIndicator(),
+                        child: Lottie.asset('assets/lottie/loading2.json'),
                       )
                     : ListView.builder(
-                        physics: NeverScrollableScrollPhysics(),
+                        physics:const NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
                         itemCount: controller.articleList.length,
                         itemBuilder: (context, index) {
@@ -57,7 +58,7 @@ class ArticlesByTagScreen extends StatelessWidget {
                             padding: const EdgeInsets.symmetric(
                                 vertical: 4, horizontal: 8),
                             child: Container(
-                              padding: EdgeInsets.all(8),
+                              padding:const EdgeInsets.all(8),
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(10),
                                   border: Border.all(color: primaryColor2)),
@@ -211,7 +212,7 @@ class ArticlesByTagScreen extends StatelessWidget {
                                         child: GridView.builder(
                                             shrinkWrap: true,
                                             gridDelegate:
-                                                SliverGridDelegateWithFixedCrossAxisCount(
+                                              const  SliverGridDelegateWithFixedCrossAxisCount(
                                                     crossAxisCount: 3,
                                                     childAspectRatio: 3 / 1,
                                                     crossAxisSpacing: 3,
@@ -222,7 +223,7 @@ class ArticlesByTagScreen extends StatelessWidget {
                                                 .length,
                                             itemBuilder: (context, i) {
                                               return Container(
-                                                padding: EdgeInsets.all(3),
+                                                padding:const EdgeInsets.all(3),
                                                 decoration: BoxDecoration(
                                                   color: grey400,
                                                   borderRadius:

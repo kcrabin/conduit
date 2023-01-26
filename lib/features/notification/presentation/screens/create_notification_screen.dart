@@ -33,7 +33,7 @@ class CreateNotification extends StatelessWidget {
                   onClicked: () {
                     controller.sendNotification();
                   },
-                  minSize: Size(150, 50),
+                  minSize: const Size(150, 50),
                   name: 'Submit'),
             ],
           );

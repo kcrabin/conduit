@@ -1,3 +1,3 @@
 abstract class DeleteArticleRepository {
-  deleteArticle();
+  deleteArticle(String slug);
 }

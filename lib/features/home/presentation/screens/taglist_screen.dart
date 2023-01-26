@@ -4,6 +4,7 @@ import 'package:conduit/features/home/presentation/controllers/taglist_controlle
 import 'package:conduit/features/profile/presentation/screens/widgets/container_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
 
 import '../controllers/article_by_taglist_controller.dart';
 
@@ -25,7 +26,7 @@ class TaglistScreen extends StatelessWidget {
             onPressed: () {
               Get.back();
             },
-            icon: Icon(
+            icon:const Icon(
               Icons.arrow_back,
               color: primaryColor,
             )),
@@ -37,7 +38,7 @@ class TaglistScreen extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: controller.isLoading == true
                   ? Center(
-                      child: CircularProgressIndicator(),
+                      child: Lottie.asset('assets/lottie/loading2.json'),
                     )
                   : ListView.builder(
                       itemCount: controller.tags.length,

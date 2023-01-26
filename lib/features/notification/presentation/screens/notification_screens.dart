@@ -6,9 +6,9 @@ class NotificationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text('Notifications')),
+        appBar: AppBar(title: const Text('Notifications')),
         body: Container(
-          child: Center(
+          child: const Center(
             child: Text("This is screen opened after clicking on notification"),
           ),
         ));

@@ -2,25 +2,31 @@ import 'package:conduit/core/presentation/utils/spacing.dart';
 import 'package:conduit/core/presentation/utils/validators.dart';
 import 'package:conduit/core/presentation/widgets/custom_elevated_button.dart';
 import 'package:conduit/core/presentation/widgets/textfield.dart';
-import 'package:conduit/features/home/presentation/controllers/add_new_article_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class AddArticleScreen extends StatelessWidget {
-  const AddArticleScreen({super.key});
+import '../../../../home/data/model/response/single_article_by_slug.dart';
+import '../../controllers/edit_article_controller.dart';
+import '../../controllers/my_articles_controller.dart';
+
+class EditArticleScreen extends StatelessWidget {
+  final Article article;
+  EditArticleScreen({super.key, required this.article});
+  final _formkey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
-    final formkey = GlobalKey<FormState>();
+    final myArticleController = Get.put(MyArticleController());
+
     // final addArticleController = Get.find<AddNewArticleController>();
     return Scaffold(
-      appBar: AppBar(title: const Text('New article')),
+      appBar: AppBar(title: const Text('Edit article')),
       body: SingleChildScrollView(
-        child: GetBuilder<AddNewArticleController>(builder: (controller) {
+        child: GetBuilder<EditArticleController>(builder: (controller) {
           return Padding(
             padding: const EdgeInsets.all(8.0),
             child: Form(
-              key: formkey,
+              key: _formkey,
               child: Column(
                 children: [
                   CustomTextField(
@@ -53,8 +59,12 @@ class AddArticleScreen extends StatelessWidget {
                   Spacing.sizeBoxH_20(),
                   CustomElevtedButton(
                       onClicked: () {
-                        if (formkey.currentState!.validate()) {
-                          controller.publishArticle();
+                        if (_formkey.currentState!.validate()) {
+                          controller.updateArticle(article.slug!);
+                          // Get.toNamed('/profile');
+                          myArticleController.getArticleByUser();
+                          Get.back();
+                          Get.back();
                         } else {
                           Get.snackbar("Empty Fields",
                               "You cannot publish empty article");
@@ -62,7 +72,7 @@ class AddArticleScreen extends StatelessWidget {
                       },
                       minSize:
                           Size(MediaQuery.of(context).size.width * 0.5, 50),
-                      name: 'Publish Article')
+                      name: 'Update Article')
                 ],
               ),
             ),

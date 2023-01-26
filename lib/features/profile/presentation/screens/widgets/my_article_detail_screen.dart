@@ -4,6 +4,9 @@ import 'package:conduit/core/presentation/widgets/custom_elevated_button.dart';
 import 'package:conduit/features/home/presentation/controllers/comment_controller.dart';
 import 'package:conduit/features/home/presentation/controllers/get_single_article_by_slug_controller.dart';
 import 'package:conduit/features/home/presentation/controllers/like_unlike_article_controller.dart';
+import 'package:conduit/features/profile/presentation/controllers/delete_article_controller.dart';
+import 'package:conduit/features/profile/presentation/controllers/edit_article_controller.dart';
+import 'package:conduit/features/profile/presentation/controllers/my_articles_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -11,18 +14,21 @@ import '../../../../../core/presentation/utils/spacing.dart';
 
 class MyArticleDetailScreen extends StatelessWidget {
   final String slug;
-  MyArticleDetailScreen({super.key, required this.slug});
+  const MyArticleDetailScreen({super.key, required this.slug});
 
   // for this do by using get articles by slug
 
   @override
   Widget build(BuildContext context) {
-    final getSingleArticleBySlugController =
-        Get.find<GetSingleArticleBySlugController>();
+    // final getSingleArticleBySlugController =
+    //     Get.find<GetSingleArticleBySlugController>();
     final addCommentController = Get.find<CommentController>();
     final favController = Get.find<FavoriteArticleController>();
-    print(
-        'printed from detail screen --${getSingleArticleBySlugController.article.body}');
+    final deleteArticleController = Get.find<DeleteArticleController>();
+    final myArticleController = Get.put(MyArticleController());
+    final editArticleController = Get.put(EditArticleController());
+    // print(
+    //     'printed from detail screen --${getSingleArticleBySlugController.article.body}');
 
     return GetBuilder<GetSingleArticleBySlugController>(
         builder: (getSingleArticleBySlugController) {
@@ -30,14 +36,14 @@ class MyArticleDetailScreen extends StatelessWidget {
         child: Scaffold(
           body: SingleChildScrollView(
             child: getSingleArticleBySlugController.isLoading == true
-                ? Center(
+                ? const Center(
                     child: CircularProgressIndicator(),
                   )
                 : Column(
                     children: [
                       Container(
-                        padding:
-                            EdgeInsets.symmetric(vertical: 15, horizontal: 6),
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 15, horizontal: 6),
                         color: backgroundDark,
                         child: Column(
                           children: [
@@ -94,13 +100,13 @@ class MyArticleDetailScreen extends StatelessWidget {
                             Spacing.sizeBoxH_10(),
                             InkWell(
                               onTap: () {
-                                print('ontap clicked');
+                                // print('ontap clicked');
                               },
                               child: Row(
                                 children: [
                                   Expanded(
                                     child: Container(
-                                      padding: EdgeInsets.all(3),
+                                      padding: const EdgeInsets.all(3),
                                       decoration: BoxDecoration(
                                           borderRadius:
                                               BorderRadius.circular(10),
@@ -108,7 +114,7 @@ class MyArticleDetailScreen extends StatelessWidget {
                                               Border.all(color: whiteColor)),
                                       child: Row(
                                         children: [
-                                          Icon(
+                                          const Icon(
                                             Icons.add,
                                             color: primaryColor,
                                           ),
@@ -145,7 +151,7 @@ class MyArticleDetailScreen extends StatelessWidget {
                                                     .toString());
                                       },
                                       child: Container(
-                                        padding: EdgeInsets.all(3),
+                                        padding: const EdgeInsets.all(3),
                                         decoration: BoxDecoration(
                                             color:
                                                 getSingleArticleBySlugController
@@ -209,21 +215,46 @@ class MyArticleDetailScreen extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
                                 IconButton(
-                                    onPressed: () {},
-                                    icon: Icon(
+                                    onPressed: () {
+                                      deleteArticleController
+                                          .requestDelete(slug);
+                                      myArticleController.getArticleByUser();
+                                      Get.back();
+
+                                      // Get.toNamed("/myArticles");
+                                    },
+                                    icon: const Icon(
                                       Icons.delete,
                                       color: deleteColor,
                                     )),
                                 Spacing.sizeBoxW_10(),
                                 IconButton(
-                                    onPressed: () {},
-                                    icon: Icon(
+                                    onPressed: () {
+                                      editArticleController
+                                              .titleController.text =
+                                          getSingleArticleBySlugController
+                                              .article.title!;
+                                      editArticleController
+                                              .descriptionController.text =
+                                          getSingleArticleBySlugController
+                                              .article.description!;
+                                      editArticleController
+                                              .bodyController.text =
+                                          getSingleArticleBySlugController
+                                              .article.body!;
+
+                                      Get.toNamed("/editArticleScreen",
+                                          arguments:
+                                              getSingleArticleBySlugController
+                                                  .article);
+                                    },
+                                    icon: const Icon(
                                       Icons.edit,
                                       color: editColor,
                                     ))
                               ],
                             ),
-                            Divider(
+                            const Divider(
                               color: dividerColor,
                               thickness: 1.5,
                             ),
@@ -241,7 +272,7 @@ class MyArticleDetailScreen extends StatelessWidget {
                                       maxLines: 5,
                                       controller: addCommentController
                                           .commentController,
-                                      decoration: InputDecoration(
+                                      decoration: const InputDecoration(
                                           // fillColor: whiteColor,
                                           focusColor: whiteColor,
                                           labelText: 'Write a comment'),
@@ -253,7 +284,7 @@ class MyArticleDetailScreen extends StatelessWidget {
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
-                                        CircleAvatar(
+                                        const CircleAvatar(
                                           backgroundColor: backgroundDark,
                                           radius: 20,
                                           child: Icon(

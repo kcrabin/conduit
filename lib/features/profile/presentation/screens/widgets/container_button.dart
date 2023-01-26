@@ -6,7 +6,7 @@ import '../../../../../core/presentation/themes/colors.dart';
 class ContainerButton extends StatelessWidget {
   final VoidCallback onPressed;
   final String name;
-  ContainerButton({Key? key, required this.onPressed, required this.name})
+ const ContainerButton({Key? key, required this.onPressed, required this.name})
       : super(
           key: key,
         );
@@ -17,7 +17,7 @@ class ContainerButton extends StatelessWidget {
       splashColor: primaryColor,
       onTap: onPressed,
       child: Container(
-        padding: EdgeInsets.all(10),
+        padding:const EdgeInsets.all(10),
         alignment: Alignment.centerLeft,
         width: MediaQuery.of(context).size.width,
         height: 50,

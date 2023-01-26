@@ -1,6 +1,5 @@
+import 'package:conduit/core/presentation/themes/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
 class CustomElevtedButton extends StatelessWidget {
   Color? color;
@@ -23,6 +22,7 @@ class CustomElevtedButton extends StatelessWidget {
         style:  TextStyle(color: Colors.white, fontSize: 18),
       ),
       style: ElevatedButton.styleFrom(
+          shadowColor: primaryColor,
           elevation: 0,
           backgroundColor: color,
           shape: const RoundedRectangleBorder(

@@ -1,7 +1,5 @@
 import 'package:conduit/core/presentation/utils/spacing.dart';
 import 'package:conduit/core/presentation/widgets/custom_elevated_button.dart';
-import 'package:conduit/features/profile/presentation/controllers/fav_articles_controller.dart';
-import 'package:conduit/features/profile/presentation/controllers/my_articles_controller.dart';
 import 'package:conduit/features/profile/presentation/controllers/profile_controller.dart';
 import 'package:conduit/features/profile/presentation/screens/widgets/container_button.dart';
 import 'package:flutter/material.dart';
@@ -12,11 +10,11 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final myArticleController = Get.find<MyArticleController>();
+    // final myArticleController = Get.find<MyArticleController>();
     final profileController = Get.find<ProfileController>();
-    final getFavArticles = Get.find<GetFavArticlesController>();
+    // final getFavArticles = Get.find<GetFavArticlesController>();
     return Scaffold(
-      appBar: AppBar(title: Text('Profile')),
+      appBar: AppBar(title: const Text('Profile')),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
@@ -32,7 +30,7 @@ class ProfileScreen extends StatelessWidget {
             ContainerButton(
               name: 'Favorited Articles',
               onPressed: () {
-                getFavArticles.getFavArticlesByUser();
+                // getFavArticles.getFavArticlesByUser();
                 Get.toNamed("/favArticleScreen");
               },
             ),
@@ -41,7 +39,7 @@ class ProfileScreen extends StatelessWidget {
               name: 'Edit Profile',
               onPressed: () {},
             ),
-            Spacer(),
+            const Spacer(),
             CustomElevtedButton(
               onClicked: () {
                 profileController.logout();

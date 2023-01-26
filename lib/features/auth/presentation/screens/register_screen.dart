@@ -23,7 +23,7 @@ class RegisterScreen extends StatelessWidget {
                 'Register',
                 style: Theme.of(context).textTheme.displayLarge,
               ),
-              Spacer(),
+             const Spacer(),
               CustomTextField(
                 controller: registerController.emailController,
                 labelText: 'Email',
@@ -59,7 +59,7 @@ class RegisterScreen extends StatelessWidget {
                 minSize: Size(MediaQuery.of(context).size.width * 0.5, 44),
                 name: 'Register',
               ),
-              Spacer(),
+             const Spacer(),
             ],
           ),
         ),

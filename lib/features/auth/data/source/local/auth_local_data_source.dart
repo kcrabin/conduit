@@ -1,6 +1,5 @@
 import 'package:conduit/core/data/source/local/storage_constants.dart';
 import 'package:conduit/core/utils/storage/storage_service.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 abstract class AuthLocalDataSource {
   Future<void> clearToken();

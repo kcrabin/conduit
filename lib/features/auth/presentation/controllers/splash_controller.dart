@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 class SplashController extends GetxController {
   @override
   void onInit() {
-    Timer(Duration(seconds: 3), () {
+    Timer(const Duration(seconds: 3), () {
       authorize();
     });
     super.onInit();

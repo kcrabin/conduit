@@ -37,8 +37,8 @@ class FavoriteArticleRemoteDataSourceImpl
 
   @override
   unfavoriteArticle(String slug) async {
-    StorageService _storage = StorageService();
-    String? token = await _storage.get(StorageConstants.accessToken);
+    StorageService storage = StorageService();
+    String? token = await storage.get(StorageConstants.accessToken);
 
     dio.interceptors.add(PrettyDioLogger(
       requestHeader: true,

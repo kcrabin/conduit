@@ -23,12 +23,15 @@ import 'package:conduit/features/navigation/presentation/controller/dI/navigatio
 import 'package:conduit/features/navigation/presentation/screens/navigation_screen.dart';
 import 'package:conduit/features/notification/presentation/controller/dI/notification_bindings.dart';
 import 'package:conduit/features/notification/presentation/screens/notification_screens.dart';
+import 'package:conduit/features/profile/presentation/controllers/dI/delete_article_bindings.dart';
+import 'package:conduit/features/profile/presentation/controllers/dI/edit_article_bindings.dart';
 import 'package:conduit/features/profile/presentation/controllers/dI/fav_articles_bindings.dart';
 import 'package:conduit/features/profile/presentation/controllers/dI/my_articles_bindings.dart';
 import 'package:conduit/features/profile/presentation/controllers/dI/profile_bindings.dart';
 import 'package:conduit/features/profile/presentation/screens/fav_articles_screen.dart';
 import 'package:conduit/features/profile/presentation/screens/my_articles_screen.dart';
 import 'package:conduit/features/profile/presentation/screens/profile_screen.dart';
+import 'package:conduit/features/profile/presentation/screens/widgets/edit_article_screen.dart';
 import 'package:get/route_manager.dart';
 
 import '../../../features/notification/presentation/screens/create_notification_screen.dart';
@@ -38,7 +41,7 @@ class AppRoutes {
   static final routes = [
     GetPage(
       name: Routes.register,
-      page: () => RegisterScreen(),
+      page: () => const RegisterScreen(),
       bindings: [
         CoreBinding(),
         RegisterBindings(),
@@ -46,7 +49,7 @@ class AppRoutes {
     ),
     GetPage(
       name: Routes.login,
-      page: () => LoginScreen(),
+      page: () => const LoginScreen(),
       bindings: [
         CoreBinding(),
         LoginBindings(),
@@ -54,7 +57,7 @@ class AppRoutes {
     ),
     GetPage(
       name: Routes.home,
-      page: () => HomePageScreen(),
+      page: () => const HomePageScreen(),
       bindings: [
         GetAllArticleBinding(),
         FavoriteArticleBinding(),
@@ -71,7 +74,7 @@ class AppRoutes {
     ),
     GetPage(
       name: Routes.splashScreen,
-      page: () => SplashScreen(),
+      page: () => const SplashScreen(),
       bindings: [
         CoreBinding(),
         SplashBindings(),
@@ -80,7 +83,7 @@ class AppRoutes {
     ),
     GetPage(
         name: Routes.navigationScreen,
-        page: () => NavigationScreen(),
+        page: () => const NavigationScreen(),
         bindings: [
           NavigationBinding(),
           GetAllArticleBinding(),
@@ -95,12 +98,12 @@ class AppRoutes {
         ]),
     GetPage(
       name: Routes.addArticleScreen,
-      page: () => AddArticleScreen(),
+      page: () => const AddArticleScreen(),
       binding: AddNewArticleBindings(),
     ),
     GetPage(
       name: Routes.profileScreen,
-      page: () => ProfileScreen(),
+      page: () => const ProfileScreen(),
       bindings: [
         ProfileBindings(),
         FavoriteArticleBinding(),
@@ -108,33 +111,36 @@ class AppRoutes {
     ),
     GetPage(
       name: Routes.notifications,
-      page: () => CreateNotification(),
+      page: () => const CreateNotification(),
       binding: NotificationBindings(),
     ),
     GetPage(
       name: Routes.showNotification,
-      page: () => NotificationScreen(),
+      page: () => const NotificationScreen(),
     ),
     GetPage(
       name: Routes.myArticleDetail,
       page: () => MyArticleDetailScreen(
         slug: Get.arguments,
       ),
-      binding: GetSingleArticleBySlugBindings(),
+      bindings: [
+        GetSingleArticleBySlugBindings(),
+        DeleteArticleBindings(),
+      ],
     ),
     GetPage(
       name: Routes.myArticleScreen,
-      page: () => MyArticles(),
+      page: () => const MyArticles(),
       binding: MyArticleBindings(),
     ),
     GetPage(
       name: Routes.favArticlesScreen,
-      page: () => MyFavArticles(),
+      page: () => const MyFavArticles(),
       binding: GetFavArticlesBindings(),
     ),
     GetPage(
       name: Routes.tagListScreen,
-      page: () => TaglistScreen(),
+      page: () => const TaglistScreen(),
       bindings: [
         TaglistBindings(),
         ArticlesByTagBindings(),
@@ -146,6 +152,13 @@ class AppRoutes {
         tagName: Get.arguments,
       ),
       binding: ArticlesByTagBindings(),
+    ),
+    GetPage(
+      name: Routes.editArticleScreen,
+      page: () => EditArticleScreen(
+        article: Get.arguments,
+      ),
+      binding: EditArticleBindings(),
     ),
   ];
 }
@@ -166,4 +179,5 @@ class Routes {
   static const favArticlesScreen = "/favArticleScreen";
   static const tagListScreen = "/tagListScreen";
   static const articlesByTagScreen = "/articleByTagScreen";
+  static const editArticleScreen = "/editArticleScreen";
 }

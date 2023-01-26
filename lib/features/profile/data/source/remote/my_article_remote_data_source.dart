@@ -14,8 +14,8 @@ class MyArticleRemoteDataSourceImpl implements MyArticleRemoteDataSource {
   MyArticleRemoteDataSourceImpl({required this.dio});
   @override
   Future getArticleByUserName() async {
-    StorageService _storage = StorageService();
-    String? token = await _storage.get(StorageConstants.accessToken);
+    StorageService storage = StorageService();
+    String? token = await storage.get(StorageConstants.accessToken);
     String username = "rabin";
 
     return dio.get(

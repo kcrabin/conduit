@@ -6,6 +6,7 @@ import 'package:conduit/features/home/presentation/controllers/get_single_articl
 import 'package:conduit/features/home/presentation/controllers/like_unlike_article_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
 
 import '../../../../../core/presentation/utils/spacing.dart';
 
@@ -17,12 +18,12 @@ class ArticleDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final getSingleArticleBySlugController =
-        Get.find<GetSingleArticleBySlugController>();
+    // final getSingleArticleBySlugController =
+    //     Get.find<GetSingleArticleBySlugController>();
     final addCommentController = Get.find<CommentController>();
     final favController = Get.find<FavoriteArticleController>();
-    print(
-        'printed from detail screen --${getSingleArticleBySlugController.article.body}');
+    // print(
+    //     'printed from detail screen --${getSingleArticleBySlugController.article.body}');
 
     return GetBuilder<GetSingleArticleBySlugController>(
         builder: (getSingleArticleBySlugController) {
@@ -31,13 +32,13 @@ class ArticleDetailScreen extends StatelessWidget {
           body: SingleChildScrollView(
             child: getSingleArticleBySlugController.isLoading == true
                 ? Center(
-                    child: CircularProgressIndicator(),
+                    child: Lottie.asset('assets/lottie/loading2.json'),
                   )
                 : Column(
                     children: [
                       Container(
-                        padding:
-                            EdgeInsets.symmetric(vertical: 15, horizontal: 6),
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 15, horizontal: 6),
                         color: backgroundDark,
                         child: Column(
                           children: [
@@ -94,13 +95,13 @@ class ArticleDetailScreen extends StatelessWidget {
                             Spacing.sizeBoxH_10(),
                             InkWell(
                               onTap: () {
-                                print('ontap clicked');
+                                // print('ontap clicked');
                               },
                               child: Row(
                                 children: [
                                   Expanded(
                                     child: Container(
-                                      padding: EdgeInsets.all(3),
+                                      padding: const EdgeInsets.all(3),
                                       decoration: BoxDecoration(
                                           borderRadius:
                                               BorderRadius.circular(10),
@@ -108,7 +109,7 @@ class ArticleDetailScreen extends StatelessWidget {
                                               Border.all(color: whiteColor)),
                                       child: Row(
                                         children: [
-                                          Icon(
+                                          const Icon(
                                             Icons.add,
                                             color: primaryColor,
                                           ),
@@ -145,7 +146,7 @@ class ArticleDetailScreen extends StatelessWidget {
                                                     .toString());
                                       },
                                       child: Container(
-                                        padding: EdgeInsets.all(3),
+                                        padding: const EdgeInsets.all(3),
                                         decoration: BoxDecoration(
                                             color:
                                                 getSingleArticleBySlugController
@@ -205,7 +206,7 @@ class ArticleDetailScreen extends StatelessWidget {
                               '${getSingleArticleBySlugController.article.body}',
                               style: AppThemes.textTheme.bodyText1,
                             ),
-                            Divider(
+                            const Divider(
                               color: dividerColor,
                               thickness: 1.5,
                             ),
@@ -223,7 +224,7 @@ class ArticleDetailScreen extends StatelessWidget {
                                       maxLines: 5,
                                       controller: addCommentController
                                           .commentController,
-                                      decoration: InputDecoration(
+                                      decoration: const InputDecoration(
                                           // fillColor: whiteColor,
                                           focusColor: whiteColor,
                                           labelText: 'Write a comment'),
@@ -235,7 +236,7 @@ class ArticleDetailScreen extends StatelessWidget {
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
-                                        CircleAvatar(
+                                        const CircleAvatar(
                                           backgroundColor: backgroundDark,
                                           radius: 20,
                                           child: Icon(

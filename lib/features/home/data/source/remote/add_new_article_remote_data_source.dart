@@ -1,7 +1,5 @@
 import 'package:conduit/core/data/source/local/storage_constants.dart';
-import 'package:conduit/features/home/data/model/response/get_article_response.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 import '../../../../../core/data/source/remote/api_constants.dart';
@@ -20,8 +18,8 @@ class AddNewArticleRemoteDataSourceImpl
 
   @override
   Future addNewArticle(PostArticleRequest postArticle) async {
-    StorageService _storage = StorageService();
-    String? token = await _storage.get(StorageConstants.accessToken);
+    StorageService storage = StorageService();
+    String? token = await storage.get(StorageConstants.accessToken);
 
     dio.interceptors.add(PrettyDioLogger(
       requestHeader: true,

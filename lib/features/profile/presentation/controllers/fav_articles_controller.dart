@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 
 class GetFavArticlesController extends GetxController {
   List<Articles> articleList = [];
+  bool hasArticle = false;
 
   @override
   void onInit() {
@@ -16,6 +17,7 @@ class GetFavArticlesController extends GetxController {
 
     articleList =
         data['articles'].map<Articles>((e) => Articles.fromJson(e)).toList();
+    articleList.isEmpty ? hasArticle = false : hasArticle = true;
 
     update();
   }

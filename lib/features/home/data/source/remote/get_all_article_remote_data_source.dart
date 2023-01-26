@@ -16,8 +16,8 @@ class GetAllArticleRemoteDataSourceImpl
 
   @override
   Future getAllArticles() async {
-    StorageService _storage = StorageService();
-    String? token = await _storage.get(StorageConstants.accessToken);
+    StorageService storage = StorageService();
+    String? token = await storage.get(StorageConstants.accessToken);
 
     return dio.get("${ApiConstants.baseUrl}${ApiConstants.articles}",
         options: Options(

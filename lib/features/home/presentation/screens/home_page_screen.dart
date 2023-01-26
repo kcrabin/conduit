@@ -5,6 +5,7 @@ import 'package:conduit/features/home/presentation/controllers/get_all_article_c
 import 'package:conduit/features/home/presentation/controllers/get_single_article_by_slug_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
 
 import '../controllers/like_unlike_article_controller.dart';
 
@@ -24,6 +25,7 @@ class HomePageScreen extends StatelessWidget {
         init: GetAllArticleController(),
         builder: (articleController) {
           return Scaffold(
+            backgroundColor: whiteColor,
             appBar: AppBar(
               backgroundColor: Colors.transparent,
               automaticallyImplyLeading: false,
@@ -36,7 +38,7 @@ class HomePageScreen extends StatelessWidget {
                     onPressed: () {
                       Get.toNamed("/notifications");
                     },
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.notifications,
                       color: primaryColor2,
                       size: 30,
@@ -54,22 +56,28 @@ class HomePageScreen extends StatelessWidget {
             ),
             body: articleController.isLoading == true
                 ? Center(
-                    child: CircularProgressIndicator(),
+                    child: Lottie.asset('assets/lottie/loading2.json'),
                   )
                 : SingleChildScrollView(
                     child: ListView.builder(
-                        physics: NeverScrollableScrollPhysics(),
+                        physics:const NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
                         itemCount: articleController.articleList.length,
                         itemBuilder: (context, index) {
                           return Padding(
                             padding: const EdgeInsets.symmetric(
-                                vertical: 4, horizontal: 8),
+                                vertical: 6, horizontal: 8),
                             child: Container(
-                              padding: EdgeInsets.all(8),
+                              padding:const EdgeInsets.all(8),
                               decoration: BoxDecoration(
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: primaryColor.withOpacity(0.3),
+                                      blurRadius: 7,
+                                    )
+                                  ],
                                   borderRadius: BorderRadius.circular(10),
-                                  border: Border.all(color: primaryColor2)),
+                                  color: whiteColor),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -158,11 +166,11 @@ class HomePageScreen extends StatelessWidget {
                                                           .articleList[index]
                                                           .favorited) ==
                                                       true
-                                                  ? Icon(
+                                                  ? const Icon(
                                                       Icons.favorite,
                                                       color: primaryColor,
                                                     )
-                                                  : Icon(
+                                                  : const Icon(
                                                       Icons
                                                           .favorite_border_outlined,
                                                       color: primaryColor,
@@ -229,7 +237,7 @@ class HomePageScreen extends StatelessWidget {
                                         child: GridView.builder(
                                             shrinkWrap: true,
                                             gridDelegate:
-                                                SliverGridDelegateWithFixedCrossAxisCount(
+                                                const SliverGridDelegateWithFixedCrossAxisCount(
                                                     crossAxisCount: 3,
                                                     childAspectRatio: 3 / 1,
                                                     crossAxisSpacing: 3,
@@ -240,7 +248,8 @@ class HomePageScreen extends StatelessWidget {
                                                 .length,
                                             itemBuilder: (context, i) {
                                               return Container(
-                                                padding: EdgeInsets.all(3),
+                                                padding:
+                                                    const EdgeInsets.all(3),
                                                 decoration: BoxDecoration(
                                                   color: grey400,
                                                   borderRadius:

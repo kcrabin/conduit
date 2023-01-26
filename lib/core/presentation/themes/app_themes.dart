@@ -22,7 +22,7 @@ class AppThemes {
           elevation: 0,
           systemOverlayStyle: SystemUiOverlayStyle.light,
         ),
-        iconTheme: IconThemeData(color: Colors.black),
+        iconTheme: const IconThemeData(color: Colors.black),
         canvasColor: colorScheme.background,
         scaffoldBackgroundColor: colorScheme.background,
         highlightColor: Colors.transparent,

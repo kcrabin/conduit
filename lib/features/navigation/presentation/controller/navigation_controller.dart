@@ -8,9 +8,9 @@ class NavigationController extends GetxController {
   final selectedIndex = 0.obs;
 
   List<Widget> pages = [
-    HomePageScreen(),
-    AddArticleScreen(),
-    ProfileScreen(),
+    const HomePageScreen(),
+    const AddArticleScreen(),
+    const ProfileScreen(),
   ];
 
   Widget get currentPage => IndexedStack(
@@ -20,20 +20,5 @@ class NavigationController extends GetxController {
 
   void changeIndex(int index) {
     selectedIndex(index);
-  }
-
-  @override
-  void onInit() {
-    super.onInit();
-  }
-
-  @override
-  void onReady() {
-    super.onReady();
-  }
-
-  @override
-  void onClose() {
-    super.onClose();
   }
 }

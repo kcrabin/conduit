@@ -139,7 +139,7 @@ class NotificationController extends GetxController {
           .get();
 
       String token = snap['token'];
-      print(token);
+      // print(token);
       sendPushMessage(token, title, message);
     }
   }
