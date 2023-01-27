@@ -12,7 +12,17 @@ class GetFavArticlesController extends GetxController {
     super.onInit();
   }
 
+  bool _isLoading = true;
+
+  set isLoading(bool value) {
+    _isLoading = value;
+    update();
+  }
+
+  bool get isLoading => _isLoading;
+
   getFavArticlesByUser() async {
+    isLoading = true;
     var data = await Get.find<GetFavArticlesRepository>().getFavArticles();
 
     articleList =
@@ -20,5 +30,6 @@ class GetFavArticlesController extends GetxController {
     articleList.isEmpty ? hasArticle = false : hasArticle = true;
 
     update();
+    isLoading = false;
   }
 }

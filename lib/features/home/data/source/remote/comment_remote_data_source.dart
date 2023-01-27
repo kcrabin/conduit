@@ -20,13 +20,13 @@ class CommentRemoteDataSourceImpl implements CommentRemoteDataSource {
     StorageService storage = StorageService();
     String? token = await storage.get(StorageConstants.accessToken);
 
-    dio.interceptors.add(PrettyDioLogger(
-      requestHeader: true,
-      requestBody: true,
-      responseBody: true,
-      responseHeader: false,
-      compact: false,
-    ));
+    // dio.interceptors.add(PrettyDioLogger(
+    //   requestHeader: true,
+    //   requestBody: true,
+    //   responseBody: true,
+    //   responseHeader: false,
+    //   compact: false,
+    // ));
 
     return dio.post("${ApiConstants.baseUrl}/articles/$slug/comments",
         data: comment.toJson(),

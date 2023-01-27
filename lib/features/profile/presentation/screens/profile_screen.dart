@@ -1,5 +1,6 @@
 import 'package:conduit/core/presentation/utils/spacing.dart';
 import 'package:conduit/core/presentation/widgets/custom_elevated_button.dart';
+import 'package:conduit/features/profile/presentation/controllers/get_current_user_controller.dart';
 import 'package:conduit/features/profile/presentation/controllers/profile_controller.dart';
 import 'package:conduit/features/profile/presentation/screens/widgets/container_button.dart';
 import 'package:flutter/material.dart';
@@ -37,7 +38,10 @@ class ProfileScreen extends StatelessWidget {
             Spacing.sizeBoxH_10(),
             ContainerButton(
               name: 'Edit Profile',
-              onPressed: () {},
+              onPressed: () {
+                Get.put(GetCurrentUserController()).getCurrentUserDetail();
+                Get.toNamed("/editProfileScreen");
+              },
             ),
             const Spacer(),
             CustomElevtedButton(

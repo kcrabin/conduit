@@ -15,9 +15,9 @@ class HomePageScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // final articleController = Get.find<GetAllArticleController>();
-    final favarticleController = Get.find<FavoriteArticleController>();
+    final favarticleController = Get.put(FavoriteArticleController());
     final getSingleArticleBySlugController =
-        Get.find<GetSingleArticleBySlugController>();
+        Get.put(GetSingleArticleBySlugController());
     // final taglistController = Get.find<TagListController>();
 
     return SafeArea(
@@ -60,7 +60,7 @@ class HomePageScreen extends StatelessWidget {
                   )
                 : SingleChildScrollView(
                     child: ListView.builder(
-                        physics:const NeverScrollableScrollPhysics(),
+                        physics: const NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
                         itemCount: articleController.articleList.length,
                         itemBuilder: (context, index) {
@@ -68,7 +68,7 @@ class HomePageScreen extends StatelessWidget {
                             padding: const EdgeInsets.symmetric(
                                 vertical: 6, horizontal: 8),
                             child: Container(
-                              padding:const EdgeInsets.all(8),
+                              padding: const EdgeInsets.all(8),
                               decoration: BoxDecoration(
                                   boxShadow: [
                                     BoxShadow(

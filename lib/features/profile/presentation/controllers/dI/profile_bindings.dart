@@ -21,5 +21,6 @@ class ProfileBindings implements Bindings {
     );
 
     Get.put(ProfileController());
+    // Get.put(GetCurrentUserBindings());
   }
 }

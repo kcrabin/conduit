@@ -16,7 +16,7 @@ class MyArticleRemoteDataSourceImpl implements MyArticleRemoteDataSource {
   Future getArticleByUserName() async {
     StorageService storage = StorageService();
     String? token = await storage.get(StorageConstants.accessToken);
-    String username = "rabin";
+    String username = "samjhana";
 
     return dio.get(
       "${ApiConstants.baseUrl}/articles",

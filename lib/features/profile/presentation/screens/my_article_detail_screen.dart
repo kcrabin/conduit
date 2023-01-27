@@ -10,7 +10,7 @@ import 'package:conduit/features/profile/presentation/controllers/my_articles_co
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../../../core/presentation/utils/spacing.dart';
+import '../../../../core/presentation/utils/spacing.dart';
 
 class MyArticleDetailScreen extends StatelessWidget {
   final String slug;
@@ -242,6 +242,11 @@ class MyArticleDetailScreen extends StatelessWidget {
                                               .bodyController.text =
                                           getSingleArticleBySlugController
                                               .article.body!;
+                                      editArticleController
+                                              .tagListController.text =
+                                          getSingleArticleBySlugController
+                                              .article.tagList!
+                                              .join(" ");
 
                                       Get.toNamed("/editArticleScreen",
                                           arguments:

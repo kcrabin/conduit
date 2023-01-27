@@ -17,7 +17,7 @@ class GetFavArticlesRemoteDataSourceImpl
     StorageService storageService = StorageService();
     String? token = await storageService.get(StorageConstants.accessToken);
 
-    String username = "rabin";
+    String username = "samjhana";
 
     return dio.get(
       "${ApiConstants.baseUrl}/articles",

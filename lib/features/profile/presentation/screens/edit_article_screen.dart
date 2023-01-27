@@ -5,9 +5,9 @@ import 'package:conduit/core/presentation/widgets/textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../../home/data/model/response/single_article_by_slug.dart';
-import '../../controllers/edit_article_controller.dart';
-import '../../controllers/my_articles_controller.dart';
+import '../../../home/data/model/response/single_article_by_slug.dart';
+import '../controllers/edit_article_controller.dart';
+import '../controllers/my_articles_controller.dart';
 
 class EditArticleScreen extends StatelessWidget {
   final Article article;
