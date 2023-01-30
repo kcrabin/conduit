@@ -1,8 +1,7 @@
+import 'package:conduit/core/data/source/remote/api_result.dart';
 import 'package:conduit/features/home/domain/repository/get_all_article_repository.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get/instance_manager.dart';
-
-import '../../data/model/response/get_article_response.dart';
 
 class GetAllArticleController extends GetxController {
   @override
@@ -11,7 +10,7 @@ class GetAllArticleController extends GetxController {
     super.onInit();
   }
 
-  List<Articles> articleList = [];
+  ApiResponse apiResponse = ApiResponse();
   bool _isLoading = true;
 
   set isLoading(bool value) {
@@ -23,15 +22,8 @@ class GetAllArticleController extends GetxController {
 
   fetchAllArticles() async {
     isLoading = true;
-    // articleList = await Get.find<ArticleRepository>().getArticleList();
-    var data = await Get.find<GetAllArticleRepository>().getArticleList();
-    articleList =
-        data['articles'].map<Articles>((e) => Articles.fromJson(e)).toList();
-    final articleCount = data['articlesCount'];
+    apiResponse = await Get.find<GetAllArticleRepository>().getArticleList();
 
-    print(articleCount);
-
-    print(articleList[1].author!.username.toString());
     update();
     isLoading = false;
   }
