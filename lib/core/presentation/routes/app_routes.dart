@@ -94,7 +94,7 @@ class AppRoutes {
           FavoriteArticleBinding(),
           CommentBindings(),
           ProfileBindings(),
-          MyArticleBindings(),
+          // MyArticleBindings(),
           GetCurrentUserBindings(),
           GetSingleArticleBySlugBindings(),
 

@@ -55,6 +55,7 @@ class AddArticleScreen extends StatelessWidget {
                       onClicked: () {
                         if (formkey.currentState!.validate()) {
                           controller.publishArticle();
+                          Get.toNamed("/home");
                         } else {
                           Get.snackbar("Empty Fields",
                               "You cannot publish empty article");

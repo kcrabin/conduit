@@ -6,6 +6,9 @@ import 'package:conduit/features/profile/presentation/screens/widgets/container_
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../../core/data/source/local/storage_constants.dart';
+import '../../../../core/utils/storage/sp_utils.dart';
+
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
 
@@ -38,7 +41,7 @@ class ProfileScreen extends StatelessWidget {
             Spacing.sizeBoxH_10(),
             ContainerButton(
               name: 'Edit Profile',
-              onPressed: () {
+              onPressed: () async {
                 Get.put(GetCurrentUserController()).getCurrentUserDetail();
                 Get.toNamed("/editProfileScreen");
               },

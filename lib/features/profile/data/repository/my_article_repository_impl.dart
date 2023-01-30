@@ -1,6 +1,7 @@
 import 'dart:convert';
 
-import 'package:conduit/core/data/source/remote/custom_exception.dart';
+import 'package:conduit/features/profile/data/models/response/my_article_response.dart';
+
 import 'package:conduit/features/profile/data/source/remote/my_article_remote_data_source.dart';
 import 'package:conduit/features/profile/domain/repository/my_article_repository.dart';
 import 'package:dio/dio.dart';
@@ -13,6 +14,8 @@ class MyArticleRepositoryImpl implements MyArticleRepository {
   MyArticleRemoteDataSource myArticleRemoteDataSource;
 
   MyArticleRepositoryImpl({required this.myArticleRemoteDataSource});
+  List<Articles> articleList = [];
+
   @override
   getMyArticle() async {
     bool hasInternet = await InternetConnectionChecker().hasConnection;
@@ -21,8 +24,11 @@ class MyArticleRepositoryImpl implements MyArticleRepository {
       try {
         final response = await myArticleRemoteDataSource.getArticleByUserName();
         var data = jsonDecode(response.toString());
+        articleList = data['articles']
+            .map<Articles>((e) => Articles.fromJson(e))
+            .toList();
         // print('this is from repository --${data['articles']}');
-        return ApiResponse(data: data);
+        return ApiResponse(data: articleList);
       } on DioError catch (error) {
         return ApiResponse(error: NetworkException.getException(error));
       }

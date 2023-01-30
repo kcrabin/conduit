@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 
+import '../../../../core/data/source/remote/network_exception.dart';
+import '../../../../core/presentation/widgets/error_view.dart';
 import '../controllers/article_by_taglist_controller.dart';
 
 class TaglistScreen extends StatelessWidget {
@@ -13,7 +15,7 @@ class TaglistScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final articleByTaglistController = Get.put(ArticleByTaglistController());
+    // final articleByTaglistController = Get.put(ArticleByTaglistController());
 
     return Scaffold(
       appBar: AppBar(
@@ -26,7 +28,7 @@ class TaglistScreen extends StatelessWidget {
             onPressed: () {
               Get.back();
             },
-            icon:const Icon(
+            icon: const Icon(
               Icons.arrow_back,
               color: primaryColor,
             )),
@@ -34,29 +36,43 @@ class TaglistScreen extends StatelessWidget {
       body: GetBuilder<TagListController>(
           init: TagListController(),
           builder: (controller) {
-            return Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: controller.isLoading == true
-                  ? Center(
-                      child: Lottie.asset('assets/lottie/loading2.json'),
-                    )
-                  : ListView.builder(
-                      itemCount: controller.tags.length,
-                      itemBuilder: (context, index) {
-                        return Padding(
-                          padding: const EdgeInsets.only(top: 10),
-                          child: ContainerButton(
-                              onPressed: () {
-                                Get.toNamed("/articleByTagScreen",
-                                    arguments: controller.tags[index]);
-                                Get.put(ArticleByTaglistController())
-                                    .getAllArticlesByTag(
-                                        controller.tags[index]);
-                              },
-                              name: controller.tags[index]),
-                        );
-                      }),
-            );
+            if (controller.apiResponse.hasData) {
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: controller.isLoading == true
+                    ? Center(
+                        child: Lottie.asset('assets/lottie/loading2.json'),
+                      )
+                    : ListView.builder(
+                        itemCount: controller.apiResponse.data.length,
+                        itemBuilder: (context, index) {
+                          return Padding(
+                            padding: const EdgeInsets.only(top: 10),
+                            child: ContainerButton(
+                                onPressed: () {
+                                  Get.toNamed("/articleByTagScreen",
+                                      arguments:
+                                          controller.apiResponse.data[index]);
+                                  Get.put(ArticleByTaglistController())
+                                      .getAllArticlesByTag(
+                                          controller.apiResponse.data[index]);
+                                },
+                                name: controller.apiResponse.data[index]),
+                          );
+                        }),
+              );
+            } else if (controller.apiResponse.hasError) {
+              return Center(
+                child: ErrorView(
+                  title: NetworkException.getErrorMessage(
+                      controller.apiResponse.error),
+                ),
+              );
+            } else {
+              return Center(
+                child: Lottie.asset('assets/lottie/loading2.json'),
+              );
+            }
           }),
     );
   }

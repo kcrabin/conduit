@@ -1,6 +1,7 @@
-import 'package:conduit/features/home/data/model/response/get_all_tags_response.dart';
 import 'package:conduit/features/home/domain/repository/taglist_repository.dart';
 import 'package:get/get.dart';
+
+import '../../../../core/data/source/remote/api_result.dart';
 
 class TagListController extends GetxController {
   @override
@@ -9,8 +10,7 @@ class TagListController extends GetxController {
     super.onInit();
   }
 
-  TagList? tagList;
-  List<String> tags = [];
+  
 
   bool _isLoading = true;
 
@@ -22,12 +22,12 @@ class TagListController extends GetxController {
   }
 
   bool get isLoading => _isLoading;
+  ApiResponse apiResponse = ApiResponse();
 
   getAllTags() async {
     isLoading = true;
-    var data = await Get.find<TagListRepository>().getAllTags();
-    tagList = TagList.fromJson(data);
-    tags = tagList!.tags!;
+    apiResponse = await Get.find<TagListRepository>().getAllTags();
+   
     update();
     // print('taglist fetched ---${tagList!.tags![0]}');
     isLoading = false;

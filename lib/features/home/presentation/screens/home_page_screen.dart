@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 
+import '../../../../core/presentation/widgets/shimmer.dart';
 import '../controllers/like_unlike_article_controller.dart';
 
 class HomePageScreen extends StatelessWidget {
@@ -57,14 +58,14 @@ class HomePageScreen extends StatelessWidget {
           init: GetAllArticleController(),
           builder: (articleController) {
             if (articleController.apiResponse.hasData) {
-              return
-                  //  articleController.isLoading == true
-                  //     ? Center(
-                  //         child: Lottie.asset('assets/lottie/loading2.json'),
-                  //       )
-                  //     :
-                  SingleChildScrollView(
-                child: ListView.builder(
+              return SingleChildScrollView(
+                child:
+                    //  articleController.isLoading == true
+                    //     ? Center(
+                    //         child: Lottie.asset('assets/lottie/loading2.json'),
+                    //       )
+                    //     :
+                    ListView.builder(
                   physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
                   itemCount: articleController.apiResponse.data.length,
@@ -226,7 +227,7 @@ class HomePageScreen extends StatelessWidget {
                                       shrinkWrap: true,
                                       gridDelegate:
                                           const SliverGridDelegateWithFixedCrossAxisCount(
-                                              crossAxisCount: 3,
+                                              crossAxisCount: 2,
                                               childAspectRatio: 3 / 1,
                                               crossAxisSpacing: 3,
                                               mainAxisSpacing: 3),
@@ -264,8 +265,18 @@ class HomePageScreen extends StatelessWidget {
                 ),
               );
             } else {
-              return Center(
-                child: Lottie.asset('assets/lottie/loading2.json'),
+              return SingleChildScrollView(
+                child: Column(
+                  children: List.generate(8, (index) {
+                    return Padding(
+                      padding: const EdgeInsets.all(8),
+                      child: ShimmerWidget.rounded(
+                          height: 100,
+                          width: MediaQuery.of(context).size.width,
+                          borderRadius: 5),
+                    );
+                  }),
+                ),
               );
             }
           },

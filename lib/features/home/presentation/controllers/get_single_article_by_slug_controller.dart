@@ -1,6 +1,7 @@
-import 'package:conduit/features/home/data/model/response/single_article_by_slug.dart';
 import 'package:conduit/features/home/domain/repository/get_single_article_by_slug_repository.dart';
 import 'package:get/get.dart';
+
+import '../../../../core/data/source/remote/api_result.dart';
 
 class GetSingleArticleBySlugController extends GetxController {
   @override
@@ -20,18 +21,15 @@ class GetSingleArticleBySlugController extends GetxController {
 
   bool get isLoading => _isLoading; //getter of _isLoading variable
 
-  Article article = Article();
-  late SingleArticleBySlug singleArticleBySlug;
+  ApiResponse apiResponse = ApiResponse();
 
   // String slug = '';
 
   getSelectedArticle(String slug) async {
     isLoading = true;
-    var data =
+    apiResponse =
         await Get.find<GetSingleArticleBySlug>().getSingleArticleBySlug(slug);
-    singleArticleBySlug = SingleArticleBySlug.fromJson(data);
-    article = singleArticleBySlug.article!;
-    print('this is articles on single artricle by slug ---${article.body}');
+
     update();
     isLoading = false;
   }

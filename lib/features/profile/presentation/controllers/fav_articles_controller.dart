@@ -1,9 +1,8 @@
-import 'package:conduit/features/profile/data/models/response/fav_article_response_model.dart';
+import 'package:conduit/core/data/source/remote/api_result.dart';
 import 'package:conduit/features/profile/domain/repository/fav_article_repository.dart';
 import 'package:get/get.dart';
 
 class GetFavArticlesController extends GetxController {
-  List<Articles> articleList = [];
   bool hasArticle = false;
 
   @override
@@ -20,14 +19,13 @@ class GetFavArticlesController extends GetxController {
   }
 
   bool get isLoading => _isLoading;
+  ApiResponse apiResponse = ApiResponse();
 
   getFavArticlesByUser() async {
     isLoading = true;
-    var data = await Get.find<GetFavArticlesRepository>().getFavArticles();
+    apiResponse = await Get.find<GetFavArticlesRepository>().getFavArticles();
 
-    articleList =
-        data['articles'].map<Articles>((e) => Articles.fromJson(e)).toList();
-    articleList.isEmpty ? hasArticle = false : hasArticle = true;
+    apiResponse.data.isEmpty ? hasArticle = false : hasArticle = true;
 
     update();
     isLoading = false;

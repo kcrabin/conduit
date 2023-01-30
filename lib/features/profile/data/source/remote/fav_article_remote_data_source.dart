@@ -3,6 +3,7 @@ import 'package:conduit/core/utils/storage/storage_service.dart';
 import 'package:dio/dio.dart';
 
 import '../../../../../core/data/source/remote/api_constants.dart';
+import '../../../../../core/utils/storage/sp_utils.dart';
 
 abstract class GetFavArticlesRemoteDataSource {
   Future<dynamic> getFavArticles();
@@ -17,7 +18,9 @@ class GetFavArticlesRemoteDataSourceImpl
     StorageService storageService = StorageService();
     String? token = await storageService.get(StorageConstants.accessToken);
 
-    String username = "samjhana";
+    SpUtils spUtils = SpUtils();
+    String username = await spUtils.getString(StorageConstants.username);
+   
 
     return dio.get(
       "${ApiConstants.baseUrl}/articles",

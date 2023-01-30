@@ -10,12 +10,12 @@ class FavoriteArticleController extends GetxController {
               Get.find<FavoriteArticleRemoteDataSource>());
 
   likeArticle(String slug) async {
-    favoriteArticleRepositoryImpl.favoriteArticle(slug);
+    await favoriteArticleRepositoryImpl.favoriteArticle(slug);
     update();
   }
 
-  unlikeArticle(String slug) {
-    favoriteArticleRepositoryImpl.unfavoriteArticle(slug);
+  unlikeArticle(String slug) async {
+    await favoriteArticleRepositoryImpl.unfavoriteArticle(slug);
     update();
   }
 }

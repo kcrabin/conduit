@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 
 import '../../../../../core/data/source/local/storage_constants.dart';
 import '../../../../../core/data/source/remote/api_constants.dart';
+import '../../../../../core/utils/storage/sp_utils.dart';
 import '../../../../../core/utils/storage/storage_service.dart';
 
 abstract class MyArticleRemoteDataSource {
@@ -16,7 +17,9 @@ class MyArticleRemoteDataSourceImpl implements MyArticleRemoteDataSource {
   Future getArticleByUserName() async {
     StorageService storage = StorageService();
     String? token = await storage.get(StorageConstants.accessToken);
-    String username = "samjhana";
+
+    SpUtils spUtils = SpUtils();
+    String username = await spUtils.getString(StorageConstants.username);
 
     return dio.get(
       "${ApiConstants.baseUrl}/articles",

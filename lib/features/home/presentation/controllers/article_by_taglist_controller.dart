@@ -1,9 +1,8 @@
-import 'package:conduit/features/home/data/model/response/article_by_tag_response.dart';
+import 'package:conduit/core/data/source/remote/api_result.dart';
 import 'package:conduit/features/home/domain/repository/article_by_tag_repository.dart';
 import 'package:get/get.dart';
 
 class ArticleByTaglistController extends GetxController {
-  List<Articles> articleList = [];
 
   // String tag = '';
 
@@ -17,13 +16,13 @@ class ArticleByTaglistController extends GetxController {
   }
 
   bool get isLoading => _isLoading;
+  ApiResponse apiResponse = ApiResponse();
 
   getAllArticlesByTag(String tag) async {
     isLoading = true;
-    var data = await Get.find<ArticleByTagRepository>().getArticlesByTag(tag);
+    apiResponse = await Get.find<ArticleByTagRepository>().getArticlesByTag(tag);
 
-    articleList =
-        data['articles'].map<Articles>((e) => Articles.fromJson(e)).toList();
+    
     update();
 
     print('this is printed tag from controller ----$tag');
