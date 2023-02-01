@@ -24,7 +24,7 @@ class LoginScreen extends StatelessWidget {
                 'Login',
                 style: Theme.of(context).textTheme.displayLarge,
               ),
-            const  Spacer(),
+              const Spacer(),
               CustomTextField(
                 controller: loginController.emailController,
                 labelText: 'Email',
@@ -54,7 +54,7 @@ class LoginScreen extends StatelessWidget {
                 minSize: Size(MediaQuery.of(context).size.width * 0.5, 44),
                 name: 'Login',
               ),
-             const Spacer(),
+              const Spacer(),
             ],
           ),
         ),

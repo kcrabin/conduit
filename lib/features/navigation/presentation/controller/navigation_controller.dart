@@ -13,6 +13,7 @@ import '../../../profile/data/models/response/get_profile_response.dart';
 class NavigationController extends GetxController {
   final selectedIndex = 0.obs;
   SpUtils spUtils = SpUtils();
+  String? username;
 
   List<Widget> pages = [
     const HomePageScreen(),
@@ -37,6 +38,8 @@ class NavigationController extends GetxController {
     //     'this is current user detail ---${userProfileResponse.user!.username}');
     spUtils.setString(
         StorageConstants.username, userProfileResponse.user!.username!);
+    username = await spUtils.getString(StorageConstants.username);
+    print('this is username from main navigation----$username');
 
     super.onInit();
   }

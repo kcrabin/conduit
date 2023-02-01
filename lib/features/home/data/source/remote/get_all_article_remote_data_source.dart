@@ -20,6 +20,7 @@ class GetAllArticleRemoteDataSourceImpl
     String? token = await storage.get(StorageConstants.accessToken);
 
     return dio.get("${ApiConstants.baseUrl}${ApiConstants.articles}",
+        queryParameters: <String, dynamic>{'limit': '20'},
         options: Options(
             headers: <String, String>{'Authorization': 'Token $token'}));
   }

@@ -9,6 +9,7 @@ import 'package:conduit/features/auth/presentation/screens/splash_screen.dart';
 import 'package:conduit/features/home/presentation/controllers/dI/add_new_article_bindings.dart';
 import 'package:conduit/features/home/presentation/controllers/dI/article_by_tag_bindings.dart';
 import 'package:conduit/features/home/presentation/controllers/dI/comment_bindings.dart';
+import 'package:conduit/features/home/presentation/controllers/dI/follow_unfollow_bindings.dart';
 import 'package:conduit/features/home/presentation/controllers/dI/get_single_article_by_slug_bindings.dart';
 import 'package:conduit/features/home/presentation/controllers/dI/like_unlike_article_bindings.dart';
 import 'package:conduit/features/home/presentation/controllers/dI/get_all_article_bindings.dart';
@@ -73,7 +74,10 @@ class AppRoutes {
       page: () => ArticleDetailScreen(
         slug: Get.arguments,
       ),
-      binding: GetSingleArticleBySlugBindings(),
+      bindings: [
+        GetSingleArticleBySlugBindings(),
+        FollowUnfollowBindings(),
+      ],
     ),
     GetPage(
       name: Routes.splashScreen,

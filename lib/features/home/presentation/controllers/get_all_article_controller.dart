@@ -5,10 +5,12 @@ import 'package:get/instance_manager.dart';
 
 class GetAllArticleController extends GetxController {
   @override
-  void onInit() {
+  void onInit() async {
     fetchAllArticles();
     super.onInit();
   }
+
+  // String? username;
 
   ApiResponse apiResponse = ApiResponse();
   bool _isLoading = true;
