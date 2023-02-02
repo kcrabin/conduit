@@ -11,7 +11,9 @@ import 'package:lottie/lottie.dart';
 
 import '../../../../../core/data/source/remote/network_exception.dart';
 import '../../../../../core/presentation/utils/spacing.dart';
+import '../../../../../core/presentation/widgets/custom_textbutton.dart';
 import '../../../../../core/presentation/widgets/error_view.dart';
+import '../../../../profile/presentation/controllers/get_all_comment_controller.dart';
 
 class ArticleDetailScreen extends StatelessWidget {
   final String slug;
@@ -123,7 +125,7 @@ class ArticleDetailScreen extends StatelessWidget {
                                                 .author
                                                 .username
                                                 .toString());
-                                                
+
                                     getSingleArticleBySlugController
                                         .getSelectedArticle(
                                             getSingleArticleBySlugController
@@ -302,13 +304,28 @@ class ArticleDetailScreen extends StatelessWidget {
                                                       .width *
                                                   0.3,
                                               40),
-                                          name: 'Post Comment')
+                                          name: 'Post Comment'),
                                     ],
                                   ),
                                 ),
                               ],
                             ),
-                          )
+                          ),
+                          Spacing.sizeBoxH_10(),
+                          CustomTextButton(
+                              onClicked: () {
+                                Get.put(GetAllCommentController())
+                                    .getAllComments(
+                                        getSingleArticleBySlugController
+                                            .apiResponse.data.slug
+                                            .toString());
+
+                                Get.toNamed('/viewComments',
+                                    arguments: getSingleArticleBySlugController
+                                        .apiResponse.data.slug
+                                        .toString());
+                              },
+                              text: "Tap to view all comments.")
                         ],
                       ),
                     ),

@@ -208,7 +208,7 @@ class HomePageScreen extends StatelessWidget {
                                     articleController.apiResponse.data[index]
                                                 .author.username
                                                 .toString() ==
-                                            navigationController.username
+                                            articleController.username
                                         ? Get.toNamed(
                                             '/myArticleDetail',
                                             arguments: articleController

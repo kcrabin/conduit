@@ -3,6 +3,9 @@ import 'package:conduit/features/home/domain/repository/get_all_article_reposito
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get/instance_manager.dart';
 
+import '../../../../core/data/source/local/storage_constants.dart';
+import '../../../../core/utils/storage/sp_utils.dart';
+
 class GetAllArticleController extends GetxController {
   @override
   void onInit() async {
@@ -10,7 +13,8 @@ class GetAllArticleController extends GetxController {
     super.onInit();
   }
 
-  // String? username;
+  String? username;
+  SpUtils spUtils = SpUtils();
 
   ApiResponse apiResponse = ApiResponse();
   bool _isLoading = true;
@@ -25,6 +29,9 @@ class GetAllArticleController extends GetxController {
   fetchAllArticles() async {
     isLoading = true;
     apiResponse = await Get.find<GetAllArticleRepository>().getArticleList();
+
+    username = await spUtils.getString(StorageConstants.username);
+    print('this is username from article controller----$username');
 
     update();
     isLoading = false;

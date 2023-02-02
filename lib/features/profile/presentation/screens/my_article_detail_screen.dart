@@ -1,11 +1,13 @@
 import 'package:conduit/core/presentation/themes/app_themes.dart';
 import 'package:conduit/core/presentation/themes/colors.dart';
 import 'package:conduit/core/presentation/widgets/custom_elevated_button.dart';
+import 'package:conduit/core/presentation/widgets/custom_textbutton.dart';
 import 'package:conduit/features/home/presentation/controllers/comment_controller.dart';
 import 'package:conduit/features/home/presentation/controllers/get_single_article_by_slug_controller.dart';
 import 'package:conduit/features/home/presentation/controllers/like_unlike_article_controller.dart';
 import 'package:conduit/features/profile/presentation/controllers/delete_article_controller.dart';
 import 'package:conduit/features/profile/presentation/controllers/edit_article_controller.dart';
+import 'package:conduit/features/profile/presentation/controllers/get_all_comment_controller.dart';
 import 'package:conduit/features/profile/presentation/controllers/my_articles_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -52,6 +54,7 @@ class MyArticleDetailScreen extends StatelessWidget {
                           vertical: 15, horizontal: 6),
                       color: backgroundDark,
                       child: Column(
+                        // crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
                             getSingleArticleBySlugController
@@ -104,102 +107,64 @@ class MyArticleDetailScreen extends StatelessWidget {
                           ),
                           Spacing.sizeBoxH_10(),
                           InkWell(
+                            splashColor: primaryColor,
                             onTap: () {
-                              // print('ontap clicked');
+                              getSingleArticleBySlugController
+                                          .apiResponse.data.favorited ==
+                                      true
+                                  ? favController.unlikeArticle(
+                                      getSingleArticleBySlugController
+                                          .apiResponse.data.slug
+                                          .toString())
+                                  : favController.likeArticle(
+                                      getSingleArticleBySlugController
+                                          .apiResponse.data.slug
+                                          .toString());
+
+                              getSingleArticleBySlugController
+                                  .getSelectedArticle(
+                                      getSingleArticleBySlugController
+                                          .apiResponse.data.slug
+                                          .toString());
                             },
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  child: Container(
-                                    padding: const EdgeInsets.all(3),
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
-                                        border: Border.all(color: whiteColor)),
-                                    child: Row(
+                            child: Container(
+                              width: MediaQuery.of(context).size.width * 0.5,
+                              padding: const EdgeInsets.all(3),
+                              decoration: BoxDecoration(
+                                  color: getSingleArticleBySlugController
+                                              .apiResponse.data.favorited ==
+                                          true
+                                      ? primaryColor
+                                      : Colors.transparent,
+                                  borderRadius: BorderRadius.circular(10),
+                                  border: Border.all(color: whiteColor)),
+                              child: getSingleArticleBySlugController
+                                          .apiResponse.data.favorited ==
+                                      true
+                                  ? Row(
                                       children: [
-                                        const Icon(
-                                          Icons.add,
-                                          color: primaryColor,
+                                        Icon(
+                                          Icons.favorite,
+                                          color: favColor,
                                         ),
                                         Text(
-                                          'Follow ${getSingleArticleBySlugController.apiResponse.data.author!.username.toString()}',
+                                          'Unfavorite Article (${getSingleArticleBySlugController.apiResponse.data.favoritesCount.toString()})',
+                                          style: AppThemes.textTheme.headline2,
+                                        )
+                                      ],
+                                    )
+                                  : Row(
+                                      children: [
+                                        Icon(
+                                          Icons.favorite_outline,
+                                          color: favColor,
+                                        ),
+                                        Text(
+                                          'Favourite Article (${getSingleArticleBySlugController.apiResponse.data.favoritesCount.toString()})',
                                           style: AppThemes.textTheme.headline2,
                                         )
                                       ],
                                     ),
-                                  ),
-                                ),
-                                Spacing.sizeBoxW_5(),
-                                Expanded(
-                                  child: InkWell(
-                                    splashColor: primaryColor,
-                                    onTap: () {
-                                      getSingleArticleBySlugController
-                                                  .apiResponse.data.favorited ==
-                                              true
-                                          ? favController.unlikeArticle(
-                                              getSingleArticleBySlugController
-                                                  .apiResponse.data.slug
-                                                  .toString())
-                                          : favController.likeArticle(
-                                              getSingleArticleBySlugController
-                                                  .apiResponse.data.slug
-                                                  .toString());
-
-                                      getSingleArticleBySlugController
-                                          .getSelectedArticle(
-                                              getSingleArticleBySlugController
-                                                  .apiResponse.data.slug
-                                                  .toString());
-                                    },
-                                    child: Container(
-                                      padding: const EdgeInsets.all(3),
-                                      decoration: BoxDecoration(
-                                          color:
-                                              getSingleArticleBySlugController
-                                                          .apiResponse
-                                                          .data
-                                                          .favorited ==
-                                                      true
-                                                  ? primaryColor
-                                                  : Colors.transparent,
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          border:
-                                              Border.all(color: whiteColor)),
-                                      child: getSingleArticleBySlugController
-                                                  .apiResponse.data.favorited ==
-                                              true
-                                          ? Row(
-                                              children: [
-                                                Icon(
-                                                  Icons.favorite,
-                                                  color: favColor,
-                                                ),
-                                                Text(
-                                                  'Unfavorite Article (${getSingleArticleBySlugController.apiResponse.data.favoritesCount.toString()})',
-                                                  style: AppThemes
-                                                      .textTheme.headline2,
-                                                )
-                                              ],
-                                            )
-                                          : Row(
-                                              children: [
-                                                Icon(
-                                                  Icons.favorite_outline,
-                                                  color: favColor,
-                                                ),
-                                                Text(
-                                                  'Favourite Article (${getSingleArticleBySlugController.apiResponse.data.favoritesCount.toString()})',
-                                                  style: AppThemes
-                                                      .textTheme.headline2,
-                                                )
-                                              ],
-                                            ),
-                                    ),
-                                  ),
-                                ),
-                              ],
                             ),
                           ),
                         ],
@@ -316,7 +281,22 @@ class MyArticleDetailScreen extends StatelessWidget {
                                 ),
                               ],
                             ),
-                          )
+                          ),
+                          Spacing.sizeBoxH_10(),
+                          CustomTextButton(
+                              onClicked: () {
+                                Get.put(GetAllCommentController())
+                                    .getAllComments(
+                                        getSingleArticleBySlugController
+                                            .apiResponse.data.slug
+                                            .toString());
+
+                                Get.toNamed('/viewComments',
+                                    arguments: getSingleArticleBySlugController
+                                        .apiResponse.data.slug
+                                        .toString());
+                              },
+                              text: "Tap to view all comments.")
                         ],
                       ),
                     ),

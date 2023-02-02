@@ -71,6 +71,7 @@ class AppThemes {
     ),
     labelMedium: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
     caption: TextStyle(fontSize: 12, color: Colors.grey),
+    overline: TextStyle(fontSize: 13, color: Colors.white),
   );
 
   static const ColorScheme lightColorScheme = ColorScheme(

@@ -25,8 +25,10 @@ import 'package:conduit/features/navigation/presentation/screens/navigation_scre
 import 'package:conduit/features/notification/presentation/controller/dI/notification_bindings.dart';
 import 'package:conduit/features/notification/presentation/screens/notification_screens.dart';
 import 'package:conduit/features/profile/presentation/controllers/dI/delete_article_bindings.dart';
+import 'package:conduit/features/profile/presentation/controllers/dI/delete_comment_bindings.dart';
 import 'package:conduit/features/profile/presentation/controllers/dI/edit_article_bindings.dart';
 import 'package:conduit/features/profile/presentation/controllers/dI/fav_articles_bindings.dart';
+import 'package:conduit/features/profile/presentation/controllers/dI/get_all_comments_bindings.dart';
 import 'package:conduit/features/profile/presentation/controllers/dI/get_current_user_bindings.dart';
 import 'package:conduit/features/profile/presentation/controllers/dI/my_articles_bindings.dart';
 import 'package:conduit/features/profile/presentation/controllers/dI/profile_bindings.dart';
@@ -36,6 +38,7 @@ import 'package:conduit/features/profile/presentation/screens/fav_articles_scree
 import 'package:conduit/features/profile/presentation/screens/my_articles_screen.dart';
 import 'package:conduit/features/profile/presentation/screens/profile_screen.dart';
 import 'package:conduit/features/profile/presentation/screens/edit_article_screen.dart';
+import 'package:conduit/features/profile/presentation/screens/view_comments_screen.dart';
 import 'package:get/route_manager.dart';
 
 import '../../../features/notification/presentation/screens/create_notification_screen.dart';
@@ -77,6 +80,8 @@ class AppRoutes {
       bindings: [
         GetSingleArticleBySlugBindings(),
         FollowUnfollowBindings(),
+        GetAllCommentsBindings(),
+        GetCurrentUserBindings(),
       ],
     ),
     GetPage(
@@ -135,6 +140,7 @@ class AppRoutes {
       bindings: [
         GetSingleArticleBySlugBindings(),
         DeleteArticleBindings(),
+        GetAllCommentsBindings()
       ],
     ),
     GetPage(
@@ -173,7 +179,17 @@ class AppRoutes {
       name: Routes.editProfileScreen,
       page: () => EditProfileScreen(),
       binding: UpdateUserInfoBindings(),
-    )
+    ),
+    GetPage(
+      name: Routes.viewCommentScreen,
+      page: () => CommentScreen(
+        slug: Get.arguments,
+      ),
+      bindings: [
+        GetAllCommentsBindings(),
+        DeleteCommentBindings(),
+      ],
+    ),
   ];
 }
 
@@ -195,4 +211,5 @@ class Routes {
   static const articlesByTagScreen = "/articleByTagScreen";
   static const editArticleScreen = "/editArticleScreen";
   static const editProfileScreen = "/editProfileScreen";
+  static const viewCommentScreen = "/viewComments";
 }

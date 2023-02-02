@@ -38,8 +38,8 @@ class NavigationController extends GetxController {
     //     'this is current user detail ---${userProfileResponse.user!.username}');
     spUtils.setString(
         StorageConstants.username, userProfileResponse.user!.username!);
-    username = await spUtils.getString(StorageConstants.username);
-    print('this is username from main navigation----$username');
+    // username = await spUtils.getString(StorageConstants.username);
+    // print('this is username from main navigation----$username');
 
     super.onInit();
   }
