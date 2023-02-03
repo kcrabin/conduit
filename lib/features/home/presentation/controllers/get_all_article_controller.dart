@@ -59,8 +59,6 @@ class GetAllArticleController extends GetxController {
   }
 
   scrollListener() {
-    var nextPageTrigger = 0.8 * scrollController.position.maxScrollExtent;
-
     if ((scrollController.position.pixels ==
             scrollController.position.maxScrollExtent) &&
         (articleList.length < articleCount)) {

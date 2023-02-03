@@ -17,18 +17,19 @@ class MyArticleRepositoryImpl implements MyArticleRepository {
   List<Articles> articleList = [];
 
   @override
-  getMyArticle() async {
+  getMyArticle(int offset) async {
     bool hasInternet = await InternetConnectionChecker().hasConnection;
 
     if (hasInternet == true) {
       try {
-        final response = await myArticleRemoteDataSource.getArticleByUserName();
+        final response =
+            await myArticleRemoteDataSource.getArticleByUserName(offset);
         var data = jsonDecode(response.toString());
-        articleList = data['articles']
-            .map<Articles>((e) => Articles.fromJson(e))
-            .toList();
+        // articleList = data['articles']
+        //     .map<Articles>((e) => Articles.fromJson(e))
+        //     .toList();
         // print('this is from repository --${data['articles']}');
-        return ApiResponse(data: articleList);
+        return ApiResponse(data: data);
       } on DioError catch (error) {
         return ApiResponse(error: NetworkException.getException(error));
       }
