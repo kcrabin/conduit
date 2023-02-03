@@ -8,6 +8,7 @@ import '../../../../core/presentation/themes/colors.dart';
 import '../../../../core/presentation/utils/spacing.dart';
 import '../../../../core/presentation/widgets/error_view.dart';
 import '../../../../core/presentation/widgets/shimmer.dart';
+import '../../../home/presentation/controllers/get_all_article_controller.dart';
 import '../../../home/presentation/controllers/get_single_article_by_slug_controller.dart';
 import '../../../home/presentation/controllers/like_unlike_article_controller.dart';
 
@@ -179,11 +180,22 @@ class MyFavArticles extends StatelessWidget {
                                         .getSelectedArticle(controller
                                             .articleList[index].slug
                                             .toString());
-                                    Get.toNamed(
-                                      '/ArticleDetail',
-                                      arguments:
-                                          controller.articleList[index].slug,
-                                    );
+
+                                    controller.articleList[index].author!
+                                                .username
+                                                .toString() ==
+                                            Get.find<GetAllArticleController>()
+                                                .username
+                                        ? Get.toNamed(
+                                            '/myArticleDetail',
+                                            arguments: controller
+                                                .articleList[index].slug,
+                                          )
+                                        : Get.toNamed(
+                                            '/ArticleDetail',
+                                            arguments: controller
+                                                .articleList[index].slug,
+                                          );
                                   },
                                   child: SizedBox(
                                     child: Column(
