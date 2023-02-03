@@ -2,7 +2,6 @@ import 'package:conduit/core/data/source/remote/network_exception.dart';
 import 'package:conduit/core/presentation/themes/app_themes.dart';
 import 'package:conduit/core/presentation/themes/colors.dart';
 import 'package:conduit/core/presentation/utils/spacing.dart';
-import 'package:conduit/core/presentation/widgets/custom_elevated_button.dart';
 import 'package:conduit/core/presentation/widgets/error_view.dart';
 import 'package:conduit/features/home/presentation/controllers/get_all_article_controller.dart';
 import 'package:conduit/features/home/presentation/controllers/get_single_article_by_slug_controller.dart';
@@ -22,7 +21,7 @@ class HomePageScreen extends StatelessWidget {
     final favarticleController = Get.put(FavoriteArticleController());
     final getSingleArticleBySlugController =
         Get.put(GetSingleArticleBySlugController());
-    final navigationController = Get.find<NavigationController>();
+    // final navigationController = Get.find<NavigationController>();
     // final taglistController = Get.find<TagListController>();
 
     return SafeArea(
@@ -36,15 +35,15 @@ class HomePageScreen extends StatelessWidget {
             style: AppThemes.textTheme.headline4,
           ),
           actions: [
-            IconButton(
-                onPressed: () {
-                  Get.toNamed("/notifications");
-                },
-                icon: const Icon(
-                  Icons.notifications,
-                  color: primaryColor2,
-                  size: 30,
-                )),
+            // IconButton(
+            //     onPressed: () {
+            //       Get.toNamed("/notifications");
+            //     },
+            //     icon: const Icon(
+            //       Icons.notifications,
+            //       color: primaryColor2,
+            //       size: 30,
+            //     )),
             TextButton(
                 onPressed: () {
                   // taglistController.getAllTags();
@@ -60,205 +59,193 @@ class HomePageScreen extends StatelessWidget {
           init: GetAllArticleController(),
           builder: (articleController) {
             if (articleController.apiResponse.hasData) {
-              return SingleChildScrollView(
-                child:
-                    //  articleController.isLoading == true
-                    //     ? Center(
-                    //         child: Lottie.asset('assets/lottie/loading2.json'),
-                    //       )
-                    //     :
-                    Column(
-                  children: [
-                    ListView.builder(
-                      physics: const NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: articleController.articleList.length,
-                      itemBuilder: (context, index) {
-                        return Padding(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 6, horizontal: 8),
-                          child: Container(
-                            padding: const EdgeInsets.all(8),
-                            decoration: BoxDecoration(
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: primaryColor.withOpacity(0.3),
-                                    blurRadius: 7,
-                                  )
-                                ],
-                                borderRadius: BorderRadius.circular(10),
-                                color: whiteColor),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+              return ListView.builder(
+                // physics: const NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                controller: articleController.scrollController,
+                itemCount: articleController.articleList.length,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 6, horizontal: 8),
+                    child: Container(
+                      padding: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                          boxShadow: [
+                            BoxShadow(
+                              color: primaryColor.withOpacity(0.3),
+                              blurRadius: 7,
+                            )
+                          ],
+                          borderRadius: BorderRadius.circular(10),
+                          color: whiteColor),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              InkWell(
+                                splashColor: primaryColor,
+                                onTap: () {
+                                  print('ontap clicked');
+                                },
+                                child: Row(
                                   children: [
-                                    InkWell(
-                                      splashColor: primaryColor,
-                                      onTap: () {
-                                        print('ontap clicked');
-                                      },
-                                      child: Row(
-                                        children: [
-                                          SizedBox(
-                                            height: 30,
-                                            child: ClipOval(
-                                              child: Image.network(
-                                                  articleController
-                                                      .articleList[index]
-                                                      .author!
-                                                      .image
-                                                      .toString()),
-                                            ),
-                                          ),
-                                          Spacing.sizeBoxW_10(),
-                                          Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                articleController
-                                                    .articleList[index]
-                                                    .author!
-                                                    .username
-                                                    .toString(),
-                                                style: AppThemes
-                                                    .textTheme.headline6,
-                                              ),
-                                              Text(
-                                                  articleController
-                                                      .articleList[index]
-                                                      .createdAt
-                                                      .toString(),
-                                                  style: AppThemes
-                                                      .textTheme.labelSmall)
-                                            ],
-                                          )
-                                        ],
+                                    SizedBox(
+                                      height: 30,
+                                      child: ClipOval(
+                                        child: Image.network(articleController
+                                            .articleList[index].author!.image
+                                            .toString()),
                                       ),
                                     ),
+                                    Spacing.sizeBoxW_10(),
                                     Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
-                                        InkWell(
-                                          splashColor: primaryColor,
-                                          onTap: () {
-                                            (articleController
-                                                        .articleList[index]
-                                                        .favorited) ==
-                                                    true
-                                                ? favarticleController
-                                                    .unlikeArticle(
-                                                        articleController
-                                                            .articleList[index]
-                                                            .slug
-                                                            .toString())
-                                                : favarticleController
-                                                    .likeArticle(
-                                                        articleController
-                                                            .articleList[index]
-                                                            .slug
-                                                            .toString());
-
-                                            articleController.fetchAllArticles(
-                                                articleController.offset);
-                                          },
-                                          child: Container(
-                                            alignment: Alignment.center,
-                                            height: 35,
-                                            width: 35,
-                                            decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
-                                                border: Border.all(
-                                                    color: primaryColor)),
-                                            child: (articleController
-                                                        .articleList[index]
-                                                        .favorited) ==
-                                                    true
-                                                ? const Icon(
-                                                    Icons.favorite,
-                                                    color: primaryColor,
-                                                  )
-                                                : const Icon(
-                                                    Icons
-                                                        .favorite_border_outlined,
-                                                    color: primaryColor,
-                                                  ),
-                                          ),
-                                        ),
                                         Text(
-                                          articleController
-                                              .articleList[index].favoritesCount
+                                          articleController.articleList[index]
+                                              .author!.username
                                               .toString(),
                                           style: AppThemes.textTheme.headline6,
-                                        )
+                                        ),
+                                        Text(
+                                            articleController
+                                                .articleList[index].createdAt
+                                                .toString(),
+                                            style:
+                                                AppThemes.textTheme.bodyText2),
                                       ],
                                     )
                                   ],
                                 ),
-                                InkWell(
-                                  onTap: () {
-                                    getSingleArticleBySlugController
-                                        .getSelectedArticle(articleController
-                                            .articleList[index].slug
-                                            .toString());
-                                    articleController.articleList[index].author!
-                                                .username
-                                                .toString() ==
-                                            articleController.username
-                                        ? Get.toNamed(
-                                            '/myArticleDetail',
-                                            arguments: articleController
-                                                .articleList[index].slug,
-                                          )
-                                        : Get.toNamed(
-                                            '/ArticleDetail',
-                                            arguments: articleController
-                                                .articleList[index].slug,
-                                          );
-                                  },
-                                  child: SizedBox(
-                                    child: Column(
-                                      children: [
-                                        Text(
-                                          articleController
-                                              .articleList[index].title
-                                              .toString(),
-                                          style:
-                                              AppThemes.textTheme.labelMedium,
-                                        ),
-                                        Text(
-                                          articleController
-                                              .articleList[index].description
-                                              .toString(),
-                                          style: AppThemes.textTheme.bodyText1,
-                                        ),
-                                      ],
+                              ),
+                              Column(
+                                children: [
+                                  InkWell(
+                                    splashColor: primaryColor,
+                                    onTap: () {
+                                      (articleController.articleList[index]
+                                                  .favorited) ==
+                                              true
+                                          ? favarticleController.unlikeArticle(
+                                              articleController
+                                                  .articleList[index].slug
+                                                  .toString())
+                                          : favarticleController.likeArticle(
+                                              articleController
+                                                  .articleList[index].slug
+                                                  .toString());
+
+                                      articleController.fetchAllArticles(
+                                          articleController.offset);
+                                    },
+                                    child: Container(
+                                      alignment: Alignment.center,
+                                      height: 35,
+                                      width: 35,
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          border:
+                                              Border.all(color: primaryColor)),
+                                      child: (articleController
+                                                  .articleList[index]
+                                                  .favorited) ==
+                                              true
+                                          ? const Icon(
+                                              Icons.favorite,
+                                              color: primaryColor,
+                                            )
+                                          : const Icon(
+                                              Icons.favorite_border_outlined,
+                                              color: primaryColor,
+                                            ),
                                     ),
                                   ),
-                                ),
-                                Spacing.sizeBoxH_15(),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      'Readmore....',
-                                      style: AppThemes.textTheme.caption,
-                                    ),
-                                    SizedBox(
+                                  Text(
+                                    articleController
+                                        .articleList[index].favoritesCount
+                                        .toString(),
+                                    style: AppThemes.textTheme.headline6,
+                                  )
+                                ],
+                              )
+                            ],
+                          ),
+                          InkWell(
+                            onTap: () {
+                              getSingleArticleBySlugController
+                                  .getSelectedArticle(articleController
+                                      .articleList[index].slug
+                                      .toString());
+                              articleController
+                                          .articleList[index].author!.username
+                                          .toString() ==
+                                      articleController.username
+                                  ? Get.toNamed(
+                                      '/myArticleDetail',
+                                      arguments: articleController
+                                          .articleList[index].slug,
+                                    )
+                                  : Get.toNamed(
+                                      '/ArticleDetail',
+                                      arguments: articleController
+                                          .articleList[index].slug,
+                                    );
+                            },
+                            child: SizedBox(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    articleController.articleList[index].title
+                                        .toString(),
+                                    style: AppThemes.textTheme.labelMedium,
+                                  ),
+                                  Text(
+                                    articleController
+                                        .articleList[index].description
+                                        .toString(),
+                                    style: AppThemes.textTheme.bodyText1,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          Spacing.sizeBoxH_15(),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'Readmore....',
+                                style: AppThemes.textTheme.caption,
+                              ),
+                              articleController
+                                          .articleList[index].tagList!.length ==
+                                      0
+                                  ? SizedBox()
+                                  : SizedBox(
                                       width: MediaQuery.of(context).size.width *
                                           0.5,
                                       child: GridView.builder(
                                           shrinkWrap: true,
                                           gridDelegate:
-                                              const SliverGridDelegateWithFixedCrossAxisCount(
-                                                  crossAxisCount: 2,
-                                                  childAspectRatio: 3 / 1,
-                                                  crossAxisSpacing: 3,
-                                                  mainAxisSpacing: 3),
+                                              SliverGridDelegateWithFixedCrossAxisCount(
+                                            crossAxisCount: 2,
+                                            crossAxisSpacing: 8.0,
+                                            mainAxisSpacing: 8.0,
+                                            childAspectRatio:
+                                                MediaQuery.of(context)
+                                                        .size
+                                                        .width /
+                                                    (MediaQuery.of(context)
+                                                            .size
+                                                            .height *
+                                                        0.2),
+                                          ),
                                           itemCount: articleController
                                               .articleList[index]
                                               .tagList!
@@ -277,91 +264,13 @@ class HomePageScreen extends StatelessWidget {
                                             );
                                           }),
                                     )
-                                  ],
-                                ),
-                              ],
-                            ),
+                            ],
                           ),
-                        );
-                      },
+                        ],
+                      ),
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        // CustomElevtedButton(
-                        //     onClicked: () {
-                        //       articleController.nextPage();
-                        //     },
-                        //     minSize: Size(
-                        //         MediaQuery.of(context).size.width * 0.3, 40),
-                        //     name: 'Previous page'),
-                        // CustomElevtedButton(
-                        //     onClicked: () {
-                        //       articleController.previousPage();
-                        //     },
-                        //     minSize: Size(
-                        //         MediaQuery.of(context).size.width * 0.4, 40),
-                        //     name: 'Next page'),
-                        Expanded(
-                          child: InkWell(
-                            onTap: () {
-                              if (articleController.offset > 20) {
-                                articleController.offset =
-                                    articleController.offset - 20;
-                                articleController
-                                    .fetchAllArticles(articleController.offset);
-                              } else {
-                                Get.snackbar('You cant go further!',
-                                    'you are on the first page');
-                              }
-                            },
-                            child: Container(
-                              height: 50,
-                              decoration: BoxDecoration(
-                                  color: primaryColor,
-                                  borderRadius: BorderRadius.circular(10)),
-                              child: Center(
-                                child: Text(
-                                  'Previous page',
-                                  style: AppThemes.textTheme.button,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                        Spacing.sizeBoxW_10(),
-                        Expanded(
-                          child: InkWell(
-                            onTap: () {
-                              if (articleController.offset <
-                                  articleController.articleCount) {
-                                articleController.offset =
-                                    articleController.offset + 20;
-                                articleController
-                                    .fetchAllArticles(articleController.offset);
-                              } else {
-                                Get.snackbar('You cant go further!',
-                                    'you are on the last page');
-                              }
-                            },
-                            child: Container(
-                              height: 50,
-                              decoration: BoxDecoration(
-                                  color: primaryColor,
-                                  borderRadius: BorderRadius.circular(10)),
-                              child: Center(
-                                child: Text(
-                                  'Next page',
-                                  style: AppThemes.textTheme.button,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    )
-                  ],
-                ),
+                  );
+                },
               );
             } else if (articleController.apiResponse.hasError) {
               return Center(

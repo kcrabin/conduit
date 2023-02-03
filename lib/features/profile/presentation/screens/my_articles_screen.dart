@@ -183,6 +183,8 @@ class MyArticles extends StatelessWidget {
                                     },
                                     child: SizedBox(
                                       child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
                                           Text(
                                             controller

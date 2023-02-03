@@ -1,7 +1,7 @@
 import 'package:conduit/core/data/source/remote/api_result.dart';
 import 'package:conduit/features/home/domain/repository/get_all_article_repository.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
-import 'package:get/instance_manager.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../../../core/data/source/local/storage_constants.dart';
 import '../../../../core/utils/storage/sp_utils.dart';
@@ -10,9 +10,12 @@ import '../../data/model/response/get_article_response.dart';
 class GetAllArticleController extends GetxController {
   @override
   void onInit() async {
+    scrollController.addListener(scrollListener);
     fetchAllArticles(offset);
     super.onInit();
   }
+
+  ScrollController scrollController = ScrollController();
 
   String? username;
   SpUtils spUtils = SpUtils();
@@ -32,15 +35,17 @@ class GetAllArticleController extends GetxController {
 
   int offset = 0;
   List<Articles> articleList = [];
+  List<Articles> articles = [];
 
   fetchAllArticles(int offset) async {
     isLoading = true;
     apiResponse =
         await Get.find<GetAllArticleRepository>().getArticleList(offset);
 
-    articleList = apiResponse.data['articles']
+    articles = apiResponse.data['articles']
         .map<Articles>((e) => Articles.fromJson(e))
         .toList();
+    articleList = articleList + articles;
     articleCount = apiResponse.data['articlesCount'];
 
     username = await spUtils.getString(StorageConstants.username);
@@ -53,15 +58,18 @@ class GetAllArticleController extends GetxController {
     isLoading = false;
   }
 
-  // nextPage() {
-  //   offset = offset + 1;
-  //   fetchAllArticles(offset);
-  //   update();
-  // }
+  scrollListener() {
+    var nextPageTrigger = 0.8 * scrollController.position.maxScrollExtent;
 
-  // previousPage() {
-  //   offset = offset - 1;
-  //   fetchAllArticles(offset);
-  //   update();
-  // }
+    if ((scrollController.position.pixels ==
+            scrollController.position.maxScrollExtent) &&
+        (articleList.length < articleCount)) {
+      offset = offset + 20;
+      fetchAllArticles(offset);
+      update();
+    }
+    // else {
+    //   print('this is the end of the list');
+    // }
+  }
 }

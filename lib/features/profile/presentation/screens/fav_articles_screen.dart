@@ -199,6 +199,8 @@ class MyFavArticles extends StatelessWidget {
                                     },
                                     child: SizedBox(
                                       child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
                                           Text(
                                             controller
@@ -234,11 +236,19 @@ class MyFavArticles extends StatelessWidget {
                                         child: GridView.builder(
                                             shrinkWrap: true,
                                             gridDelegate:
-                                                const SliverGridDelegateWithFixedCrossAxisCount(
-                                                    crossAxisCount: 3,
-                                                    childAspectRatio: 3 / 1,
-                                                    crossAxisSpacing: 3,
-                                                    mainAxisSpacing: 3),
+                                                SliverGridDelegateWithFixedCrossAxisCount(
+                                              crossAxisCount: 2,
+                                              crossAxisSpacing: 8.0,
+                                              mainAxisSpacing: 8.0,
+                                              childAspectRatio:
+                                                  MediaQuery.of(context)
+                                                          .size
+                                                          .width /
+                                                      (MediaQuery.of(context)
+                                                              .size
+                                                              .height *
+                                                          0.2),
+                                            ),
                                             itemCount: controller.apiResponse
                                                 .data[index].tagList!.length,
                                             itemBuilder: (context, i) {
