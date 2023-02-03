@@ -2,6 +2,7 @@ import 'package:conduit/core/data/source/remote/network_exception.dart';
 import 'package:conduit/core/presentation/themes/app_themes.dart';
 import 'package:conduit/core/presentation/themes/colors.dart';
 import 'package:conduit/core/presentation/utils/spacing.dart';
+import 'package:conduit/core/presentation/widgets/custom_elevated_button.dart';
 import 'package:conduit/core/presentation/widgets/error_view.dart';
 import 'package:conduit/features/home/presentation/controllers/get_all_article_controller.dart';
 import 'package:conduit/features/home/presentation/controllers/get_single_article_by_slug_controller.dart';
@@ -71,7 +72,7 @@ class HomePageScreen extends StatelessWidget {
                     ListView.builder(
                       physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
-                      itemCount: articleController.apiResponse.data.length,
+                      itemCount: articleController.articleList.length,
                       itemBuilder: (context, index) {
                         return Padding(
                           padding: const EdgeInsets.symmetric(
@@ -105,8 +106,10 @@ class HomePageScreen extends StatelessWidget {
                                             height: 30,
                                             child: ClipOval(
                                               child: Image.network(
-                                                  articleController.apiResponse
-                                                      .data[index].author!.image
+                                                  articleController
+                                                      .articleList[index]
+                                                      .author!
+                                                      .image
                                                       .toString()),
                                             ),
                                           ),
@@ -117,8 +120,7 @@ class HomePageScreen extends StatelessWidget {
                                             children: [
                                               Text(
                                                 articleController
-                                                    .apiResponse
-                                                    .data[index]
+                                                    .articleList[index]
                                                     .author!
                                                     .username
                                                     .toString(),
@@ -126,8 +128,9 @@ class HomePageScreen extends StatelessWidget {
                                                     .textTheme.headline6,
                                               ),
                                               Text(
-                                                  articleController.apiResponse
-                                                      .data[index].createdAt
+                                                  articleController
+                                                      .articleList[index]
+                                                      .createdAt
                                                       .toString(),
                                                   style: AppThemes
                                                       .textTheme.labelSmall)
@@ -142,27 +145,24 @@ class HomePageScreen extends StatelessWidget {
                                           splashColor: primaryColor,
                                           onTap: () {
                                             (articleController
-                                                        .apiResponse
-                                                        .data[index]
+                                                        .articleList[index]
                                                         .favorited) ==
                                                     true
                                                 ? favarticleController
                                                     .unlikeArticle(
                                                         articleController
-                                                            .apiResponse
-                                                            .data[index]
+                                                            .articleList[index]
                                                             .slug
                                                             .toString())
                                                 : favarticleController
                                                     .likeArticle(
                                                         articleController
-                                                            .apiResponse
-                                                            .data[index]
+                                                            .articleList[index]
                                                             .slug
                                                             .toString());
 
-                                            articleController
-                                                .fetchAllArticles();
+                                            articleController.fetchAllArticles(
+                                                articleController.offset);
                                           },
                                           child: Container(
                                             alignment: Alignment.center,
@@ -174,8 +174,7 @@ class HomePageScreen extends StatelessWidget {
                                                 border: Border.all(
                                                     color: primaryColor)),
                                             child: (articleController
-                                                        .apiResponse
-                                                        .data[index]
+                                                        .articleList[index]
                                                         .favorited) ==
                                                     true
                                                 ? const Icon(
@@ -190,8 +189,8 @@ class HomePageScreen extends StatelessWidget {
                                           ),
                                         ),
                                         Text(
-                                          articleController.apiResponse
-                                              .data[index].favoritesCount
+                                          articleController
+                                              .articleList[index].favoritesCount
                                               .toString(),
                                           style: AppThemes.textTheme.headline6,
                                         )
@@ -203,21 +202,21 @@ class HomePageScreen extends StatelessWidget {
                                   onTap: () {
                                     getSingleArticleBySlugController
                                         .getSelectedArticle(articleController
-                                            .apiResponse.data[index].slug
+                                            .articleList[index].slug
                                             .toString());
-                                    articleController.apiResponse.data[index]
-                                                .author.username
+                                    articleController.articleList[index].author!
+                                                .username
                                                 .toString() ==
                                             articleController.username
                                         ? Get.toNamed(
                                             '/myArticleDetail',
                                             arguments: articleController
-                                                .apiResponse.data[index].slug,
+                                                .articleList[index].slug,
                                           )
                                         : Get.toNamed(
                                             '/ArticleDetail',
                                             arguments: articleController
-                                                .apiResponse.data[index].slug,
+                                                .articleList[index].slug,
                                           );
                                   },
                                   child: SizedBox(
@@ -225,14 +224,14 @@ class HomePageScreen extends StatelessWidget {
                                       children: [
                                         Text(
                                           articleController
-                                              .apiResponse.data[index].title
+                                              .articleList[index].title
                                               .toString(),
                                           style:
                                               AppThemes.textTheme.labelMedium,
                                         ),
                                         Text(
-                                          articleController.apiResponse
-                                              .data[index].description
+                                          articleController
+                                              .articleList[index].description
                                               .toString(),
                                           style: AppThemes.textTheme.bodyText1,
                                         ),
@@ -261,8 +260,7 @@ class HomePageScreen extends StatelessWidget {
                                                   crossAxisSpacing: 3,
                                                   mainAxisSpacing: 3),
                                           itemCount: articleController
-                                              .apiResponse
-                                              .data[index]
+                                              .articleList[index]
                                               .tagList!
                                               .length,
                                           itemBuilder: (context, i) {
@@ -274,8 +272,7 @@ class HomePageScreen extends StatelessWidget {
                                                     BorderRadius.circular(6),
                                               ),
                                               child: Text(articleController
-                                                  .apiResponse
-                                                  .data[index]
+                                                  .articleList[index]
                                                   .tagList![i]),
                                             );
                                           }),
@@ -288,14 +285,99 @@ class HomePageScreen extends StatelessWidget {
                         );
                       },
                     ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        // CustomElevtedButton(
+                        //     onClicked: () {
+                        //       articleController.nextPage();
+                        //     },
+                        //     minSize: Size(
+                        //         MediaQuery.of(context).size.width * 0.3, 40),
+                        //     name: 'Previous page'),
+                        // CustomElevtedButton(
+                        //     onClicked: () {
+                        //       articleController.previousPage();
+                        //     },
+                        //     minSize: Size(
+                        //         MediaQuery.of(context).size.width * 0.4, 40),
+                        //     name: 'Next page'),
+                        Expanded(
+                          child: InkWell(
+                            onTap: () {
+                              if (articleController.offset > 20) {
+                                articleController.offset =
+                                    articleController.offset - 20;
+                                articleController
+                                    .fetchAllArticles(articleController.offset);
+                              } else {
+                                Get.snackbar('You cant go further!',
+                                    'you are on the first page');
+                              }
+                            },
+                            child: Container(
+                              height: 50,
+                              decoration: BoxDecoration(
+                                  color: primaryColor,
+                                  borderRadius: BorderRadius.circular(10)),
+                              child: Center(
+                                child: Text(
+                                  'Previous page',
+                                  style: AppThemes.textTheme.button,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Spacing.sizeBoxW_10(),
+                        Expanded(
+                          child: InkWell(
+                            onTap: () {
+                              if (articleController.offset <
+                                  articleController.articleCount) {
+                                articleController.offset =
+                                    articleController.offset + 20;
+                                articleController
+                                    .fetchAllArticles(articleController.offset);
+                              } else {
+                                Get.snackbar('You cant go further!',
+                                    'you are on the last page');
+                              }
+                            },
+                            child: Container(
+                              height: 50,
+                              decoration: BoxDecoration(
+                                  color: primaryColor,
+                                  borderRadius: BorderRadius.circular(10)),
+                              child: Center(
+                                child: Text(
+                                  'Next page',
+                                  style: AppThemes.textTheme.button,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    )
                   ],
                 ),
               );
             } else if (articleController.apiResponse.hasError) {
               return Center(
-                child: ErrorView(
-                  title: NetworkException.getErrorMessage(
-                      articleController.apiResponse.error),
+                child: Column(
+                  children: [
+                    ErrorView(
+                      title: NetworkException.getErrorMessage(
+                          articleController.apiResponse.error),
+                    ),
+                    Spacing.sizeBoxH_10(),
+                    IconButton(
+                        onPressed: () {
+                          Get.toNamed('/splashScreen');
+                        },
+                        icon: Icon(Icons.refresh))
+                  ],
                 ),
               );
             } else {

@@ -39,7 +39,7 @@ class MyArticles extends StatelessWidget {
               return SingleChildScrollView(
                 child: controller.hasArticle == false
                     ? const Center(
-                        child: Text("You have no favorite articles"),
+                        child: Text("You have no articles"),
                       )
                     : ListView.builder(
                         physics: const NeverScrollableScrollPhysics(),

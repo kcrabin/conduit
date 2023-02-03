@@ -13,6 +13,7 @@ class NavigationScreen extends StatelessWidget {
     return Obx(
       () => Scaffold(
         bottomNavigationBar: BottomAppBar(
+          color: whiteColor,
           child: Row(
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -22,23 +23,29 @@ class NavigationScreen extends StatelessWidget {
                 controller: navigationController,
                 index: 0,
               ),
-              MaterialButton(
-                elevation: 0,
-                minWidth: 10,
-                padding: const EdgeInsets.all(16),
+              FloatingActionButton(
+                backgroundColor: primaryColor,
+                elevation: 5,
+                // minWidth: 10,
+                // padding: const EdgeInsets.all(16),
                 onPressed: () {
                   navigationController.changeIndex(1);
                 },
-                child: const Text(
-                  "Add",
-                  style: TextStyle(
-                      color: whiteColor,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16),
+                child: Icon(
+                  Icons.add,
+                  size: 30,
+                  color: Colors.white,
                 ),
-                color: primaryColor,
+                // const Text(
+                //   "Add",
+                //   style: TextStyle(
+                //       color: whiteColor,
+                //       fontWeight: FontWeight.bold,
+                //       fontSize: 16),
+                // ),
+                // color: primaryColor,
                 shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20)),
+                    borderRadius: BorderRadius.circular(30)),
               ),
               BottomBarIcon(
                   icon: Icons.person,

@@ -1,4 +1,5 @@
 import 'package:conduit/core/data/source/remote/api_result.dart';
+import 'package:conduit/core/data/source/remote/custom_exception.dart';
 import 'package:get/get.dart';
 
 import '../../domain/repository/my_article_repository.dart';
@@ -22,8 +23,11 @@ class MyArticleController extends GetxController {
     apiResponse = await Get.find<MyArticleRepository>().getMyArticle();
     print('this is my article controller ---${apiResponse.data}');
 
-    apiResponse.data.isEmpty ? hasArticle = false : hasArticle = true;
-
+    if (apiResponse.data == null) {
+      CustomException.noInternetConnecion();
+    } else {
+      apiResponse.data.isEmpty ? hasArticle = false : hasArticle = true;
+    }
     update();
     isLoading = false;
   }

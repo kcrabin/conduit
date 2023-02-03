@@ -1,3 +1,4 @@
+import 'package:conduit/core/presentation/themes/colors.dart';
 import 'package:conduit/core/presentation/utils/spacing.dart';
 import 'package:conduit/core/presentation/widgets/custom_elevated_button.dart';
 import 'package:conduit/features/profile/presentation/controllers/get_current_user_controller.dart';
@@ -18,6 +19,7 @@ class ProfileScreen extends StatelessWidget {
     final profileController = Get.find<ProfileController>();
     // final getFavArticles = Get.find<GetFavArticlesController>();
     return Scaffold(
+      backgroundColor: whiteColor,
       appBar: AppBar(title: const Text('Profile')),
       body: Padding(
         padding: const EdgeInsets.all(8.0),

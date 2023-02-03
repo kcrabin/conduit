@@ -50,7 +50,16 @@ class EditProfileScreen extends StatelessWidget {
                           },
                           minSize:
                               Size(MediaQuery.of(context).size.width * 0.5, 50),
-                          name: 'Update')
+                          name: 'Update'),
+                      Spacing.sizeBoxH_10(),
+                      controller.username == ''
+                          ? IconButton(
+                              onPressed: () {
+                                controller.getUserInfo();
+                              },
+                              icon: Icon(Icons.refresh),
+                            )
+                          : SizedBox(),
                     ]),
                   ),
           );

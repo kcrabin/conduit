@@ -1,4 +1,5 @@
 import 'package:conduit/core/data/source/remote/api_result.dart';
+import 'package:conduit/core/data/source/remote/custom_exception.dart';
 import 'package:conduit/features/profile/domain/repository/fav_article_repository.dart';
 import 'package:get/get.dart';
 
@@ -24,9 +25,11 @@ class GetFavArticlesController extends GetxController {
   getFavArticlesByUser() async {
     isLoading = true;
     apiResponse = await Get.find<GetFavArticlesRepository>().getFavArticles();
-
-    apiResponse.data.isEmpty ? hasArticle = false : hasArticle = true;
-
+    if (apiResponse.data != null) {
+      apiResponse.data.isEmpty ? hasArticle = false : hasArticle = true;
+    } else {
+      CustomException.noInternetConnecion();
+    }
     update();
     isLoading = false;
   }

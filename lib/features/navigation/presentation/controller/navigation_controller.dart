@@ -32,12 +32,12 @@ class NavigationController extends GetxController {
 
   @override
   void onInit() async {
-    GetProfileResponse userProfileResponse =
+    GetProfileResponse? userProfileResponse =
         await Get.put(GetCurrentUserController()).getCurrentUserDetail();
     // print(
     //     'this is current user detail ---${userProfileResponse.user!.username}');
     spUtils.setString(
-        StorageConstants.username, userProfileResponse.user!.username!);
+        StorageConstants.username, userProfileResponse?.user?.username! ?? '');
     // username = await spUtils.getString(StorageConstants.username);
     // print('this is username from main navigation----$username');
 

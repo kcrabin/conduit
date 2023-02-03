@@ -15,18 +15,16 @@ class GetAllArticleRepositoryImpl implements GetAllArticleRepository {
   GetAllArticleRepositoryImpl({required this.articleRemoteDataSource});
 
   @override
-  getArticleList() async {
+  getArticleList(int offset) async {
     bool hasInternet = await InternetConnectionChecker().hasConnection;
 
     if (hasInternet == true) {
       try {
-        final response = await articleRemoteDataSource.getAllArticles();
+        final response = await articleRemoteDataSource.getAllArticles(offset);
         var data = jsonDecode(response.toString());
-        List<Articles> articleList = data['articles']
-            .map<Articles>((e) => Articles.fromJson(e))
-            .toList();
+        
 
-        return ApiResponse(data: articleList);
+        return ApiResponse(data: data);
       } catch (error) {
         return ApiResponse(error: NetworkException.getException(error));
       }

@@ -14,14 +14,14 @@ class GetCurrentUserController extends GetxController {
 
   bool get isLoading => _isLoading;
 
-  ApiResponse apiResponse = ApiResponse();
+  ApiResponse? apiResponse = ApiResponse();
 
   getCurrentUserDetail() async {
     isLoading = true;
     apiResponse = await Get.find<GetCurrentUserRepository>().getCurrentUser();
     isLoading = false;
     // print(' this is user info ---${getProfileResponse.user!.email}');
-    return apiResponse.data;
+    return apiResponse?.data;
 
     // user = User()
   }
