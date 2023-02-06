@@ -186,7 +186,7 @@ class MyArticleDetailScreen extends StatelessWidget {
                                   onPressed: () {
                                     deleteArticleController.requestDelete(slug);
                                     myArticleController.getArticleByUser(
-                                        myArticleController.offset);
+                                        20, myArticleController.offset);
                                     Get.back();
 
                                     // Get.toNamed("/myArticles");

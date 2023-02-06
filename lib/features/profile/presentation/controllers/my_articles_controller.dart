@@ -22,14 +22,17 @@ class MyArticleController extends GetxController {
 
   ApiResponse apiResponse = ApiResponse();
   int offset = 0;
+  int limit = 20;
+
   int articleCount = 0;
 
   List<Articles> articleList = [];
   List<Articles> articles = [];
 
-  getArticleByUser(int offset) async {
+  getArticleByUser(int limit, int offset) async {
     isLoading = true;
-    apiResponse = await Get.find<MyArticleRepository>().getMyArticle(offset);
+    apiResponse =
+        await Get.find<MyArticleRepository>().getMyArticle(limit, offset);
     articles = apiResponse.data['articles']
         .map<Articles>((e) => Articles.fromJson(e))
         .toList();
@@ -46,24 +49,56 @@ class MyArticleController extends GetxController {
     isLoading = false;
   }
 
-  scrollListener() {
-    if ((scrollController.position.pixels ==
-            scrollController.position.maxScrollExtent) &&
-        (articleList.length < articleCount)) {
-      offset = offset + 20;
-      getArticleByUser(offset);
-      update();
+  getArticleByUserAfterLike(int limit, int offset) async {
+    isLoading = true;
+    apiResponse =
+        await Get.find<MyArticleRepository>().getMyArticle(limit, offset);
+    articles = apiResponse.data['articles']
+        .map<Articles>((e) => Articles.fromJson(e))
+        .toList();
+        
+    articleList = [];
+    articleList = articleList + articles;
+    articleCount = apiResponse.data['articlesCount'];
+    print('this is my article controller ---${apiResponse.data}');
+
+    if (apiResponse.data == null) {
+      CustomException.noInternetConnecion();
+    } else {
+      apiResponse.data.isEmpty ? hasArticle = false : hasArticle = true;
     }
-    // else {
-    //   print('this is the end of the list');
-    // }
+    update();
+    isLoading = false;
+  }
+
+  // scrollListener() {
+  //   if ((scrollController.position.pixels ==
+  //           scrollController.position.maxScrollExtent) &&
+  //       (articleList.length < articleCount)) {
+  //     offset = offset + 20;
+  //     getArticleByUser(limit, offset);
+  //     update();
+  //   }
+  //   // else {
+  //   //   print('this is the end of the list');
+  //   // }
+  // }
+
+  loadMoreArticles() {
+    if (articleList.length < articleCount) {
+      offset = offset + 20;
+      getArticleByUser(limit, offset);
+      update();
+    } else {
+      Get.snackbar('No more articles', 'You don\'t have any more articles');
+    }
   }
 
   @override
   void onInit() {
-    scrollController.addListener(scrollListener);
+    // scrollController.addListener(scrollListener);
 
-    getArticleByUser(offset);
+    getArticleByUser(limit, offset);
     super.onInit();
   }
 }

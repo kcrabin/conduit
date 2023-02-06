@@ -17,13 +17,13 @@ class MyArticleRepositoryImpl implements MyArticleRepository {
   List<Articles> articleList = [];
 
   @override
-  getMyArticle(int offset) async {
+  getMyArticle(int limit, int offset) async {
     bool hasInternet = await InternetConnectionChecker().hasConnection;
 
     if (hasInternet == true) {
       try {
         final response =
-            await myArticleRemoteDataSource.getArticleByUserName(offset);
+            await myArticleRemoteDataSource.getArticleByUserName(limit ,offset);
         var data = jsonDecode(response.toString());
         // articleList = data['articles']
         //     .map<Articles>((e) => Articles.fromJson(e))

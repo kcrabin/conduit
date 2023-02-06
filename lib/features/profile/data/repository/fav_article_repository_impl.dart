@@ -18,13 +18,13 @@ class GetFavArticlesRepositoryImpl implements GetFavArticlesRepository {
   List<Articles> articleList = [];
 
   @override
-  getFavArticles(int offset) async {
+  getFavArticles(int limit, int offset) async {
     bool hasInternet = await InternetConnectionChecker().hasConnection;
 
     if (hasInternet == true) {
       try {
         final response =
-            await favArticleRemoteDataSource.getFavArticles(offset);
+            await favArticleRemoteDataSource.getFavArticles(limit, offset);
         var data = jsonDecode(response.toString());
         // articleList = data['articles']
         //     .map<Articles>((e) => Articles.fromJson(e))

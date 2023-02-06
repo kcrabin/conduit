@@ -1,3 +1,3 @@
 abstract class GetFavArticlesRepository {
-  getFavArticles(int offset);
+  getFavArticles(int limit, int offset);
 }

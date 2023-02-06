@@ -6,7 +6,7 @@ import '../../../../../core/data/source/remote/api_constants.dart';
 import '../../../../../core/utils/storage/sp_utils.dart';
 
 abstract class GetFavArticlesRemoteDataSource {
-  Future<dynamic> getFavArticles(int offset);
+  Future<dynamic> getFavArticles(int limit, int offset);
 }
 
 class GetFavArticlesRemoteDataSourceImpl
@@ -14,7 +14,7 @@ class GetFavArticlesRemoteDataSourceImpl
   Dio dio;
   GetFavArticlesRemoteDataSourceImpl({required this.dio});
   @override
-  Future getFavArticles(int offset) async {
+  Future getFavArticles(int limit, int offset) async {
     StorageService storageService = StorageService();
     String? token = await storageService.get(StorageConstants.accessToken);
 
@@ -25,7 +25,7 @@ class GetFavArticlesRemoteDataSourceImpl
       "${ApiConstants.baseUrl}/articles",
       queryParameters: <String, dynamic>{
         'favorited': '$username',
-        'limit': '20',
+        'limit': '$limit',
         'offset': '$offset'
       },
       options: Options(

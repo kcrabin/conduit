@@ -11,9 +11,9 @@ class GetFavArticlesController extends GetxController {
 
   @override
   void onInit() {
-    scrollController.addListener(scrollListener);
+    // scrollController.addListener(scrollListener);
 
-    getFavArticlesByUser(offset);
+    getFavArticlesByUser(limit, offset);
     super.onInit();
   }
 
@@ -30,14 +30,16 @@ class GetFavArticlesController extends GetxController {
   ApiResponse apiResponse = ApiResponse();
 
   int offset = 0;
+  int limit = 20;
+
   List<Articles> articleList = [];
   List<Articles> articles = [];
   int articleCount = 0;
 
-  getFavArticlesByUser(int offset) async {
+  getFavArticlesByUser(int limit, int offset) async {
     isLoading = true;
-    apiResponse =
-        await Get.find<GetFavArticlesRepository>().getFavArticles(offset);
+    apiResponse = await Get.find<GetFavArticlesRepository>()
+        .getFavArticles(limit, offset);
     articles = apiResponse.data['articles']
         .map<Articles>((e) => Articles.fromJson(e))
         .toList();
@@ -53,16 +55,46 @@ class GetFavArticlesController extends GetxController {
     isLoading = false;
   }
 
-  scrollListener() {
-    if ((scrollController.position.pixels ==
-            scrollController.position.maxScrollExtent) &&
-        (articleList.length < articleCount)) {
-      offset = offset + 20;
-      getFavArticlesByUser(offset);
-      update();
+  getFavArticlesByUserAfterLike(int limit, int offset) async {
+    isLoading = true;
+    apiResponse = await Get.find<GetFavArticlesRepository>()
+        .getFavArticles(limit, offset);
+    articles = apiResponse.data['articles']
+        .map<Articles>((e) => Articles.fromJson(e))
+        .toList();
+
+    articleList = [];
+    articleList = articleList + articles;
+    articleCount = apiResponse.data['articlesCount'];
+    if (apiResponse.data != null) {
+      apiResponse.data.isEmpty ? hasArticle = false : hasArticle = true;
+    } else {
+      CustomException.noInternetConnecion();
     }
-    // else {
-    //   print('this is the end of the list');
-    // }
+    update();
+    isLoading = false;
   }
+
+  loadMoreArticles() {
+    if (articleList.length < articleCount) {
+      offset = offset + 20;
+      getFavArticlesByUser(limit, offset);
+      update();
+    } else {
+      Get.snackbar('No more articles', 'You don\'t have any more articles');
+    }
+  }
+
+  // scrollListener() {
+  //   if ((scrollController.position.pixels ==
+  //           scrollController.position.maxScrollExtent) &&
+  //       (articleList.length < articleCount)) {
+  //     offset = offset + 20;
+  //     getFavArticlesByUser(limit, offset);
+  //     update();
+  //   }
+  //   // else {
+  //   //   print('this is the end of the list');
+  //   // }
+  // }
 }

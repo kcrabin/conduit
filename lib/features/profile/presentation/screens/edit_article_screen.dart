@@ -62,8 +62,8 @@ class EditArticleScreen extends StatelessWidget {
                         if (_formkey.currentState!.validate()) {
                           controller.updateArticle(article.slug!);
                           // Get.toNamed('/profile');
-                          myArticleController
-                              .getArticleByUser(myArticleController.offset);
+                          myArticleController.getArticleByUser(
+                              20, myArticleController.offset);
                           Get.back();
                           Get.back();
                         } else {

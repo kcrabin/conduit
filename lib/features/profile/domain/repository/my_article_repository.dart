@@ -1,3 +1,3 @@
 abstract class MyArticleRepository {
-  getMyArticle(int offset);
+  getMyArticle(int limit, int offset);
 }

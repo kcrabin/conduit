@@ -6,7 +6,7 @@ import '../../../../../core/utils/storage/sp_utils.dart';
 import '../../../../../core/utils/storage/storage_service.dart';
 
 abstract class MyArticleRemoteDataSource {
-  Future<dynamic> getArticleByUserName(int offset);
+  Future<dynamic> getArticleByUserName(int limit, int offset);
 }
 
 class MyArticleRemoteDataSourceImpl implements MyArticleRemoteDataSource {
@@ -14,7 +14,7 @@ class MyArticleRemoteDataSourceImpl implements MyArticleRemoteDataSource {
 
   MyArticleRemoteDataSourceImpl({required this.dio});
   @override
-  Future getArticleByUserName(int offset) async {
+  Future getArticleByUserName(int limit, int offset) async {
     StorageService storage = StorageService();
     String? token = await storage.get(StorageConstants.accessToken);
 
@@ -25,7 +25,7 @@ class MyArticleRemoteDataSourceImpl implements MyArticleRemoteDataSource {
       "${ApiConstants.baseUrl}/articles",
       queryParameters: <String, dynamic>{
         'author': '$username',
-        'limit': '20',
+        'limit': '$limit',
         'offset': '$offset'
       },
       options: Options(
