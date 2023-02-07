@@ -137,7 +137,7 @@ class MyArticles extends StatelessWidget {
                                                                   .toString());
 
                                                   controller
-                                                      .getArticleByUserAfterLike(
+                                                      .updateArticleListByUser(
                                                           controller.articleList
                                                               .length,
                                                           0);

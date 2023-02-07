@@ -50,7 +50,7 @@ class MyArticleController extends GetxController {
     isLoading = false;
   }
 
-  getArticleByUserAfterLike(int limit, int offset) async {
+  updateArticleListByUser(int limit, int offset) async {
     isLoading = true;
     apiResponse =
         await Get.find<MyArticleRepository>().getMyArticle(limit, offset);

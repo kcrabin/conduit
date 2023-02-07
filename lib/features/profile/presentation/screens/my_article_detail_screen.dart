@@ -185,12 +185,12 @@ class MyArticleDetailScreen extends StatelessWidget {
                               IconButton(
                                   onPressed: () {
                                     deleteArticleController.requestDelete(slug);
-                                    myArticleController.getArticleByUser(
-                                        20, myArticleController.offset);
+                                    // myArticleController.getArticleByUser(
+                                    //     20, myArticleController.offset);
                                     // Get.back();
-                                    myArticleController.getArticleByUser(
-                                        myArticleController.limit,
-                                        myArticleController.offset);
+                                    myArticleController.updateArticleListByUser(
+                                        myArticleController.articleList.length,
+                                        0);
 
                                     Get.toNamed("/myArticles");
                                   },
