@@ -1,3 +1,3 @@
 abstract class ArticleByTagRepository {
-  getArticlesByTag(String tagName);
+  getArticlesByTag(String tagName, int limit, int offset);
 }

@@ -55,7 +55,9 @@ class TaglistScreen extends StatelessWidget {
                                           controller.apiResponse.data[index]);
                                   Get.put(ArticleByTaglistController())
                                       .getAllArticlesByTag(
-                                          controller.apiResponse.data[index]);
+                                          controller.apiResponse.data[index],
+                                          20,
+                                          0);
                                 },
                                 name: controller.apiResponse.data[index]),
                           );

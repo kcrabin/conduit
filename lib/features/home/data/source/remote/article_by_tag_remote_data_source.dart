@@ -5,7 +5,7 @@ import 'package:dio/dio.dart';
 import '../../../../../core/data/source/remote/api_constants.dart';
 
 abstract class ArticleByTagRemoteDataSource {
-  getArticles(String tagName);
+  getArticles(String tagName, int limit, int offset);
 }
 
 class ArticleByTagRemoteDataSourceImpl implements ArticleByTagRemoteDataSource {
@@ -13,7 +13,7 @@ class ArticleByTagRemoteDataSourceImpl implements ArticleByTagRemoteDataSource {
 
   ArticleByTagRemoteDataSourceImpl({required this.dio});
   @override
-  getArticles(String tagName) async {
+  getArticles(String tagName, int limit, int offset) async {
     StorageService storageService = StorageService();
     String? token = await storageService.get(StorageConstants.accessToken);
     // String tag = 'implementations';
@@ -22,6 +22,8 @@ class ArticleByTagRemoteDataSourceImpl implements ArticleByTagRemoteDataSource {
       "${ApiConstants.baseUrl}/articles",
       queryParameters: <String, dynamic>{
         'tag': '$tagName',
+        'limit': '$limit',
+        'offset': '$offset'
       },
       options: Options(
         headers: <String, String>{

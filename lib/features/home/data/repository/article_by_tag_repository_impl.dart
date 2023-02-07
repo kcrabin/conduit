@@ -15,18 +15,18 @@ class ArticleByTagRepositoryImpl implements ArticleByTagRepository {
   List<Articles> articleList = [];
 
   @override
-  getArticlesByTag(String tagName) async {
+  getArticlesByTag(String tagName, int limit, int offset) async {
     bool hasInternet = await InternetConnectionChecker().hasConnection;
     if (hasInternet == true) {
       try {
-        final response =
-            await articleByTagRemoteDataSource.getArticles(tagName);
+        final response = await articleByTagRemoteDataSource.getArticles(
+            tagName, limit, offset);
         var data = jsonDecode(response.toString());
-        articleList = data['articles']
-            .map<Articles>((e) => Articles.fromJson(e))
-            .toList();
+        // articleList = data['articles']
+        //     .map<Articles>((e) => Articles.fromJson(e))
+        //     .toList();
 
-        return ApiResponse(data: articleList);
+        return ApiResponse(data: data);
       } catch (error) {
         return ApiResponse(error: NetworkException.getException(error));
       }
