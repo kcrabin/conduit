@@ -33,13 +33,14 @@ class MyArticleController extends GetxController {
     isLoading = true;
     apiResponse =
         await Get.find<MyArticleRepository>().getMyArticle(limit, offset);
-    articles = apiResponse.data['articles']
-        .map<Articles>((e) => Articles.fromJson(e))
-        .toList();
-    articleList = articleList + articles;
-    articleCount = apiResponse.data['articlesCount'];
-    print('this is my article controller ---${apiResponse.data}');
-
+    if (apiResponse.hasData) {
+      articles = apiResponse.data['articles']
+          .map<Articles>((e) => Articles.fromJson(e))
+          .toList();
+      articleList = articleList + articles;
+      articleCount = apiResponse.data['articlesCount'];
+      print('this is my article controller ---${apiResponse.data}');
+    }
     if (apiResponse.data == null) {
       CustomException.noInternetConnecion();
     } else {
@@ -56,7 +57,7 @@ class MyArticleController extends GetxController {
     articles = apiResponse.data['articles']
         .map<Articles>((e) => Articles.fromJson(e))
         .toList();
-        
+
     articleList = [];
     articleList = articleList + articles;
     articleCount = apiResponse.data['articlesCount'];

@@ -6,6 +6,9 @@ import 'package:conduit/features/home/presentation/controllers/add_new_article_c
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../../core/data/source/remote/network_exception.dart';
+import '../../../../core/presentation/widgets/error_view.dart';
+
 class AddArticleScreen extends StatelessWidget {
   const AddArticleScreen({super.key});
 
@@ -52,9 +55,24 @@ class AddArticleScreen extends StatelessWidget {
                   ),
                   Spacing.sizeBoxH_20(),
                   CustomElevtedButton(
-                      onClicked: () {
+                      onClicked: () async {
                         if (formkey.currentState!.validate()) {
                           controller.publishArticle();
+                          print(
+                              'this is from add article screen-- ${controller.apiResponse.data}');
+
+                          // if (controller.apiResponse.hasData) {
+                          //   Get.snackbar('Article added',
+                          //       'Your article has been added successfully');
+                          // } else if (controller.apiResponse.hasError) {
+                          //   Center(
+                          //     child: ErrorView(
+                          //       title: NetworkException.getErrorMessage(
+                          //           controller.apiResponse.error),
+                          //     ),
+                          //   );
+                          // }
+
                           Get.toNamed("/navigation");
                         } else {
                           Get.snackbar("Empty Fields",

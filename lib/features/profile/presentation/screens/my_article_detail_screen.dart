@@ -187,9 +187,12 @@ class MyArticleDetailScreen extends StatelessWidget {
                                     deleteArticleController.requestDelete(slug);
                                     myArticleController.getArticleByUser(
                                         20, myArticleController.offset);
-                                    Get.back();
+                                    // Get.back();
+                                    myArticleController.getArticleByUser(
+                                        myArticleController.limit,
+                                        myArticleController.offset);
 
-                                    // Get.toNamed("/myArticles");
+                                    Get.toNamed("/myArticles");
                                   },
                                   icon: const Icon(
                                     Icons.delete,

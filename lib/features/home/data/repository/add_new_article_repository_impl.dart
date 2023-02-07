@@ -1,6 +1,8 @@
 import 'dart:convert';
 
+import 'package:conduit/core/data/source/remote/api_result.dart';
 import 'package:conduit/core/data/source/remote/custom_exception.dart';
+import 'package:conduit/core/data/source/remote/network_exception.dart';
 import 'package:conduit/features/home/data/model/response/get_article_response.dart';
 import 'package:conduit/features/home/data/source/remote/add_new_article_remote_data_source.dart';
 import 'package:conduit/features/home/domain/repository/add_new_article_repository.dart';
@@ -27,12 +29,12 @@ class AddNewArticleRepositoryImpl implements AddNewArticleRepository {
         print(
             'this is data after publish article ---- ${data['article']['title']}');
 
-        return data;
-      } on DioError catch (e) {
-        CustomException.errorMessage(e);
+        return ApiResponse(data: data);
+      } catch (error) {
+        return ApiResponse(error: NetworkException.getException(error));
       }
     } else {
-      CustomException.noInternetConnecion();
+      return ApiResponse(error: NetworkException.noInternetConnection());
     }
   }
 }

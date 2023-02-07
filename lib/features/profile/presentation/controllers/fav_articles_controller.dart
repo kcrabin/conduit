@@ -40,12 +40,14 @@ class GetFavArticlesController extends GetxController {
     isLoading = true;
     apiResponse = await Get.find<GetFavArticlesRepository>()
         .getFavArticles(limit, offset);
-    articles = apiResponse.data['articles']
-        .map<Articles>((e) => Articles.fromJson(e))
-        .toList();
+    if (apiResponse.hasData) {
+      articles = apiResponse.data['articles']
+          .map<Articles>((e) => Articles.fromJson(e))
+          .toList();
 
-    articleList = articleList + articles;
-    articleCount = apiResponse.data['articlesCount'];
+      articleList = articleList + articles;
+      articleCount = apiResponse.data['articlesCount'];
+    }
     if (apiResponse.data != null) {
       apiResponse.data.isEmpty ? hasArticle = false : hasArticle = true;
     } else {

@@ -44,13 +44,13 @@ class GetAllArticleController extends GetxController {
     isLoading = true;
     apiResponse =
         await Get.find<GetAllArticleRepository>().getArticleList(limit, offset);
-
-    articles = apiResponse.data['articles']
-        .map<Articles>((e) => Articles.fromJson(e))
-        .toList();
-
+    if (apiResponse.hasData) {
+      articles = apiResponse.data['articles']
+          .map<Articles>((e) => Articles.fromJson(e))
+          .toList();
+      articleCount = apiResponse.data['articlesCount'];
+    }
     articleList = articleList + articles;
-    articleCount = apiResponse.data['articlesCount'];
 
     username = await spUtils.getString(StorageConstants.username);
     // print('this is username from article controller----$username');
@@ -66,15 +66,15 @@ class GetAllArticleController extends GetxController {
     isLoading = true;
     apiResponse =
         await Get.find<GetAllArticleRepository>().getArticleList(limit, offset);
+    if (apiResponse.hasData) {
+      articles = apiResponse.data['articles']
+          .map<Articles>((e) => Articles.fromJson(e))
+          .toList();
+      articleList = [];
 
-    articles = apiResponse.data['articles']
-        .map<Articles>((e) => Articles.fromJson(e))
-        .toList();
-    articleList = [];
-
-    articleList = articleList + articles;
-    articleCount = apiResponse.data['articlesCount'];
-
+      articleList = articleList + articles;
+      articleCount = apiResponse.data['articlesCount'];
+    }
     username = await spUtils.getString(StorageConstants.username);
     // print('this is username from article controller----$username');
     print(

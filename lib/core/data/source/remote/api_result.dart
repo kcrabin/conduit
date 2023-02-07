@@ -1,6 +1,4 @@
-import 'package:equatable/equatable.dart';
-
-class ApiResponse<T> extends Equatable {
+class ApiResponse<T> {
   ApiResponse({this.error, this.data});
 
   T? data;
