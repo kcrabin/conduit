@@ -16,7 +16,8 @@ class LoginRemoteDataSourceImpl implements LoginRemoteDataSource {
   Future login(LoginRequest user) {
     return dio.post("${ApiConstants.baseUrl}${ApiConstants.login}",
         data: user.toJson(),
-        options: Options(headers: <String, String>{
+        options: Options(
+            headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8'
         }));
   }
